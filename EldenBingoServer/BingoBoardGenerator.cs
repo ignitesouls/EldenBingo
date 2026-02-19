@@ -10,15 +10,23 @@ namespace EldenBingoServer
         private int _randomSeed;
         private Random _random;
 
-        public BingoBoardGenerator(JArray squareArray, int randomSeed)
+        public BingoBoardGenerator(JObject root, int randomSeed)
         {
             RandomSeed = randomSeed;
             _list = new List<BingoJsonObj>();
+
+            
+            var categoryConfig = CategoryConfig.FromJson(root);
+
+            var squareArray = root["squares"] as JArray
+                ?? throw new Exception("Missing 'squares' array");
+
             foreach (var square in squareArray)
             {
                 string? name = square.Value<string>("name");
                 if (string.IsNullOrWhiteSpace(name))
                     continue;
+
                 string? tooltip = square.Value<string>("tooltip");
                 int? weight = square.Value<int?>("weight");
                 string? category = square.Value<string>("category");
@@ -35,27 +43,32 @@ namespace EldenBingoServer
                     foreach (var v in categoryArray.OfType<JValue>())
                     {
                         if (v.Value is string c)
-                        {
                             categories.Add(c.Trim());
-                        }
                     }
                 }
+
                 var tokenDict = new Dictionary<string, string[]>();
                 foreach (var textToken in getTokens(name))
                 {
-                    var tokenArray = square.Value<JArray>(textToken);
-                    if (tokenArray == null || tokenArray.Count == 0)
-                        throw new Exception($"Non-existent token '{textToken}' in '{name}'");
+                    var tokenArray = square.Value<JArray>(textToken)
+                        ?? throw new Exception($"Non-existent token '{textToken}' in '{name}'");
+
                     if (!tokenDict.ContainsKey(textToken))
                     {
-                        if (tokenArray.Any(t => t.Type != JTokenType.String))
-                        {
-                            throw new Exception($"Invalid type inside '{textToken}' in '{name}'");
-                        }
-                        tokenDict.Add(textToken, tokenArray.Select(t => t.Value<string>()).ToArray());
+                        tokenDict[textToken] = tokenArray
+                            .Select(t => t.Value<string>()!)
+                            .ToArray();
                     }
                 }
-                _list.Add(new BingoJsonObj(name, tooltip, weight.GetValueOrDefault(1), categories.ToArray(), tokenDict.Count == 0 ? null : tokenDict, (CenterType)center.GetValueOrDefault(0)));
+
+                _list.Add(new BingoJsonObj(
+                    name,
+                    tooltip,
+                    weight.GetValueOrDefault(1),
+                    categories.ToArray(),
+                    tokenDict.Count == 0 ? null : tokenDict,
+                    (CenterType)center.GetValueOrDefault(0)
+                ));
             }
         }
 

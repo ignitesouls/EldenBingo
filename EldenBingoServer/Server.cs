@@ -129,7 +129,7 @@ namespace EldenBingoServer
                     ContractResolver = new DefaultContractResolver
                     {
                         NamingStrategy = new CamelCaseNamingStrategy(),
-                        // Optional: You can make everything private or internal serializable
+                        
                         SerializeCompilerGeneratedMembers = true
                     },
                     Formatting = Formatting.Indented,
@@ -433,24 +433,44 @@ namespace EldenBingoServer
             {
                 var token = JToken.Parse(bingoJson.Json);
                 JArray? squares = null;
-                if (token is JArray)
+                JObject? rootObject = null;
+
+                if (token is JArray arr)
                 {
-                    squares = (JArray)token;
-                } 
+                    // Wrap JArray in JObject for BingoBoardGenerator
+                    rootObject = new JObject
+                    {
+                        ["squares"] = arr
+                    };
+                    squares = arr;
+                }
                 else if (token is JObject jobj && jobj.ContainsKey("squares") && jobj["squares"] is JArray jarr)
                 {
                     squares = jarr;
+
+                    // Wrap in rootObject and include category limits if present
+                    rootObject = new JObject
+                    {
+                        ["squares"] = jarr
+                    };
+
                     if (jobj.ContainsKey("category limits") && jobj["category limits"] is JObject configObject)
                     {
+                        rootObject["category limits"] = configObject;
+
                         var config = CategoryConfig.ParseConfig(configObject);
                         sender.Room.CategoryConfig = config;
                     }
                 }
-                if (squares == null)
+
+                if (squares == null || rootObject == null)
                     throw new Exception("Could not parse square data");
-                var bg = new BingoBoardGenerator(squares, sender.Room.GameSettings.RandomSeed);
+
+                // Pass the wrapped JObject instead of bare JArray
+                var bg = new BingoBoardGenerator(rootObject, sender.Room.GameSettings.RandomSeed);
                 sender.Room.BoardGenerator = bg;
-                //Don't update bingo board if match is running
+
+                // Don't update bingo board if match is running
                 if (sender.Room.Match.MatchStatus == MatchStatus.NotRunning || sender.Room.Match.MatchStatus == MatchStatus.Finished)
                 {
                     board = sender.Room.BoardGenerator.CreateBingoBoard(sender.Room);
@@ -537,6 +557,8 @@ namespace EldenBingoServer
                     }
                 }
             }
+
+            
 
             //Can always change status to "Not running", all others require that bingo board is generated
             if (matchStatus.MatchStatus > MatchStatus.NotRunning && !await confirm(sender, hasBingoBoard: true))
