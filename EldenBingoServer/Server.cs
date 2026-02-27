@@ -437,29 +437,45 @@ namespace EldenBingoServer
 
                 if (token is JArray arr)
                 {
-                    // Wrap JArray in JObject for BingoBoardGenerator
+                    // Legacy format: bare array of squares
                     rootObject = new JObject
                     {
                         ["squares"] = arr
                     };
                     squares = arr;
                 }
-                else if (token is JObject jobj && jobj.ContainsKey("squares") && jobj["squares"] is JArray jarr)
+                else if (token is JObject jobj && jobj.TryGetValue("squares", out var sqTok) && sqTok is JArray jarr)
                 {
                     squares = jarr;
 
-                    // Wrap in rootObject and include category limits if present
+                    // Wrapped format: { "squares": [...] }
                     rootObject = new JObject
                     {
                         ["squares"] = jarr
                     };
 
-                    if (jobj.ContainsKey("category limits") && jobj["category limits"] is JObject configObject)
+                    // carry region limits through to the generator (ONLY for wrapped-object format)
+                    if (jobj.TryGetValue("setRegionLimits", StringComparison.OrdinalIgnoreCase, out var rlTok)
+                        && rlTok is JArray regionLimits)
+                    {
+                        rootObject["setRegionLimits"] = regionLimits;
+                    }
+
+                    // keep your current category-limits key exactly to work with previous square sets
+                    if (jobj.TryGetValue("category limits", out var clTok) && clTok is JObject configObject)
                     {
                         rootObject["category limits"] = configObject;
 
                         var config = CategoryConfig.ParseConfig(configObject);
                         sender.Room.CategoryConfig = config;
+                    }
+
+                    if (jobj.TryGetValue("category minimums", StringComparison.OrdinalIgnoreCase, out var minTok)
+                        && minTok is JObject minsObject)
+                    {
+                        // ensure room config exists
+                        sender.Room.CategoryConfig ??= new CategoryConfig();
+                        sender.Room.CategoryConfig.ParseMinimums(minsObject);
                     }
                 }
 
@@ -490,11 +506,15 @@ namespace EldenBingoServer
             if (board != null)
             {
                 await setRoomBingoBoard(sender.Room, board);
-                await sendAdminStatusMessage(sender, $"Bingo json file successfully uploaded and bingo board generated!", Color.Green);
+                await sendAdminStatusMessage(sender,
+                    $"Bingo json file successfully uploaded and bingo board generated!",
+                    Color.Green);
             }
             else
             {
-                await sendAdminStatusMessage(sender, $"Bingo json file successfully uploaded!", Color.Green);
+                await sendAdminStatusMessage(sender,
+                    $"Bingo json file successfully uploaded!",
+                    Color.Green);
             }
         }
 

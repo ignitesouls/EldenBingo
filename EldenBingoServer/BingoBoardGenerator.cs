@@ -1,5 +1,6 @@
 ﻿using EldenBingoCommon;
 using Newtonsoft.Json.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 
 namespace EldenBingoServer
@@ -10,6 +11,10 @@ namespace EldenBingoServer
         private int _randomSeed;
         private Random _random;
 
+        //New Code
+        private readonly RegionLimitConfig _regionLimitConfig;
+        //New Code
+
         public BingoBoardGenerator(JObject root, int randomSeed)
         {
             RandomSeed = randomSeed;
@@ -17,6 +22,10 @@ namespace EldenBingoServer
 
             
             var categoryConfig = CategoryConfig.FromJson(root);
+
+            //New Initialization
+            _regionLimitConfig = RegionLimitConfig.FromJson(root);
+            //New Initialization
 
             var squareArray = root["squares"] as JArray
                 ?? throw new Exception("Missing 'squares' array");
@@ -47,6 +56,25 @@ namespace EldenBingoServer
                     }
                 }
 
+                //Adding Region Parsing
+                var regions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+                string? region = square.Value<string>("region");
+                if (!string.IsNullOrWhiteSpace(region))
+                    regions.Add(region.Trim());
+
+                var regionsArray = square.Value<JArray>("regions");
+                if (regionsArray != null)
+                {
+                    foreach (var v in regionsArray.OfType<JValue>())
+                    {
+                        if (v.Value is string r && !string.IsNullOrWhiteSpace(r))
+                            regions.Add(r.Trim());
+                    }
+                }
+
+                //Adding Region Parsing
+
                 var tokenDict = new Dictionary<string, string[]>();
                 foreach (var textToken in getTokens(name))
                 {
@@ -67,7 +95,10 @@ namespace EldenBingoServer
                     weight.GetValueOrDefault(1),
                     categories.ToArray(),
                     tokenDict.Count == 0 ? null : tokenDict,
-                    (CenterType)center.GetValueOrDefault(0)
+                    (CenterType)center.GetValueOrDefault(0),
+                    //Add Region
+                    regions.Count == 0 ? null : regions.ToArray()
+                    //Add Region
                 ));
             }
         }
@@ -92,6 +123,12 @@ namespace EldenBingoServer
             var squareList = new List<BingoJsonObj>(shuffleList(_list, _random));
             var squares = new List<BingoJsonObj>();
             var categoryCount = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+            //Add Region
+            var usedRegionsByGroup = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
+            foreach (var g in _regionLimitConfig.Groups)
+                usedRegionsByGroup[g.Name] = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            //Add Region
 
             var numSquares = room.GameSettings.BoardSize * room.GameSettings.BoardSize;
             bool anySquareFailedCategoryLimit = false;
@@ -121,7 +158,84 @@ namespace EldenBingoServer
                     categoryCount.TryGetValue(category, out int count);
                     categoryCount[category] = count + 1;
                 }
+                //Add Region
+                ApplySquareRegions(centerSquare.Value, usedRegionsByGroup);
+                //Add Region
             }
+
+            //For Minimums
+            var remainingMin = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+            if (room.CategoryConfig != null)
+            {
+                foreach (var kv in room.CategoryConfig.GetAllMinimums())
+                {
+                    if (kv.Value > 0)
+                        remainingMin[kv.Key] = kv.Value;
+                }
+            }
+
+            // If center square exists, it already "counts" toward mins
+            if (centerSquare.HasValue && remainingMin.Count > 0)
+            {
+                DecrementMinimums(remainingMin, centerSquare.Value.Categories);
+            }
+
+            // Greedily satisfy minimums first
+            int guard = 0;
+            while (remainingMin.Count > 0 && AnyMinimumsRemaining(remainingMin))
+            {
+                guard++;
+                if (guard > 50000) // safety against infinite loops in bad configs
+                    return null;
+
+                // Find best candidate that helps minimums
+                int bestIndex = -1;
+                int bestScore = 0;
+
+                for (int i = 0; i < squareList.Count; i++)
+                {
+                    var sq = squareList[i];
+
+                    int score = ScoreSquareForMinimums(remainingMin, sq);
+                    if (score <= 0) continue;
+
+                    // Must pass normal checks (max categories + region)
+                    if (!PassesMaxCategoryLimits(room, sq, categoryCount)) continue;
+                    if (!PassesRegionDistinctLimit(sq, usedRegionsByGroup)) continue;
+
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        bestIndex = i;
+
+                        // early-exit: can't do better than all unmet categories it has
+                        if (bestScore >= 3) { /* optional */ }
+                    }
+                }
+
+                // No way to satisfy remaining mins => impossible board
+                if (bestIndex == -1)
+                    return null;
+
+                var picked = squareList[bestIndex];
+                squareList.RemoveAt(bestIndex);
+
+                squares.Add(picked);
+
+                foreach (var category in picked.Categories)
+                {
+                    categoryCount.TryGetValue(category, out int count);
+                    categoryCount[category] = count + 1;
+                }
+                ApplySquareRegions(picked, usedRegionsByGroup);
+
+                DecrementMinimums(remainingMin, picked.Categories);
+
+                if (squares.Count >= numSquares)
+                    break;
+            }
+            //For Minimums
 
             while (squareList.Count > 0 && squares.Count < numSquares)
             {
@@ -148,6 +262,14 @@ namespace EldenBingoServer
                     //Try next square instead
                     continue;
                 }
+
+                //Add Region
+                if (!PassesRegionDistinctLimit(potentialSquare, usedRegionsByGroup))
+                { 
+                    continue; 
+                }
+                //Add Region
+
                 //YES, include the square on the board
                 squares.Add(potentialSquare);
                 //Increment count of each category by 1
@@ -156,6 +278,10 @@ namespace EldenBingoServer
                     categoryCount.TryGetValue(category, out int count);
                     categoryCount[category] = count + 1;
                 }
+
+                //Add Region
+                ApplySquareRegions(potentialSquare, usedRegionsByGroup);
+                //Add Region
             }
             if (squares.Count != numSquares)
             {
@@ -222,6 +348,120 @@ namespace EldenBingoServer
             //TODO
         }
 
+        //Add New Function for Regions as I don't want to add anything to EldenBingoCommon for Regions
+        private sealed class RegionLimitConfig
+        {
+            public sealed class Group
+            {
+                public string Name { get; }
+                public HashSet<string> RegionNames { get; }
+                public int RegionLimit { get; }
+
+                public Group(string name, HashSet<string> regionNames, int regionLimit)
+                {
+                    Name = name;
+                    RegionNames = regionNames;
+                    RegionLimit = regionLimit;
+                }
+            }
+
+            public IReadOnlyList<Group> Groups => _groups;
+            private readonly List<Group> _groups = new();
+
+            // region -> groups containing it
+            private readonly Dictionary<string, List<Group>> _regionToGroups =
+                new(StringComparer.OrdinalIgnoreCase);
+
+            public static RegionLimitConfig FromJson(JObject root)
+            {
+                var cfg = new RegionLimitConfig();
+
+                var arr = root["setRegionLimits"] as JArray;
+                if (arr == null) return cfg; // optional
+
+                foreach (var token in arr.OfType<JObject>())
+                {
+                    var name = token.Value<string>("name") ?? "unnamed";
+                    var limit = token.Value<int?>("regionLimit") ?? 0;
+                    if (limit <= 0) continue;
+
+                    var namesArr = token["regionNames"] as JArray;
+                    if (namesArr == null) continue;
+
+                    var set = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                    foreach (var v in namesArr.OfType<JValue>())
+                    {
+                        if (v.Value is string s && !string.IsNullOrWhiteSpace(s))
+                            set.Add(s.Trim());
+                    }
+
+                    if (set.Count == 0) continue;
+
+                    var g = new Group(name, set, limit);
+                    cfg._groups.Add(g);
+
+                    foreach (var r in set)
+                    {
+                        if (!cfg._regionToGroups.TryGetValue(r, out var list))
+                        {
+                            list = new List<Group>();
+                            cfg._regionToGroups[r] = list;
+                        }
+                        list.Add(g);
+                    }
+                }
+
+                return cfg;
+            }
+
+            public IReadOnlyList<Group> GetGroupsForRegion(string region)
+            {
+                return _regionToGroups.TryGetValue(region, out var list) ? list : Array.Empty<Group>();
+            }
+        }
+        //Add New Function
+
+
+        //Added to handle Minimums
+        private static void DecrementMinimums(Dictionary<string, int> remainingMin, ISet<string> categories)
+        {
+            foreach (var c in categories)
+            {
+                if (remainingMin.TryGetValue(c, out var need) && need > 0)
+                    remainingMin[c] = need - 1;
+            }
+        }
+
+        private static bool AnyMinimumsRemaining(Dictionary<string, int> remainingMin)
+            => remainingMin.Values.Any(v => v > 0);
+
+        private static int ScoreSquareForMinimums(Dictionary<string, int> remainingMin, BingoJsonObj sq)
+        {
+            int score = 0;
+            foreach (var c in sq.Categories)
+            {
+                if (remainingMin.TryGetValue(c, out var need) && need > 0)
+                    score++;
+            }
+            return score;
+        }
+
+        private bool PassesMaxCategoryLimits(ServerRoom room, BingoJsonObj potentialSquare, Dictionary<string, int> categoryCount)
+        {
+            foreach (var category in potentialSquare.Categories)
+            {
+                int limit = room.GameSettings.CategoryLimit > 0 ? room.GameSettings.CategoryLimit : 99999;
+                if (room.CategoryConfig != null)
+                    limit = Math.Min(limit, room.CategoryConfig.GetCategoryLimit(category));
+
+                if (categoryCount.TryGetValue(category, out int count) && count + 1 > limit)
+                    return false;
+            }
+            return true;
+        }
+
+        //Added to handle Minimums
+
         private IEnumerable<string> getTokens(string text)
         {
             return Regex.Matches(text, @"%(\w+)%").Select(m => m.Groups[1].Value);
@@ -245,9 +485,61 @@ namespace EldenBingoServer
             return items[_random.Next(items.Count)];
         }
 
+        // Add Regions
+        private bool PassesRegionDistinctLimit(
+            BingoJsonObj sq,
+            Dictionary<string, HashSet<string>> usedRegionsByGroup)
+        {
+            if (sq.Regions.Count == 0) return true;
+            if (_regionLimitConfig.Groups.Count == 0) return true;
+
+            // For each group, count how many NEW distinct regions this square would add
+            foreach (var g in _regionLimitConfig.Groups)
+            {
+                if (!usedRegionsByGroup.TryGetValue(g.Name, out var used))
+                    continue;
+
+                int newDistinct = 0;
+
+                foreach (var region in sq.Regions)
+                {
+                    if (!g.RegionNames.Contains(region)) continue; // not governed by this group
+                    if (used.Contains(region)) continue;           // already activated
+                    newDistinct++;
+                }
+
+                if (newDistinct > 0 && used.Count + newDistinct > g.RegionLimit)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private void ApplySquareRegions(BingoJsonObj sq, Dictionary<string, HashSet<string>> usedRegionsByGroup)
+        {
+            if (sq.Regions.Count == 0) return;
+            if (_regionLimitConfig.Groups.Count == 0) return;
+
+            foreach (var region in sq.Regions)
+            {
+                var groups = _regionLimitConfig.GetGroupsForRegion(region);
+
+                // Region not governed => ignore
+                if (groups.Count == 0) continue;
+
+                foreach (var g in groups)
+                {
+                    if (usedRegionsByGroup.TryGetValue(g.Name, out var used))
+                        used.Add(region);
+                }
+            }
+        }
+
+        //Add Regions
+
         private struct BingoJsonObj
         {
-            public BingoJsonObj(string text, string? tooltip = null, int weight = 1, string[]? categories = null, IDictionary<string, string[]>? tokens = null, CenterType center = CenterType.None)
+            public BingoJsonObj(string text, string? tooltip = null, int weight = 1, string[]? categories = null, IDictionary<string, string[]>? tokens = null, CenterType center = CenterType.None, string[]? regions = null)
             {
                 Text = text;
                 Tooltip = tooltip == null ? string.Empty : tooltip;
@@ -255,14 +547,18 @@ namespace EldenBingoServer
                 Categories = new HashSet<string>(categories ?? Array.Empty<string>());
                 Tokens = tokens;
                 CenterType = center;
+                Regions = new HashSet<string>(regions ?? Array.Empty<string>(), StringComparer.OrdinalIgnoreCase);
             }
 
             public string Text { get; init; }
             public string Tooltip { get; init; }
             public int Weight { get; init; }
-            public ISet<string> Categories { get; init; }
+            public ISet<string> Categories { get; init; }            
             public IDictionary<string, string[]>? Tokens { get; init; }
             public CenterType CenterType { get; init; }
+            //Add regions
+            public ISet<string> Regions { get; init; }
+            //Add regions
 
             public override string ToString()
             {
