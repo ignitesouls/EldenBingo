@@ -81,6 +81,7 @@ namespace EldenBingoCommon
             return config;
         }
 
+        //Top 10 ChatGPT Comments
         public void ParseMinimums(JObject minsObject)
         {
             try
