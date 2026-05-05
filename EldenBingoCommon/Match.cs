@@ -8,6 +8,7 @@ namespace EldenBingoCommon
     {
         NotRunning,
         Starting,
+        ShipPlacement,
         Preparation,
         Running,
         Finished
@@ -129,6 +130,10 @@ namespace EldenBingoCommon
                     color = Color.Orange;
                     return "Starting...";
                 
+                case MatchStatus.ShipPlacement:
+                    color = Color.DarkCyan;
+                    return "Ship Placement";
+
                 case MatchStatus.Preparation:
                     color = Color.BlueViolet;
                     return "Preparation";

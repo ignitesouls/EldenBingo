@@ -718,5 +718,17 @@ namespace EldenBingo.Properties {
                 this["ArrowNavigation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int GS_GameMode {
+            get {
+                return ((int)(this["GS_GameMode"]));
+            }
+            set {
+                this["GS_GameMode"] = value;
+            }
+        }
     }
 }

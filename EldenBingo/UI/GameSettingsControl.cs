@@ -4,11 +4,16 @@ namespace EldenBingo.UI
 {
     public partial class GameSettingsControl : UserControl
     {
+        private ComboBox _gameModeComboBox;
+        private Label _gameModeLabel;
+        private Panel _gameModePanel;
+
         public GameSettingsControl()
         {
             InitializeComponent();
             fillBoardSizeList();
             fillClassList();
+            initGameModePanel();
             updateEnabling();
             _randomSeedUpDown.ValueChanged += (o, e) => SeedChanged?.Invoke();
         }
@@ -41,7 +46,8 @@ namespace EldenBingo.UI
                     Convert.ToInt32(_maxCategoryUpDown.Value),//Max number of squares in the same category
                     Convert.ToInt32(_randomSeedUpDown.Value), //Random seed
                     Convert.ToInt32(_preparationTimeUpDown.Value), //Preparation time in seconds
-                    Convert.ToInt32(_bonusPointsUpDown.Value) //Bonus points for a bingo line
+                    Convert.ToInt32(_bonusPointsUpDown.Value), //Bonus points for a bingo line
+                    (GameMode)_gameModeComboBox.SelectedIndex
                 );
             }
             set
@@ -62,8 +68,42 @@ namespace EldenBingo.UI
                 _randomSeedUpDown.Value = value.RandomSeed;
                 _preparationTimeUpDown.Value = value.PreparationTime;
                 _bonusPointsUpDown.Value = value.PointsPerBingoLine;
+                _gameModeComboBox.SelectedIndex = (int)value.GameMode;
                 updateEnabling();
             }
+        }
+
+        private void initGameModePanel()
+        {
+            _gameModePanel = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 30,
+            };
+            _gameModeLabel = new Label
+            {
+                Text = "Game mode:",
+                AutoSize = true,
+                Location = new Point(4, 4),
+            };
+            _gameModeComboBox = new ComboBox
+            {
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Location = new Point(85, 1),
+                Width = 120,
+            };
+            _gameModeComboBox.Items.Add("Bingo");
+            _gameModeComboBox.Items.Add("Battleship");
+            _gameModeComboBox.SelectedIndex = 0;
+
+            _gameModePanel.Controls.Add(_gameModeLabel);
+            _gameModePanel.Controls.Add(_gameModeComboBox);
+
+            // Insert at top - before panel1
+            Controls.Add(_gameModePanel);
+            _gameModePanel.BringToFront();
+            // Shift the dock order so game mode is first
+            Controls.SetChildIndex(_gameModePanel, Controls.Count - 1);
         }
 
         private void fillBoardSizeList()

@@ -446,6 +446,8 @@ namespace EldenBingo
         {
             if (!Properties.Settings.Default.PlaySounds)
                 return;
+            if (_client.IsBattleshipMode)
+                return;
             //Only play sound if the team checking is now present in the square
             if (userCheckedSquareArgs.TeamsChecked.Contains(userCheckedSquareArgs.Team))
             {
@@ -465,10 +467,12 @@ namespace EldenBingo
 
         private void bingoAchieved(ClientModel? model, ServerBingoAchievedUpdate update)
         {
-            if (Properties.Settings.Default.PlaySounds)
-            {
-                _sounds.PlaySound(SoundType.Bingo);
-            }
+            if (!Properties.Settings.Default.PlaySounds)
+                return;
+            // Don't play bingo sound while in battleship mode (battleship sounds take precedence)
+            if (_client?.IsBattleshipMode == true)
+                return;
+            _sounds.PlaySound(SoundType.Bingo);
         }
 
         private void showLobbyTab()

@@ -12,6 +12,9 @@ namespace EldenBingo.Sfx
         SquareUnclaimedOther,
         SquareUnclaimedOwn,
         Bingo,
+        BattleshipMiss,
+        BattleshipHit,
+        BattleshipSunk,
     }
 
     public class AudioDevice
@@ -35,14 +38,17 @@ namespace EldenBingo.Sfx
     {
         private readonly MMDeviceEnumerator _deviceEnumerator;
 
-        private static string SfxPath = "./Sfx/";
+        private static string SfxPath = Path.Combine(AppContext.BaseDirectory, "Sfx");
         private static readonly string[] AudioFiles = new string[]
         {
             "square_claimed_other.wav",
             "square_claimed_own.wav",
             "square_unclaimed_other.wav",
             "square_unclaimed_own.wav",
-            "bingo.wav"
+            "bingo.wav",
+            "battleship_miss.wav",
+            "battleship_hit.wav",
+            "battleship_sunk.wav"
         };
 
         private readonly CachedSoundSampleProvider?[] _sounds;

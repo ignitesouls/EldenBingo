@@ -1,0 +1,2722 @@
+[4/7/2026 11:49:21 PM] Error: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+[4/7/2026 11:49:21 PM] Error: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+[4/8/2026 1:21:17 AM] Error: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+[4/8/2026 1:21:17 AM] Error: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+[4/26/2026 7:34:16 PM] Hosting server on port 4501
+[4/26/2026 7:34:17 PM] Client connected (127.0.0.1)
+[4/26/2026 7:34:17 PM] Client connected (127.0.0.1)
+[4/26/2026 7:34:17 PM] Client connected (127.0.0.1)
+[4/26/2026 7:34:17 PM] Client connected (127.0.0.1)
+[4/26/2026 7:34:35 PM] Lobby 'MWMS' was created
+[4/26/2026 7:35:46 PM] PLACED team=2 by=KC
+[4/26/2026 7:35:46 PM] CONFIRM team=2 by=KC
+[4/26/2026 7:35:51 PM] PLACED team=4 by=KC
+[4/26/2026 7:35:51 PM] CONFIRM team=4 by=KC
+[4/26/2026 7:35:56 PM] PLACED team=5 by=KC
+[4/26/2026 7:35:56 PM] CONFIRM team=5 by=KC
+[4/26/2026 7:36:19 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[4/26/2026 7:36:19 PM] ATTACK idx=0 attacker=4 defender=2 result=Miss
+[4/26/2026 7:36:19 PM] ATTACK idx=0 attacker=4 defender=5 result=Hit
+[4/26/2026 7:36:25 PM] AttackRequest from=KC onBehalfOf=KC index=1
+[4/26/2026 7:36:25 PM] ATTACK idx=1 attacker=4 defender=2 result=Hit
+[4/26/2026 7:36:25 PM] ATTACK idx=1 attacker=4 defender=5 result=Hit
+[4/26/2026 7:36:46 PM] AttackRequest from=KC onBehalfOf=KC index=2
+[4/26/2026 7:36:46 PM] ATTACK idx=2 attacker=4 defender=2 result=Hit
+[4/26/2026 7:36:46 PM] ATTACK idx=2 attacker=4 defender=5 result=Hit
+[4/26/2026 7:36:47 PM] AttackRequest from=KC onBehalfOf=KC index=3
+[4/26/2026 7:36:47 PM] ATTACK idx=3 attacker=4 defender=2 result=Hit
+[4/26/2026 7:36:47 PM] ATTACK idx=3 attacker=4 defender=5 result=Hit
+[4/26/2026 7:36:48 PM] AttackRequest from=KC onBehalfOf=KC index=4
+[4/26/2026 7:36:48 PM] ATTACK idx=4 attacker=4 defender=2 result=Hit
+[4/26/2026 7:36:48 PM] ATTACK idx=4 attacker=4 defender=5 result=Sunk
+[4/26/2026 7:36:53 PM] AttackRequest from=KC onBehalfOf=KC index=10
+[4/26/2026 7:36:53 PM] ATTACK idx=10 attacker=4 defender=2 result=Miss
+[4/26/2026 7:36:53 PM] ATTACK idx=10 attacker=4 defender=5 result=Hit
+[4/26/2026 7:36:53 PM] AttackRequest from=KC onBehalfOf=KC index=11
+[4/26/2026 7:36:53 PM] ATTACK idx=11 attacker=4 defender=2 result=Miss
+[4/26/2026 7:36:53 PM] ATTACK idx=11 attacker=4 defender=5 result=Hit
+[4/26/2026 7:36:54 PM] AttackRequest from=KC onBehalfOf=KC index=12
+[4/26/2026 7:36:54 PM] ATTACK idx=12 attacker=4 defender=2 result=Miss
+[4/26/2026 7:36:54 PM] ATTACK idx=12 attacker=4 defender=5 result=Hit
+[4/26/2026 7:36:55 PM] AttackRequest from=KC onBehalfOf=KC index=13
+[4/26/2026 7:36:55 PM] ATTACK idx=13 attacker=4 defender=2 result=Miss
+[4/26/2026 7:36:55 PM] ATTACK idx=13 attacker=4 defender=5 result=Sunk
+[4/26/2026 7:36:57 PM] AttackRequest from=KC onBehalfOf=KC index=20
+[4/26/2026 7:36:57 PM] ATTACK idx=20 attacker=4 defender=2 result=Miss
+[4/26/2026 7:36:57 PM] ATTACK idx=20 attacker=4 defender=5 result=Hit
+[4/26/2026 7:36:58 PM] AttackRequest from=KC onBehalfOf=KC index=21
+[4/26/2026 7:36:58 PM] ATTACK idx=21 attacker=4 defender=2 result=Miss
+[4/26/2026 7:36:58 PM] ATTACK idx=21 attacker=4 defender=5 result=Hit
+[4/26/2026 7:36:58 PM] AttackRequest from=KC onBehalfOf=KC index=22
+[4/26/2026 7:36:58 PM] ATTACK idx=22 attacker=4 defender=2 result=Miss
+[4/26/2026 7:36:58 PM] ATTACK idx=22 attacker=4 defender=5 result=Sunk
+[4/26/2026 7:37:06 PM] AttackRequest from=KC onBehalfOf=KC index=10
+[4/26/2026 7:37:06 PM] ATTACK idx=10 attacker=2 defender=4 result=Hit
+[4/26/2026 7:37:06 PM] ATTACK idx=10 attacker=2 defender=5 result=Miss
+[4/26/2026 7:37:07 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[4/26/2026 7:37:07 PM] ATTACK idx=0 attacker=2 defender=4 result=Hit
+[4/26/2026 7:37:07 PM] ATTACK idx=0 attacker=2 defender=5 result=Miss
+[4/26/2026 7:37:07 PM] AttackRequest from=KC onBehalfOf=KC index=1
+[4/26/2026 7:37:07 PM] ATTACK idx=1 attacker=2 defender=4 result=Hit
+[4/26/2026 7:37:07 PM] ATTACK idx=1 attacker=2 defender=5 result=Miss
+[4/26/2026 7:37:08 PM] AttackRequest from=KC onBehalfOf=KC index=2
+[4/26/2026 7:37:08 PM] ATTACK idx=2 attacker=2 defender=4 result=Hit
+[4/26/2026 7:37:08 PM] ATTACK idx=2 attacker=2 defender=5 result=Miss
+[4/26/2026 7:37:08 PM] AttackRequest from=KC onBehalfOf=KC index=3
+[4/26/2026 7:37:08 PM] ATTACK idx=3 attacker=2 defender=4 result=Hit
+[4/26/2026 7:37:08 PM] ATTACK idx=3 attacker=2 defender=5 result=Miss
+[4/26/2026 7:37:09 PM] AttackRequest from=KC onBehalfOf=KC index=4
+[4/26/2026 7:37:09 PM] ATTACK idx=4 attacker=2 defender=4 result=Sunk
+[4/26/2026 7:37:09 PM] ATTACK idx=4 attacker=2 defender=5 result=Miss
+[4/26/2026 7:37:25 PM] AttackRequest from=KC onBehalfOf=KC index=66
+[4/26/2026 7:37:25 PM] ATTACK idx=66 attacker=4 defender=2 result=Hit
+[4/26/2026 7:37:25 PM] ATTACK idx=66 attacker=4 defender=5 result=Miss
+[4/26/2026 7:37:38 PM] AttackRequest from=KC onBehalfOf=KC index=67
+[4/26/2026 7:37:38 PM] ATTACK idx=67 attacker=5 defender=2 result=Sunk
+[4/26/2026 7:37:38 PM] ATTACK idx=67 attacker=5 defender=4 result=Miss
+[4/26/2026 7:38:00 PM] Client disconnected (127.0.0.1)
+[4/26/2026 7:38:19 PM] PLACED team=2 by=KC
+[4/26/2026 7:38:19 PM] CONFIRM team=2 by=KC
+[4/26/2026 7:38:25 PM] PLACED team=4 by=KC
+[4/26/2026 7:38:25 PM] CONFIRM team=4 by=KC
+[4/26/2026 10:01:15 PM] Hosting server on port 4501
+[4/26/2026 10:02:39 PM] Client connected (127.0.0.1)
+[4/26/2026 10:03:07 PM] Client connected (127.0.0.1)
+[4/26/2026 10:04:34 PM] Lobby 'MMQC' was created
+[4/26/2026 10:11:35 PM] Client disconnected (127.0.0.1)
+[4/26/2026 10:17:09 PM] Client connected (127.0.0.1)
+[4/26/2026 10:17:47 PM] Lobby 'RJEE' was created
+[4/26/2026 10:19:07 PM] Client connected (127.0.0.1)
+[4/26/2026 10:19:24 PM] Client connected (127.0.0.1)
+[4/26/2026 10:24:12 PM] Client connected (127.0.0.1)
+[4/26/2026 10:25:09 PM] Lobby 'KBMZ' was created
+[4/26/2026 10:26:14 PM] PLACED team=0 by=KC
+[4/26/2026 10:26:14 PM] CONFIRM team=0 by=KC
+[4/26/2026 10:26:19 PM] PLACED team=1 by=KC
+[4/26/2026 10:26:19 PM] CONFIRM team=1 by=KC
+[4/26/2026 10:26:25 PM] PLACED team=2 by=KC
+[4/26/2026 10:26:25 PM] CONFIRM team=2 by=KC
+[4/26/2026 10:28:49 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[4/26/2026 10:28:49 PM] ATTACK idx=0 attacker=1 defender=0 result=Hit
+[4/26/2026 10:28:49 PM] ATTACK idx=0 attacker=1 defender=2 result=Hit
+[4/26/2026 10:28:50 PM] AttackRequest from=KC onBehalfOf=KC index=1
+[4/26/2026 10:28:50 PM] ATTACK idx=1 attacker=1 defender=0 result=Hit
+[4/26/2026 10:28:50 PM] ATTACK idx=1 attacker=1 defender=2 result=Hit
+[4/26/2026 10:28:58 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[4/26/2026 10:28:58 PM] ATTACK idx=0 attacker=2 defender=0 result=Miss
+[4/26/2026 10:28:58 PM] ATTACK idx=0 attacker=2 defender=1 result=Hit
+[4/26/2026 10:28:58 PM] AttackRequest from=KC onBehalfOf=KC index=1
+[4/26/2026 10:28:58 PM] ATTACK idx=1 attacker=2 defender=0 result=Miss
+[4/26/2026 10:28:58 PM] ATTACK idx=1 attacker=2 defender=1 result=Hit
+[4/26/2026 10:28:59 PM] AttackRequest from=KC onBehalfOf=KC index=2
+[4/26/2026 10:28:59 PM] ATTACK idx=2 attacker=2 defender=0 result=Hit
+[4/26/2026 10:28:59 PM] ATTACK idx=2 attacker=2 defender=1 result=Hit
+[4/26/2026 10:28:59 PM] AttackRequest from=KC onBehalfOf=KC index=3
+[4/26/2026 10:28:59 PM] ATTACK idx=3 attacker=2 defender=0 result=Hit
+[4/26/2026 10:28:59 PM] ATTACK idx=3 attacker=2 defender=1 result=Hit
+[4/26/2026 10:29:30 PM] Client disconnected (127.0.0.1)
+[4/26/2026 10:29:31 PM] Client disconnected (127.0.0.1)
+[4/26/2026 10:29:32 PM] Client disconnected (127.0.0.1)
+[4/26/2026 10:29:57 PM] AttackRequest from=KC onBehalfOf=KC index=4
+[4/26/2026 10:29:57 PM] ATTACK idx=4 attacker=-1 defender=0 result=Sunk
+[4/26/2026 10:29:57 PM] ATTACK idx=4 attacker=-1 defender=1 result=Sunk
+[4/26/2026 10:29:57 PM] ATTACK idx=4 attacker=-1 defender=2 result=Hit
+[4/26/2026 10:29:58 PM] AttackRequest from=KC onBehalfOf=KC index=10
+[4/26/2026 10:29:58 PM] ATTACK idx=10 attacker=-1 defender=0 result=Hit
+[4/26/2026 10:29:58 PM] ATTACK idx=10 attacker=-1 defender=1 result=Hit
+[4/26/2026 10:29:58 PM] ATTACK idx=10 attacker=-1 defender=2 result=Miss
+[4/26/2026 10:29:58 PM] AttackRequest from=KC onBehalfOf=KC index=11
+[4/26/2026 10:29:58 PM] ATTACK idx=11 attacker=-1 defender=0 result=Hit
+[4/26/2026 10:29:58 PM] ATTACK idx=11 attacker=-1 defender=1 result=Hit
+[4/26/2026 10:29:58 PM] ATTACK idx=11 attacker=-1 defender=2 result=Hit
+[4/26/2026 10:29:59 PM] AttackRequest from=KC onBehalfOf=KC index=12
+[4/26/2026 10:29:59 PM] ATTACK idx=12 attacker=-1 defender=0 result=Hit
+[4/26/2026 10:29:59 PM] ATTACK idx=12 attacker=-1 defender=1 result=Hit
+[4/26/2026 10:29:59 PM] ATTACK idx=12 attacker=-1 defender=2 result=Hit
+[4/26/2026 10:29:59 PM] AttackRequest from=KC onBehalfOf=KC index=13
+[4/26/2026 10:29:59 PM] ATTACK idx=13 attacker=-1 defender=0 result=Sunk
+[4/26/2026 10:29:59 PM] ATTACK idx=13 attacker=-1 defender=1 result=Sunk
+[4/26/2026 10:29:59 PM] ATTACK idx=13 attacker=-1 defender=2 result=Hit
+[4/26/2026 10:29:59 PM] AttackRequest from=KC onBehalfOf=KC index=14
+[4/26/2026 10:29:59 PM] ATTACK idx=14 attacker=-1 defender=0 result=Miss
+[4/26/2026 10:29:59 PM] ATTACK idx=14 attacker=-1 defender=1 result=Miss
+[4/26/2026 10:29:59 PM] ATTACK idx=14 attacker=-1 defender=2 result=Sunk
+[4/26/2026 10:30:04 PM] Client disconnected (127.0.0.1)
+[4/26/2026 10:50:29 PM] Client connected (127.0.0.1)
+[4/26/2026 10:50:29 PM] Client connected (127.0.0.1)
+[4/26/2026 10:50:29 PM] Client connected (127.0.0.1)
+[4/26/2026 10:50:29 PM] Client connected (127.0.0.1)
+[4/26/2026 10:50:38 PM] Lobby 'VOTR' was created
+[4/26/2026 10:51:53 PM] PLACED team=2 by=KC
+[4/26/2026 10:51:53 PM] CONFIRM team=2 by=KC
+[4/26/2026 10:51:57 PM] PLACED team=0 by=KC
+[4/26/2026 10:51:58 PM] CONFIRM team=0 by=KC
+[4/26/2026 10:52:04 PM] PLACED team=1 by=KC
+[4/26/2026 10:52:04 PM] CONFIRM team=1 by=KC
+[4/26/2026 10:52:15 PM] AttackRequest from=KC onBehalfOf=KC index=25
+[4/26/2026 10:52:15 PM] ATTACK idx=25 attacker=-1 defender=0 result=Hit
+[4/26/2026 10:52:15 PM] ATTACK idx=25 attacker=-1 defender=1 result=Hit
+[4/26/2026 10:52:15 PM] ATTACK idx=25 attacker=-1 defender=2 result=Hit
+[4/26/2026 10:52:18 PM] AttackRequest from=KC onBehalfOf=KC index=12
+[4/26/2026 10:52:18 PM] ATTACK idx=12 attacker=2 defender=0 result=Hit
+[4/26/2026 10:52:18 PM] ATTACK idx=12 attacker=2 defender=1 result=Miss
+[4/26/2026 10:52:19 PM] AttackRequest from=KC onBehalfOf=KC index=13
+[4/26/2026 10:52:19 PM] ATTACK idx=13 attacker=2 defender=0 result=Hit
+[4/26/2026 10:52:19 PM] ATTACK idx=13 attacker=2 defender=1 result=Hit
+[4/26/2026 10:52:19 PM] AttackRequest from=KC onBehalfOf=KC index=14
+[4/26/2026 10:52:19 PM] ATTACK idx=14 attacker=2 defender=0 result=Hit
+[4/26/2026 10:52:19 PM] ATTACK idx=14 attacker=2 defender=1 result=Hit
+[4/26/2026 10:52:19 PM] AttackRequest from=KC onBehalfOf=KC index=15
+[4/26/2026 10:52:19 PM] ATTACK idx=15 attacker=2 defender=0 result=Hit
+[4/26/2026 10:52:19 PM] ATTACK idx=15 attacker=2 defender=1 result=Hit
+[4/26/2026 10:52:20 PM] AttackRequest from=KC onBehalfOf=KC index=16
+[4/26/2026 10:52:20 PM] ATTACK idx=16 attacker=2 defender=0 result=Sunk
+[4/26/2026 10:52:20 PM] ATTACK idx=16 attacker=2 defender=1 result=Hit
+[4/26/2026 10:52:30 PM] AttackRequest from=KC onBehalfOf=KC index=17
+[4/26/2026 10:52:30 PM] ATTACK idx=17 attacker=2 defender=0 result=Miss
+[4/26/2026 10:52:30 PM] ATTACK idx=17 attacker=2 defender=1 result=Sunk
+[4/26/2026 10:52:31 PM] AttackRequest from=KC onBehalfOf=KC index=8
+[4/26/2026 10:52:31 PM] ATTACK idx=8 attacker=2 defender=0 result=Miss
+[4/26/2026 10:52:31 PM] ATTACK idx=8 attacker=2 defender=1 result=Miss
+[4/26/2026 10:52:31 PM] AttackRequest from=KC onBehalfOf=KC index=18
+[4/26/2026 10:52:31 PM] ATTACK idx=18 attacker=2 defender=0 result=Miss
+[4/26/2026 10:52:31 PM] ATTACK idx=18 attacker=2 defender=1 result=Miss
+[4/26/2026 10:52:32 PM] AttackRequest from=KC onBehalfOf=KC index=19
+[4/26/2026 10:52:32 PM] ATTACK idx=19 attacker=2 defender=0 result=Miss
+[4/26/2026 10:52:32 PM] ATTACK idx=19 attacker=2 defender=1 result=Miss
+[4/26/2026 10:52:38 PM] AttackRequest from=KC onBehalfOf=KC index=12
+[4/26/2026 10:52:38 PM] ATTACK idx=12 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:38 PM] ATTACK idx=12 attacker=1 defender=2 result=Hit
+[4/26/2026 10:52:39 PM] AttackRequest from=KC onBehalfOf=KC index=13
+[4/26/2026 10:52:39 PM] ATTACK idx=13 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:39 PM] ATTACK idx=13 attacker=1 defender=2 result=Hit
+[4/26/2026 10:52:39 PM] AttackRequest from=KC onBehalfOf=KC index=4
+[4/26/2026 10:52:39 PM] ATTACK idx=4 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:39 PM] ATTACK idx=4 attacker=1 defender=2 result=Miss
+[4/26/2026 10:52:40 PM] AttackRequest from=KC onBehalfOf=KC index=3
+[4/26/2026 10:52:40 PM] ATTACK idx=3 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:40 PM] ATTACK idx=3 attacker=1 defender=2 result=Miss
+[4/26/2026 10:52:40 PM] AttackRequest from=KC onBehalfOf=KC index=14
+[4/26/2026 10:52:40 PM] ATTACK idx=14 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:40 PM] ATTACK idx=14 attacker=1 defender=2 result=Hit
+[4/26/2026 10:52:40 PM] AttackRequest from=KC onBehalfOf=KC index=14
+[4/26/2026 10:52:40 PM] ATTACK idx=14 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:40 PM] ATTACK idx=14 attacker=1 defender=2 result=Miss
+[4/26/2026 10:52:40 PM] AttackRequest from=KC onBehalfOf=KC index=15
+[4/26/2026 10:52:40 PM] ATTACK idx=15 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:40 PM] ATTACK idx=15 attacker=1 defender=2 result=Hit
+[4/26/2026 10:52:41 PM] AttackRequest from=KC onBehalfOf=KC index=16
+[4/26/2026 10:52:41 PM] ATTACK idx=16 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:41 PM] ATTACK idx=16 attacker=1 defender=2 result=Sunk
+[4/26/2026 10:52:41 PM] AttackRequest from=KC onBehalfOf=KC index=18
+[4/26/2026 10:52:41 PM] ATTACK idx=18 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:41 PM] ATTACK idx=18 attacker=1 defender=2 result=Miss
+[4/26/2026 10:52:42 PM] AttackRequest from=KC onBehalfOf=KC index=17
+[4/26/2026 10:52:42 PM] ATTACK idx=17 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:42 PM] ATTACK idx=17 attacker=1 defender=2 result=Miss
+[4/26/2026 10:52:42 PM] AttackRequest from=KC onBehalfOf=KC index=18
+[4/26/2026 10:52:42 PM] ATTACK idx=18 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:42 PM] ATTACK idx=18 attacker=1 defender=2 result=Miss
+[4/26/2026 10:52:43 PM] AttackRequest from=KC onBehalfOf=KC index=7
+[4/26/2026 10:52:43 PM] ATTACK idx=7 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:43 PM] ATTACK idx=7 attacker=1 defender=2 result=Miss
+[4/26/2026 10:52:43 PM] AttackRequest from=KC onBehalfOf=KC index=6
+[4/26/2026 10:52:43 PM] ATTACK idx=6 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:43 PM] ATTACK idx=6 attacker=1 defender=2 result=Miss
+[4/26/2026 10:52:43 PM] AttackRequest from=KC onBehalfOf=KC index=5
+[4/26/2026 10:52:43 PM] ATTACK idx=5 attacker=1 defender=0 result=Miss
+[4/26/2026 10:52:43 PM] ATTACK idx=5 attacker=1 defender=2 result=Miss
+[4/26/2026 10:52:56 PM] AttackRequest from=KC onBehalfOf=KC index=35
+[4/26/2026 10:52:56 PM] ATTACK idx=35 attacker=-1 defender=0 result=Hit
+[4/26/2026 10:52:56 PM] ATTACK idx=35 attacker=-1 defender=1 result=Hit
+[4/26/2026 10:52:56 PM] ATTACK idx=35 attacker=-1 defender=2 result=Miss
+[4/26/2026 10:52:57 PM] AttackRequest from=KC onBehalfOf=KC index=65
+[4/26/2026 10:52:57 PM] ATTACK idx=65 attacker=-1 defender=0 result=Miss
+[4/26/2026 10:52:57 PM] ATTACK idx=65 attacker=-1 defender=1 result=Miss
+[4/26/2026 10:52:57 PM] ATTACK idx=65 attacker=-1 defender=2 result=Hit
+[4/26/2026 10:52:57 PM] AttackRequest from=KC onBehalfOf=KC index=75
+[4/26/2026 10:52:57 PM] ATTACK idx=75 attacker=-1 defender=0 result=Miss
+[4/26/2026 10:52:57 PM] ATTACK idx=75 attacker=-1 defender=1 result=Miss
+[4/26/2026 10:52:57 PM] ATTACK idx=75 attacker=-1 defender=2 result=Miss
+[4/26/2026 10:52:58 PM] AttackRequest from=KC onBehalfOf=KC index=86
+[4/26/2026 10:52:58 PM] ATTACK idx=86 attacker=-1 defender=0 result=Miss
+[4/26/2026 10:52:58 PM] ATTACK idx=86 attacker=-1 defender=1 result=Miss
+[4/26/2026 10:52:58 PM] ATTACK idx=86 attacker=-1 defender=2 result=Miss
+[4/26/2026 10:54:14 PM] Client disconnected (127.0.0.1)
+[4/26/2026 10:54:14 PM] Client disconnected (127.0.0.1)
+[4/26/2026 10:54:15 PM] Client disconnected (127.0.0.1)
+[4/26/2026 10:54:15 PM] Client disconnected (127.0.0.1)
+[4/26/2026 10:58:40 PM] Client connected (127.0.0.1)
+[4/26/2026 10:58:40 PM] Client connected (127.0.0.1)
+[4/26/2026 10:58:40 PM] Client connected (127.0.0.1)
+[4/26/2026 10:58:40 PM] Client connected (127.0.0.1)
+[4/26/2026 10:59:06 PM] Lobby 'VGQF' was created
+[4/26/2026 11:01:15 PM] Removed inactive lobby 'WWDZ'
+[4/26/2026 11:01:27 PM] PLACED team=0 by=KC
+[4/26/2026 11:01:27 PM] CONFIRM team=0 by=KC
+[4/26/2026 11:01:32 PM] PLACED team=1 by=KC
+[4/26/2026 11:01:32 PM] CONFIRM team=1 by=KC
+[4/26/2026 11:01:38 PM] PLACED team=2 by=KC
+[4/26/2026 11:01:38 PM] CONFIRM team=2 by=KC
+[4/26/2026 11:01:43 PM] AttackRequest from=KC onBehalfOf=KC index=25
+[4/26/2026 11:01:43 PM] ATTACK idx=25 attacker=-1 defender=0 result=Miss
+[4/26/2026 11:01:43 PM] ATTACK idx=25 attacker=-1 defender=1 result=Miss
+[4/26/2026 11:01:43 PM] ATTACK idx=25 attacker=-1 defender=2 result=Miss
+[4/26/2026 11:01:44 PM] AttackRequest from=KC onBehalfOf=KC index=25
+[4/26/2026 11:01:44 PM] ATTACK idx=25 attacker=-1 defender=0 result=Miss
+[4/26/2026 11:01:44 PM] ATTACK idx=25 attacker=-1 defender=1 result=Miss
+[4/26/2026 11:01:44 PM] ATTACK idx=25 attacker=-1 defender=2 result=Miss
+[4/26/2026 11:01:45 PM] AttackRequest from=KC onBehalfOf=KC index=46
+[4/26/2026 11:01:45 PM] ATTACK idx=46 attacker=-1 defender=0 result=Miss
+[4/26/2026 11:01:45 PM] ATTACK idx=46 attacker=-1 defender=1 result=Miss
+[4/26/2026 11:01:45 PM] ATTACK idx=46 attacker=-1 defender=2 result=Miss
+[4/26/2026 11:02:10 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[4/26/2026 11:02:10 PM] ATTACK idx=0 attacker=-1 defender=0 result=Miss
+[4/26/2026 11:02:10 PM] ATTACK idx=0 attacker=-1 defender=1 result=Hit
+[4/26/2026 11:02:10 PM] ATTACK idx=0 attacker=-1 defender=2 result=Hit
+[4/26/2026 11:02:12 PM] AttackRequest from=KC onBehalfOf=KC index=1
+[4/26/2026 11:02:12 PM] ATTACK idx=1 attacker=-1 defender=0 result=Miss
+[4/26/2026 11:02:12 PM] ATTACK idx=1 attacker=-1 defender=1 result=Hit
+[4/26/2026 11:02:12 PM] ATTACK idx=1 attacker=-1 defender=2 result=Hit
+[4/26/2026 11:02:13 PM] AttackRequest from=KC onBehalfOf=KC index=1
+[4/26/2026 11:02:13 PM] ATTACK idx=1 attacker=-1 defender=0 result=Miss
+[4/26/2026 11:02:13 PM] ATTACK idx=1 attacker=-1 defender=1 result=Hit
+[4/26/2026 11:02:13 PM] ATTACK idx=1 attacker=-1 defender=2 result=Hit
+[4/26/2026 11:02:13 PM] AttackRequest from=KC onBehalfOf=KC index=2
+[4/26/2026 11:02:13 PM] ATTACK idx=2 attacker=-1 defender=0 result=Miss
+[4/26/2026 11:02:13 PM] ATTACK idx=2 attacker=-1 defender=1 result=Hit
+[4/26/2026 11:02:13 PM] ATTACK idx=2 attacker=-1 defender=2 result=Hit
+[4/26/2026 11:02:13 PM] AttackRequest from=KC onBehalfOf=KC index=3
+[4/26/2026 11:02:13 PM] ATTACK idx=3 attacker=-1 defender=0 result=Miss
+[4/26/2026 11:02:13 PM] ATTACK idx=3 attacker=-1 defender=1 result=Sunk
+[4/26/2026 11:02:13 PM] ATTACK idx=3 attacker=-1 defender=2 result=Sunk
+[4/26/2026 11:02:13 PM] AttackRequest from=KC onBehalfOf=KC index=5
+[4/26/2026 11:02:13 PM] ATTACK idx=5 attacker=-1 defender=0 result=Miss
+[4/26/2026 11:02:13 PM] ATTACK idx=5 attacker=-1 defender=1 result=Miss
+[4/26/2026 11:02:13 PM] ATTACK idx=5 attacker=-1 defender=2 result=Miss
+[4/26/2026 11:08:59 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:08:59 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:08:59 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:08:59 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:11:18 PM] Client connected (127.0.0.1)
+[4/26/2026 11:11:18 PM] Client connected (127.0.0.1)
+[4/26/2026 11:11:18 PM] Client connected (127.0.0.1)
+[4/26/2026 11:11:18 PM] Client connected (127.0.0.1)
+[4/26/2026 11:11:51 PM] Lobby 'PYRW' was created
+[4/26/2026 11:12:08 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:12:08 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:12:09 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:12:09 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:17:41 PM] Client connected (127.0.0.1)
+[4/26/2026 11:17:41 PM] Client connected (127.0.0.1)
+[4/26/2026 11:17:41 PM] Client connected (127.0.0.1)
+[4/26/2026 11:17:41 PM] Client connected (127.0.0.1)
+[4/26/2026 11:18:12 PM] Lobby 'CZZN' was created
+[4/26/2026 11:25:50 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:25:50 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:25:50 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:25:50 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:25:51 PM] Client connected (127.0.0.1)
+[4/26/2026 11:25:51 PM] Client connected (127.0.0.1)
+[4/26/2026 11:25:51 PM] Client connected (127.0.0.1)
+[4/26/2026 11:25:51 PM] Client connected (127.0.0.1)
+[4/26/2026 11:25:59 PM] Lobby 'BIIT' was created
+[4/26/2026 11:27:49 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:27:50 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:27:51 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:27:53 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:28:16 PM] Client connected (127.0.0.1)
+[4/26/2026 11:28:16 PM] Client connected (127.0.0.1)
+[4/26/2026 11:28:16 PM] Client connected (127.0.0.1)
+[4/26/2026 11:28:16 PM] Client connected (127.0.0.1)
+[4/26/2026 11:31:54 PM] Lobby 'CHPL' was created
+[4/26/2026 11:34:54 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:34:54 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:34:54 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:34:54 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:34:58 PM] Client connected (127.0.0.1)
+[4/26/2026 11:34:58 PM] Client connected (127.0.0.1)
+[4/26/2026 11:34:58 PM] Client connected (127.0.0.1)
+[4/26/2026 11:34:58 PM] Client connected (127.0.0.1)
+[4/26/2026 11:35:11 PM] Lobby 'IGIX' was created
+[4/26/2026 11:38:35 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:38:35 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:38:35 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:38:35 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:38:36 PM] Client connected (127.0.0.1)
+[4/26/2026 11:38:36 PM] Client connected (127.0.0.1)
+[4/26/2026 11:38:36 PM] Client connected (127.0.0.1)
+[4/26/2026 11:38:36 PM] Client connected (127.0.0.1)
+[4/26/2026 11:38:58 PM] Lobby 'MACY' was created
+[4/26/2026 11:42:27 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:42:27 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:42:27 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:42:27 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:42:28 PM] Client connected (127.0.0.1)
+[4/26/2026 11:42:28 PM] Client connected (127.0.0.1)
+[4/26/2026 11:42:28 PM] Client connected (127.0.0.1)
+[4/26/2026 11:42:28 PM] Client connected (127.0.0.1)
+[4/26/2026 11:43:08 PM] Lobby 'QOFU' was created
+[4/26/2026 11:47:44 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:47:44 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:47:44 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:47:44 PM] Client disconnected (127.0.0.1)
+[4/26/2026 11:47:45 PM] Client connected (127.0.0.1)
+[4/26/2026 11:47:45 PM] Client connected (127.0.0.1)
+[4/26/2026 11:47:45 PM] Client connected (127.0.0.1)
+[4/26/2026 11:47:45 PM] Client connected (127.0.0.1)
+[4/26/2026 11:47:57 PM] Lobby 'HQKS' was created
+[4/27/2026 12:01:15 AM] Removed inactive lobby 'VOTR'
+[4/27/2026 12:01:15 AM] Removed inactive lobby 'RJEE'
+[4/27/2026 12:01:15 AM] Removed inactive lobby 'MMQC'
+[4/27/2026 12:01:15 AM] Removed inactive lobby 'KBMZ'
+[4/27/2026 12:07:16 AM] Client disconnected (127.0.0.1)
+[4/27/2026 12:07:16 AM] Client disconnected (127.0.0.1)
+[4/27/2026 12:07:17 AM] Client disconnected (127.0.0.1)
+[4/27/2026 12:07:17 AM] Client disconnected (127.0.0.1)
+[4/27/2026 1:01:15 AM] Removed inactive lobby 'MACY'
+[4/27/2026 1:01:15 AM] Removed inactive lobby 'IGIX'
+[4/27/2026 1:01:15 AM] Removed inactive lobby 'BIIT'
+[4/27/2026 1:01:15 AM] Removed inactive lobby 'PYRW'
+[4/27/2026 1:01:15 AM] Removed inactive lobby 'VGQF'
+[4/27/2026 1:01:15 AM] Removed inactive lobby 'QOFU'
+[4/27/2026 1:01:15 AM] Removed inactive lobby 'CHPL'
+[4/27/2026 1:01:15 AM] Removed inactive lobby 'CZZN'
+[4/27/2026 2:01:15 AM] Removed inactive lobby 'HQKS'
+[4/29/2026 9:20:41 PM] Hosting server on port 4501
+[4/29/2026 9:22:50 PM] Client connected (127.0.0.1)
+[4/29/2026 9:22:50 PM] readPackets: 100 bytes
+[4/29/2026 9:22:50 PM] readPackets: packet type=ClientRegister objs=1
+[4/29/2026 9:23:04 PM] Client connected (127.0.0.1)
+[4/29/2026 9:23:04 PM] readPackets: 100 bytes
+[4/29/2026 9:23:04 PM] readPackets: packet type=ClientRegister objs=1
+[4/29/2026 9:23:15 PM] readPackets: 30 bytes
+[4/29/2026 9:23:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:23:23 PM] Client connected (127.0.0.1)
+[4/29/2026 9:23:23 PM] readPackets: 100 bytes
+[4/29/2026 9:23:23 PM] readPackets: packet type=ClientRegister objs=1
+[4/29/2026 9:23:30 PM] readPackets: 30 bytes
+[4/29/2026 9:23:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:23:45 PM] readPackets: 30 bytes
+[4/29/2026 9:23:45 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:23:45 PM] DispatchObjects: objectType=ClientRequestRoomName
+[4/29/2026 9:23:45 PM] readPackets: 30 bytes
+[4/29/2026 9:23:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:23:55 PM] readPackets: 247 bytes
+[4/29/2026 9:23:55 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:23:55 PM] DispatchObjects: objectType=ClientRequestCreateRoom
+[4/29/2026 9:23:55 PM] Lobby 'IXWV' was created
+[4/29/2026 9:24:00 PM] readPackets: 30 bytes
+[4/29/2026 9:24:00 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:24:04 PM] readPackets: 80 bytes
+[4/29/2026 9:24:04 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:24:04 PM] DispatchObjects: objectType=ClientRequestJoinRoom
+[4/29/2026 9:24:10 PM] readPackets: 30 bytes
+[4/29/2026 9:24:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:24:12 PM] readPackets: 80 bytes
+[4/29/2026 9:24:12 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:24:12 PM] DispatchObjects: objectType=ClientRequestJoinRoom
+[4/29/2026 9:24:18 PM] readPackets: 7873 bytes
+[4/29/2026 9:24:18 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:24:18 PM] DispatchObjects: objectType=ClientBingoJson
+[4/29/2026 9:24:19 PM] readPackets: 29 bytes
+[4/29/2026 9:24:19 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:24:19 PM] DispatchObjects: objectType=ClientRandomizeBoard
+[4/29/2026 9:24:20 PM] readPackets: 45 bytes
+[4/29/2026 9:24:20 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:24:20 PM] DispatchObjects: objectType=ClientChangeMatchStatus
+[4/29/2026 9:24:30 PM] readPackets: 30 bytes
+[4/29/2026 9:24:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:24:40 PM] readPackets: 157 bytes
+[4/29/2026 9:24:40 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:24:40 PM] DispatchObjects: objectType=ClientPlaceShips
+[4/29/2026 9:24:40 PM] PLACED team=1 by=KC
+[4/29/2026 9:24:40 PM] readPackets: 35 bytes
+[4/29/2026 9:24:40 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:24:40 PM] DispatchObjects: objectType=ClientConfirmShipPlacement
+[4/29/2026 9:24:40 PM] CONFIRM team=1 by=KC
+[4/29/2026 9:24:45 PM] readPackets: 30 bytes
+[4/29/2026 9:24:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:24:51 PM] readPackets: 165 bytes
+[4/29/2026 9:24:51 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:24:51 PM] DispatchObjects: objectType=ClientPlaceShips
+[4/29/2026 9:24:51 PM] PLACED team=0 by=KC
+[4/29/2026 9:24:51 PM] readPackets: 35 bytes
+[4/29/2026 9:24:51 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:24:51 PM] DispatchObjects: objectType=ClientConfirmShipPlacement
+[4/29/2026 9:24:51 PM] CONFIRM team=0 by=KC
+[4/29/2026 9:25:02 PM] readPackets: 118 bytes
+[4/29/2026 9:25:02 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:02 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:02 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[4/29/2026 9:25:02 PM] ATTACK idx=0 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:02 PM] readPackets: 118 bytes
+[4/29/2026 9:25:02 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:02 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:02 PM] AttackRequest from=KC onBehalfOf=KC index=10
+[4/29/2026 9:25:02 PM] ATTACK idx=10 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:03 PM] readPackets: 118 bytes
+[4/29/2026 9:25:03 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:03 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:03 PM] AttackRequest from=KC onBehalfOf=KC index=20
+[4/29/2026 9:25:03 PM] ATTACK idx=20 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:04 PM] readPackets: 118 bytes
+[4/29/2026 9:25:04 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:04 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:04 PM] AttackRequest from=KC onBehalfOf=KC index=30
+[4/29/2026 9:25:04 PM] ATTACK idx=30 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:07 PM] readPackets: 118 bytes
+[4/29/2026 9:25:07 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:07 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:07 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[4/29/2026 9:25:07 PM] ATTACK idx=0 attacker=0 defender=1 result=Hit
+[4/29/2026 9:25:08 PM] readPackets: 118 bytes
+[4/29/2026 9:25:08 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:08 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:08 PM] AttackRequest from=KC onBehalfOf=KC index=1
+[4/29/2026 9:25:08 PM] ATTACK idx=1 attacker=0 defender=1 result=Hit
+[4/29/2026 9:25:08 PM] readPackets: 118 bytes
+[4/29/2026 9:25:08 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:08 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:08 PM] AttackRequest from=KC onBehalfOf=KC index=2
+[4/29/2026 9:25:08 PM] ATTACK idx=2 attacker=0 defender=1 result=Hit
+[4/29/2026 9:25:08 PM] readPackets: 118 bytes
+[4/29/2026 9:25:08 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:08 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:08 PM] AttackRequest from=KC onBehalfOf=KC index=3
+[4/29/2026 9:25:08 PM] ATTACK idx=3 attacker=0 defender=1 result=Hit
+[4/29/2026 9:25:09 PM] readPackets: 118 bytes
+[4/29/2026 9:25:09 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:09 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:09 PM] AttackRequest from=KC onBehalfOf=KC index=4
+[4/29/2026 9:25:09 PM] ATTACK idx=4 attacker=0 defender=1 result=Sunk
+[4/29/2026 9:25:14 PM] readPackets: 118 bytes
+[4/29/2026 9:25:14 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:14 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:14 PM] AttackRequest from=KC onBehalfOf=KC index=40
+[4/29/2026 9:25:14 PM] ATTACK idx=40 attacker=1 defender=0 result=Sunk
+[4/29/2026 9:25:15 PM] readPackets: 30 bytes
+[4/29/2026 9:25:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:25:16 PM] readPackets: 118 bytes
+[4/29/2026 9:25:16 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:16 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:16 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[4/29/2026 9:25:16 PM] ATTACK idx=0 attacker=1 defender=0 result=Miss
+[4/29/2026 9:25:18 PM] readPackets: 118 bytes
+[4/29/2026 9:25:18 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:18 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:18 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[4/29/2026 9:25:18 PM] ATTACK idx=0 attacker=1 defender=0 result=Miss
+[4/29/2026 9:25:19 PM] readPackets: 118 bytes
+[4/29/2026 9:25:19 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:19 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:19 PM] AttackRequest from=KC onBehalfOf=KC index=10
+[4/29/2026 9:25:19 PM] ATTACK idx=10 attacker=1 defender=0 result=Miss
+[4/29/2026 9:25:21 PM] readPackets: 118 bytes
+[4/29/2026 9:25:21 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:21 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:21 PM] AttackRequest from=KC onBehalfOf=KC index=1
+[4/29/2026 9:25:21 PM] ATTACK idx=1 attacker=1 defender=0 result=Miss
+[4/29/2026 9:25:21 PM] readPackets: 118 bytes
+[4/29/2026 9:25:21 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:21 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:21 PM] AttackRequest from=KC onBehalfOf=KC index=2
+[4/29/2026 9:25:21 PM] ATTACK idx=2 attacker=1 defender=0 result=Miss
+[4/29/2026 9:25:23 PM] readPackets: 118 bytes
+[4/29/2026 9:25:23 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:23 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:23 PM] AttackRequest from=KC onBehalfOf=KC index=50
+[4/29/2026 9:25:23 PM] ATTACK idx=50 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:23 PM] readPackets: 118 bytes
+[4/29/2026 9:25:23 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:23 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:23 PM] AttackRequest from=KC onBehalfOf=KC index=60
+[4/29/2026 9:25:23 PM] ATTACK idx=60 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:24 PM] readPackets: 118 bytes
+[4/29/2026 9:25:24 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:24 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:24 PM] AttackRequest from=KC onBehalfOf=KC index=70
+[4/29/2026 9:25:24 PM] ATTACK idx=70 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:25 PM] readPackets: 118 bytes
+[4/29/2026 9:25:25 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:25 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:25 PM] AttackRequest from=KC onBehalfOf=KC index=80
+[4/29/2026 9:25:25 PM] ATTACK idx=80 attacker=1 defender=0 result=Sunk
+[4/29/2026 9:25:26 PM] readPackets: 118 bytes
+[4/29/2026 9:25:26 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:26 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:26 PM] AttackRequest from=KC onBehalfOf=KC index=81
+[4/29/2026 9:25:26 PM] ATTACK idx=81 attacker=1 defender=0 result=Miss
+[4/29/2026 9:25:27 PM] readPackets: 118 bytes
+[4/29/2026 9:25:27 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:27 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:27 PM] AttackRequest from=KC onBehalfOf=KC index=82
+[4/29/2026 9:25:27 PM] ATTACK idx=82 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:27 PM] readPackets: 118 bytes
+[4/29/2026 9:25:27 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:27 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:27 PM] AttackRequest from=KC onBehalfOf=KC index=72
+[4/29/2026 9:25:27 PM] ATTACK idx=72 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:28 PM] readPackets: 118 bytes
+[4/29/2026 9:25:28 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:28 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:28 PM] AttackRequest from=KC onBehalfOf=KC index=62
+[4/29/2026 9:25:28 PM] ATTACK idx=62 attacker=1 defender=0 result=Sunk
+[4/29/2026 9:25:28 PM] readPackets: 118 bytes
+[4/29/2026 9:25:28 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:28 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:28 PM] AttackRequest from=KC onBehalfOf=KC index=52
+[4/29/2026 9:25:28 PM] ATTACK idx=52 attacker=1 defender=0 result=Miss
+[4/29/2026 9:25:29 PM] readPackets: 118 bytes
+[4/29/2026 9:25:29 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:29 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:29 PM] AttackRequest from=KC onBehalfOf=KC index=42
+[4/29/2026 9:25:29 PM] ATTACK idx=42 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:30 PM] readPackets: 118 bytes
+[4/29/2026 9:25:30 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:30 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:30 PM] AttackRequest from=KC onBehalfOf=KC index=32
+[4/29/2026 9:25:30 PM] ATTACK idx=32 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:30 PM] readPackets: 118 bytes
+[4/29/2026 9:25:30 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:30 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:30 PM] AttackRequest from=KC onBehalfOf=KC index=22
+[4/29/2026 9:25:30 PM] ATTACK idx=22 attacker=1 defender=0 result=Sunk
+[4/29/2026 9:25:31 PM] readPackets: 118 bytes
+[4/29/2026 9:25:31 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:31 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:31 PM] AttackRequest from=KC onBehalfOf=KC index=3
+[4/29/2026 9:25:31 PM] ATTACK idx=3 attacker=1 defender=0 result=Hit
+[4/29/2026 9:25:31 PM] readPackets: 118 bytes
+[4/29/2026 9:25:31 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 9:25:31 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 9:25:31 PM] AttackRequest from=KC onBehalfOf=KC index=13
+[4/29/2026 9:25:31 PM] ATTACK idx=13 attacker=1 defender=0 result=Sunk
+[4/29/2026 9:25:35 PM] readPackets: 30 bytes
+[4/29/2026 9:25:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:25:40 PM] readPackets: 30 bytes
+[4/29/2026 9:25:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:26:00 PM] readPackets: 30 bytes
+[4/29/2026 9:26:00 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:26:05 PM] readPackets: 30 bytes
+[4/29/2026 9:26:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:26:10 PM] readPackets: 30 bytes
+[4/29/2026 9:26:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:26:30 PM] readPackets: 30 bytes
+[4/29/2026 9:26:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:26:35 PM] readPackets: 30 bytes
+[4/29/2026 9:26:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:26:40 PM] readPackets: 30 bytes
+[4/29/2026 9:26:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:27:00 PM] readPackets: 30 bytes
+[4/29/2026 9:27:00 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:27:05 PM] readPackets: 30 bytes
+[4/29/2026 9:27:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:27:10 PM] readPackets: 30 bytes
+[4/29/2026 9:27:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:27:30 PM] readPackets: 30 bytes
+[4/29/2026 9:27:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:27:35 PM] readPackets: 30 bytes
+[4/29/2026 9:27:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:27:40 PM] readPackets: 30 bytes
+[4/29/2026 9:27:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:27:55 PM] readPackets: 30 bytes
+[4/29/2026 9:27:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:28:05 PM] readPackets: 30 bytes
+[4/29/2026 9:28:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:28:10 PM] readPackets: 30 bytes
+[4/29/2026 9:28:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:28:25 PM] readPackets: 30 bytes
+[4/29/2026 9:28:25 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:28:30 PM] readPackets: 30 bytes
+[4/29/2026 9:28:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:28:40 PM] readPackets: 30 bytes
+[4/29/2026 9:28:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:28:55 PM] readPackets: 30 bytes
+[4/29/2026 9:28:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:29:00 PM] readPackets: 30 bytes
+[4/29/2026 9:29:00 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:29:05 PM] readPackets: 30 bytes
+[4/29/2026 9:29:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:29:25 PM] readPackets: 30 bytes
+[4/29/2026 9:29:25 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:29:30 PM] readPackets: 30 bytes
+[4/29/2026 9:29:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:29:35 PM] readPackets: 30 bytes
+[4/29/2026 9:29:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:29:55 PM] readPackets: 30 bytes
+[4/29/2026 9:29:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:30:00 PM] readPackets: 30 bytes
+[4/29/2026 9:30:00 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:30:05 PM] readPackets: 30 bytes
+[4/29/2026 9:30:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:30:25 PM] readPackets: 30 bytes
+[4/29/2026 9:30:25 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:30:30 PM] readPackets: 30 bytes
+[4/29/2026 9:30:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:30:35 PM] readPackets: 30 bytes
+[4/29/2026 9:30:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:30:55 PM] readPackets: 30 bytes
+[4/29/2026 9:30:55 PM] readPackets: 30 bytes
+[4/29/2026 9:30:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:30:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:31:00 PM] readPackets: 30 bytes
+[4/29/2026 9:31:00 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:31:25 PM] readPackets: 30 bytes
+[4/29/2026 9:31:25 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:31:25 PM] readPackets: 30 bytes
+[4/29/2026 9:31:25 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:31:30 PM] readPackets: 30 bytes
+[4/29/2026 9:31:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:31:55 PM] readPackets: 30 bytes
+[4/29/2026 9:31:55 PM] readPackets: 30 bytes
+[4/29/2026 9:31:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:31:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:32:00 PM] readPackets: 30 bytes
+[4/29/2026 9:32:00 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:32:25 PM] readPackets: 30 bytes
+[4/29/2026 9:32:25 PM] readPackets: 30 bytes
+[4/29/2026 9:32:25 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:32:25 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:32:30 PM] readPackets: 30 bytes
+[4/29/2026 9:32:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:32:55 PM] readPackets: 30 bytes
+[4/29/2026 9:32:55 PM] readPackets: 30 bytes
+[4/29/2026 9:32:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:32:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:33:00 PM] readPackets: 30 bytes
+[4/29/2026 9:33:00 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:33:26 PM] readPackets: 30 bytes
+[4/29/2026 9:33:26 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:33:26 PM] readPackets: 30 bytes
+[4/29/2026 9:33:26 PM] readPackets: 30 bytes
+[4/29/2026 9:33:26 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:33:26 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:33:55 PM] readPackets: 30 bytes
+[4/29/2026 9:33:56 PM] readPackets: 30 bytes
+[4/29/2026 9:33:56 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:33:56 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:33:56 PM] readPackets: 30 bytes
+[4/29/2026 9:33:56 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:34:25 PM] readPackets: 30 bytes
+[4/29/2026 9:34:25 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:34:25 PM] readPackets: 30 bytes
+[4/29/2026 9:34:25 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:34:25 PM] readPackets: 30 bytes
+[4/29/2026 9:34:25 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:34:55 PM] readPackets: 30 bytes
+[4/29/2026 9:34:55 PM] readPackets: 30 bytes
+[4/29/2026 9:34:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:34:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:34:55 PM] readPackets: 30 bytes
+[4/29/2026 9:34:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:35:21 PM] readPackets: 30 bytes
+[4/29/2026 9:35:21 PM] readPackets: 30 bytes
+[4/29/2026 9:35:21 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:35:21 PM] readPackets: 30 bytes
+[4/29/2026 9:35:21 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:35:21 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:35:50 PM] readPackets: 30 bytes
+[4/29/2026 9:35:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:35:50 PM] readPackets: 30 bytes
+[4/29/2026 9:35:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:35:50 PM] readPackets: 30 bytes
+[4/29/2026 9:35:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:36:20 PM] readPackets: 30 bytes
+[4/29/2026 9:36:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:36:20 PM] readPackets: 30 bytes
+[4/29/2026 9:36:20 PM] readPackets: 30 bytes
+[4/29/2026 9:36:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:36:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:36:50 PM] readPackets: 30 bytes
+[4/29/2026 9:36:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:36:50 PM] readPackets: 30 bytes
+[4/29/2026 9:36:50 PM] readPackets: 30 bytes
+[4/29/2026 9:36:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:36:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:37:20 PM] readPackets: 30 bytes
+[4/29/2026 9:37:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:37:20 PM] readPackets: 30 bytes
+[4/29/2026 9:37:20 PM] readPackets: 30 bytes
+[4/29/2026 9:37:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:37:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:37:50 PM] readPackets: 30 bytes
+[4/29/2026 9:37:50 PM] readPackets: 30 bytes
+[4/29/2026 9:37:50 PM] readPackets: 30 bytes
+[4/29/2026 9:37:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:37:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:37:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:38:20 PM] readPackets: 30 bytes
+[4/29/2026 9:38:20 PM] readPackets: 30 bytes
+[4/29/2026 9:38:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:38:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:38:21 PM] readPackets: 30 bytes
+[4/29/2026 9:38:21 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:38:50 PM] readPackets: 30 bytes
+[4/29/2026 9:38:50 PM] readPackets: 30 bytes
+[4/29/2026 9:38:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:38:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:38:50 PM] readPackets: 30 bytes
+[4/29/2026 9:38:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:39:20 PM] readPackets: 30 bytes
+[4/29/2026 9:39:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:39:20 PM] readPackets: 30 bytes
+[4/29/2026 9:39:20 PM] readPackets: 30 bytes
+[4/29/2026 9:39:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:39:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:39:50 PM] readPackets: 30 bytes
+[4/29/2026 9:39:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:39:50 PM] readPackets: 30 bytes
+[4/29/2026 9:39:50 PM] readPackets: 30 bytes
+[4/29/2026 9:39:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:39:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:40:15 PM] readPackets: 30 bytes
+[4/29/2026 9:40:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:40:20 PM] readPackets: 30 bytes
+[4/29/2026 9:40:20 PM] readPackets: 30 bytes
+[4/29/2026 9:40:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:40:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:40:45 PM] readPackets: 30 bytes
+[4/29/2026 9:40:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:40:50 PM] readPackets: 30 bytes
+[4/29/2026 9:40:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:40:50 PM] readPackets: 30 bytes
+[4/29/2026 9:40:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:41:15 PM] readPackets: 30 bytes
+[4/29/2026 9:41:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:41:20 PM] readPackets: 30 bytes
+[4/29/2026 9:41:20 PM] readPackets: 30 bytes
+[4/29/2026 9:41:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:41:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:41:45 PM] readPackets: 30 bytes
+[4/29/2026 9:41:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:41:50 PM] readPackets: 30 bytes
+[4/29/2026 9:41:50 PM] readPackets: 30 bytes
+[4/29/2026 9:41:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:41:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:42:10 PM] readPackets: 30 bytes
+[4/29/2026 9:42:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:42:15 PM] readPackets: 30 bytes
+[4/29/2026 9:42:15 PM] readPackets: 30 bytes
+[4/29/2026 9:42:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:42:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:42:40 PM] readPackets: 30 bytes
+[4/29/2026 9:42:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:42:45 PM] readPackets: 30 bytes
+[4/29/2026 9:42:45 PM] readPackets: 30 bytes
+[4/29/2026 9:42:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:42:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:43:05 PM] readPackets: 30 bytes
+[4/29/2026 9:43:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:43:15 PM] readPackets: 30 bytes
+[4/29/2026 9:43:15 PM] readPackets: 30 bytes
+[4/29/2026 9:43:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:43:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:43:35 PM] readPackets: 30 bytes
+[4/29/2026 9:43:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:43:45 PM] readPackets: 30 bytes
+[4/29/2026 9:43:45 PM] readPackets: 30 bytes
+[4/29/2026 9:43:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:43:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:44:05 PM] readPackets: 30 bytes
+[4/29/2026 9:44:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:44:15 PM] readPackets: 30 bytes
+[4/29/2026 9:44:15 PM] readPackets: 30 bytes
+[4/29/2026 9:44:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:44:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:44:35 PM] readPackets: 30 bytes
+[4/29/2026 9:44:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:44:40 PM] readPackets: 30 bytes
+[4/29/2026 9:44:40 PM] readPackets: 30 bytes
+[4/29/2026 9:44:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:44:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:45:05 PM] readPackets: 30 bytes
+[4/29/2026 9:45:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:45:10 PM] readPackets: 30 bytes
+[4/29/2026 9:45:10 PM] readPackets: 30 bytes
+[4/29/2026 9:45:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:45:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:45:35 PM] readPackets: 30 bytes
+[4/29/2026 9:45:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:45:40 PM] readPackets: 30 bytes
+[4/29/2026 9:45:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:45:40 PM] readPackets: 30 bytes
+[4/29/2026 9:45:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:46:05 PM] readPackets: 30 bytes
+[4/29/2026 9:46:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:46:10 PM] readPackets: 30 bytes
+[4/29/2026 9:46:10 PM] readPackets: 30 bytes
+[4/29/2026 9:46:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:46:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:46:36 PM] readPackets: 30 bytes
+[4/29/2026 9:46:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:46:40 PM] readPackets: 30 bytes
+[4/29/2026 9:46:40 PM] readPackets: 30 bytes
+[4/29/2026 9:46:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:46:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:47:05 PM] readPackets: 30 bytes
+[4/29/2026 9:47:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:47:10 PM] readPackets: 30 bytes
+[4/29/2026 9:47:10 PM] readPackets: 30 bytes
+[4/29/2026 9:47:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:47:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:47:35 PM] readPackets: 30 bytes
+[4/29/2026 9:47:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:47:40 PM] readPackets: 30 bytes
+[4/29/2026 9:47:40 PM] readPackets: 30 bytes
+[4/29/2026 9:47:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:47:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:48:05 PM] readPackets: 30 bytes
+[4/29/2026 9:48:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:48:10 PM] readPackets: 30 bytes
+[4/29/2026 9:48:10 PM] readPackets: 30 bytes
+[4/29/2026 9:48:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:48:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:48:35 PM] readPackets: 30 bytes
+[4/29/2026 9:48:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:48:40 PM] readPackets: 30 bytes
+[4/29/2026 9:48:40 PM] readPackets: 30 bytes
+[4/29/2026 9:48:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:48:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:49:00 PM] readPackets: 30 bytes
+[4/29/2026 9:49:00 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:49:10 PM] readPackets: 30 bytes
+[4/29/2026 9:49:10 PM] readPackets: 30 bytes
+[4/29/2026 9:49:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:49:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:49:30 PM] readPackets: 30 bytes
+[4/29/2026 9:49:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:49:40 PM] readPackets: 30 bytes
+[4/29/2026 9:49:40 PM] readPackets: 30 bytes
+[4/29/2026 9:49:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:49:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:50:00 PM] readPackets: 30 bytes
+[4/29/2026 9:50:00 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:50:10 PM] readPackets: 30 bytes
+[4/29/2026 9:50:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:50:10 PM] readPackets: 30 bytes
+[4/29/2026 9:50:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:50:30 PM] readPackets: 30 bytes
+[4/29/2026 9:50:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:50:40 PM] readPackets: 30 bytes
+[4/29/2026 9:50:40 PM] readPackets: 30 bytes
+[4/29/2026 9:50:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:51:00 PM] readPackets: 30 bytes
+[4/29/2026 9:51:00 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:51:10 PM] readPackets: 30 bytes
+[4/29/2026 9:51:10 PM] readPackets: 30 bytes
+[4/29/2026 9:51:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:51:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:51:30 PM] readPackets: 30 bytes
+[4/29/2026 9:51:30 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:51:40 PM] readPackets: 30 bytes
+[4/29/2026 9:51:40 PM] readPackets: 30 bytes
+[4/29/2026 9:51:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:51:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:51:55 PM] readPackets: 30 bytes
+[4/29/2026 9:51:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:52:10 PM] readPackets: 30 bytes
+[4/29/2026 9:52:10 PM] readPackets: 30 bytes
+[4/29/2026 9:52:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:52:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:52:25 PM] readPackets: 30 bytes
+[4/29/2026 9:52:25 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:52:40 PM] readPackets: 30 bytes
+[4/29/2026 9:52:40 PM] readPackets: 30 bytes
+[4/29/2026 9:52:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:52:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:52:55 PM] readPackets: 30 bytes
+[4/29/2026 9:52:55 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:53:10 PM] readPackets: 30 bytes
+[4/29/2026 9:53:10 PM] readPackets: 30 bytes
+[4/29/2026 9:53:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:53:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:53:20 PM] readPackets: 30 bytes
+[4/29/2026 9:53:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:53:40 PM] readPackets: 30 bytes
+[4/29/2026 9:53:40 PM] readPackets: 30 bytes
+[4/29/2026 9:53:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:53:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:53:50 PM] readPackets: 30 bytes
+[4/29/2026 9:53:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:54:10 PM] readPackets: 30 bytes
+[4/29/2026 9:54:10 PM] readPackets: 30 bytes
+[4/29/2026 9:54:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:54:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:54:20 PM] readPackets: 30 bytes
+[4/29/2026 9:54:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:54:40 PM] readPackets: 30 bytes
+[4/29/2026 9:54:40 PM] readPackets: 30 bytes
+[4/29/2026 9:54:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:54:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:54:50 PM] readPackets: 30 bytes
+[4/29/2026 9:54:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:55:10 PM] readPackets: 30 bytes
+[4/29/2026 9:55:10 PM] readPackets: 30 bytes
+[4/29/2026 9:55:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:55:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:55:20 PM] readPackets: 30 bytes
+[4/29/2026 9:55:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:55:40 PM] readPackets: 30 bytes
+[4/29/2026 9:55:40 PM] readPackets: 30 bytes
+[4/29/2026 9:55:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:55:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:55:50 PM] readPackets: 30 bytes
+[4/29/2026 9:55:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:56:10 PM] readPackets: 30 bytes
+[4/29/2026 9:56:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:56:10 PM] readPackets: 30 bytes
+[4/29/2026 9:56:11 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:56:20 PM] readPackets: 30 bytes
+[4/29/2026 9:56:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:56:40 PM] readPackets: 30 bytes
+[4/29/2026 9:56:40 PM] readPackets: 30 bytes
+[4/29/2026 9:56:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:56:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:56:50 PM] readPackets: 30 bytes
+[4/29/2026 9:56:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:57:10 PM] readPackets: 30 bytes
+[4/29/2026 9:57:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:57:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:57:20 PM] readPackets: 30 bytes
+[4/29/2026 9:57:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:57:40 PM] readPackets: 30 bytes
+[4/29/2026 9:57:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:57:40 PM] readPackets: 30 bytes
+[4/29/2026 9:57:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:57:50 PM] readPackets: 30 bytes
+[4/29/2026 9:57:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:58:05 PM] readPackets: 30 bytes
+[4/29/2026 9:58:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:58:10 PM] readPackets: 30 bytes
+[4/29/2026 9:58:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:58:20 PM] readPackets: 30 bytes
+[4/29/2026 9:58:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:58:35 PM] readPackets: 30 bytes
+[4/29/2026 9:58:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:58:40 PM] readPackets: 30 bytes
+[4/29/2026 9:58:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:58:50 PM] readPackets: 30 bytes
+[4/29/2026 9:58:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:59:05 PM] readPackets: 30 bytes
+[4/29/2026 9:59:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:59:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:59:20 PM] readPackets: 30 bytes
+[4/29/2026 9:59:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:59:35 PM] readPackets: 30 bytes
+[4/29/2026 9:59:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:59:35 PM] readPackets: 30 bytes
+[4/29/2026 9:59:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 9:59:50 PM] readPackets: 30 bytes
+[4/29/2026 9:59:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:00:05 PM] readPackets: 30 bytes
+[4/29/2026 10:00:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:00:05 PM] readPackets: 30 bytes
+[4/29/2026 10:00:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:00:21 PM] readPackets: 30 bytes
+[4/29/2026 10:00:21 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:00:35 PM] readPackets: 30 bytes
+[4/29/2026 10:00:35 PM] readPackets: 30 bytes
+[4/29/2026 10:00:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:00:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:00:50 PM] readPackets: 30 bytes
+[4/29/2026 10:00:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:01:05 PM] readPackets: 30 bytes
+[4/29/2026 10:01:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:01:05 PM] readPackets: 30 bytes
+[4/29/2026 10:01:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:01:20 PM] readPackets: 30 bytes
+[4/29/2026 10:01:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:01:35 PM] readPackets: 30 bytes
+[4/29/2026 10:01:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:01:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:01:50 PM] readPackets: 30 bytes
+[4/29/2026 10:01:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:02:05 PM] readPackets: 30 bytes
+[4/29/2026 10:02:05 PM] readPackets: 30 bytes
+[4/29/2026 10:02:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:02:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:02:20 PM] readPackets: 30 bytes
+[4/29/2026 10:02:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:02:35 PM] readPackets: 30 bytes
+[4/29/2026 10:02:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:02:35 PM] readPackets: 30 bytes
+[4/29/2026 10:02:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:02:45 PM] readPackets: 30 bytes
+[4/29/2026 10:02:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:03:05 PM] readPackets: 30 bytes
+[4/29/2026 10:03:05 PM] readPackets: 30 bytes
+[4/29/2026 10:03:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:03:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:03:16 PM] readPackets: 30 bytes
+[4/29/2026 10:03:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:03:35 PM] readPackets: 30 bytes
+[4/29/2026 10:03:35 PM] readPackets: 30 bytes
+[4/29/2026 10:03:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:03:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:03:45 PM] readPackets: 30 bytes
+[4/29/2026 10:03:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:04:05 PM] readPackets: 30 bytes
+[4/29/2026 10:04:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:04:06 PM] readPackets: 30 bytes
+[4/29/2026 10:04:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:04:15 PM] readPackets: 30 bytes
+[4/29/2026 10:04:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:04:35 PM] readPackets: 30 bytes
+[4/29/2026 10:04:35 PM] readPackets: 30 bytes
+[4/29/2026 10:04:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:04:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:04:45 PM] readPackets: 30 bytes
+[4/29/2026 10:04:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:05:05 PM] readPackets: 30 bytes
+[4/29/2026 10:05:05 PM] readPackets: 30 bytes
+[4/29/2026 10:05:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:05:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:05:15 PM] readPackets: 30 bytes
+[4/29/2026 10:05:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:05:36 PM] readPackets: 30 bytes
+[4/29/2026 10:05:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:05:36 PM] readPackets: 30 bytes
+[4/29/2026 10:05:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:05:45 PM] readPackets: 30 bytes
+[4/29/2026 10:05:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:06:05 PM] readPackets: 30 bytes
+[4/29/2026 10:06:05 PM] readPackets: 30 bytes
+[4/29/2026 10:06:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:06:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:06:15 PM] readPackets: 30 bytes
+[4/29/2026 10:06:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:06:35 PM] readPackets: 30 bytes
+[4/29/2026 10:06:35 PM] readPackets: 30 bytes
+[4/29/2026 10:06:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:06:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:06:45 PM] readPackets: 30 bytes
+[4/29/2026 10:06:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:07:05 PM] readPackets: 30 bytes
+[4/29/2026 10:07:05 PM] readPackets: 30 bytes
+[4/29/2026 10:07:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:07:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:07:15 PM] readPackets: 30 bytes
+[4/29/2026 10:07:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:07:35 PM] readPackets: 30 bytes
+[4/29/2026 10:07:35 PM] readPackets: 30 bytes
+[4/29/2026 10:07:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:07:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:07:45 PM] readPackets: 30 bytes
+[4/29/2026 10:07:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:08:05 PM] readPackets: 30 bytes
+[4/29/2026 10:08:05 PM] readPackets: 30 bytes
+[4/29/2026 10:08:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:08:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:08:15 PM] readPackets: 30 bytes
+[4/29/2026 10:08:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:08:35 PM] readPackets: 30 bytes
+[4/29/2026 10:08:35 PM] readPackets: 30 bytes
+[4/29/2026 10:08:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:08:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:08:45 PM] readPackets: 30 bytes
+[4/29/2026 10:08:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:09:05 PM] readPackets: 30 bytes
+[4/29/2026 10:09:05 PM] readPackets: 30 bytes
+[4/29/2026 10:09:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:09:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:09:10 PM] readPackets: 30 bytes
+[4/29/2026 10:09:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:09:35 PM] readPackets: 30 bytes
+[4/29/2026 10:09:35 PM] readPackets: 30 bytes
+[4/29/2026 10:09:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:09:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:09:40 PM] readPackets: 30 bytes
+[4/29/2026 10:09:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:10:05 PM] readPackets: 30 bytes
+[4/29/2026 10:10:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:10:05 PM] readPackets: 30 bytes
+[4/29/2026 10:10:05 PM] readPackets: 30 bytes
+[4/29/2026 10:10:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:10:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:10:35 PM] readPackets: 30 bytes
+[4/29/2026 10:10:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:10:35 PM] readPackets: 30 bytes
+[4/29/2026 10:10:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:10:36 PM] readPackets: 30 bytes
+[4/29/2026 10:10:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:11:05 PM] readPackets: 30 bytes
+[4/29/2026 10:11:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:11:05 PM] readPackets: 30 bytes
+[4/29/2026 10:11:06 PM] readPackets: 30 bytes
+[4/29/2026 10:11:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:11:35 PM] readPackets: 30 bytes
+[4/29/2026 10:11:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:11:35 PM] readPackets: 30 bytes
+[4/29/2026 10:11:35 PM] readPackets: 30 bytes
+[4/29/2026 10:11:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:11:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:12:05 PM] readPackets: 30 bytes
+[4/29/2026 10:12:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:12:05 PM] readPackets: 30 bytes
+[4/29/2026 10:12:05 PM] readPackets: 30 bytes
+[4/29/2026 10:12:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:12:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:12:35 PM] readPackets: 30 bytes
+[4/29/2026 10:12:35 PM] readPackets: 30 bytes
+[4/29/2026 10:12:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:12:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:12:35 PM] readPackets: 30 bytes
+[4/29/2026 10:12:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:13:05 PM] readPackets: 30 bytes
+[4/29/2026 10:13:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:13:05 PM] readPackets: 30 bytes
+[4/29/2026 10:13:05 PM] readPackets: 30 bytes
+[4/29/2026 10:13:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:13:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:13:35 PM] readPackets: 30 bytes
+[4/29/2026 10:13:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:13:35 PM] readPackets: 30 bytes
+[4/29/2026 10:13:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:13:36 PM] readPackets: 30 bytes
+[4/29/2026 10:13:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:14:05 PM] readPackets: 30 bytes
+[4/29/2026 10:14:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:14:05 PM] readPackets: 30 bytes
+[4/29/2026 10:14:05 PM] readPackets: 30 bytes
+[4/29/2026 10:14:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:14:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:14:35 PM] readPackets: 30 bytes
+[4/29/2026 10:14:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:14:35 PM] readPackets: 30 bytes
+[4/29/2026 10:14:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:14:35 PM] readPackets: 30 bytes
+[4/29/2026 10:14:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:15:05 PM] readPackets: 30 bytes
+[4/29/2026 10:15:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:15:05 PM] readPackets: 30 bytes
+[4/29/2026 10:15:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:15:06 PM] readPackets: 30 bytes
+[4/29/2026 10:15:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:15:35 PM] readPackets: 30 bytes
+[4/29/2026 10:15:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:15:35 PM] readPackets: 30 bytes
+[4/29/2026 10:15:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:15:35 PM] readPackets: 30 bytes
+[4/29/2026 10:15:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:16:05 PM] readPackets: 30 bytes
+[4/29/2026 10:16:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:16:05 PM] readPackets: 30 bytes
+[4/29/2026 10:16:05 PM] readPackets: 30 bytes
+[4/29/2026 10:16:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:16:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:16:35 PM] readPackets: 30 bytes
+[4/29/2026 10:16:35 PM] readPackets: 30 bytes
+[4/29/2026 10:16:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:16:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:16:36 PM] readPackets: 30 bytes
+[4/29/2026 10:16:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:17:05 PM] readPackets: 30 bytes
+[4/29/2026 10:17:05 PM] readPackets: 30 bytes
+[4/29/2026 10:17:05 PM] readPackets: 30 bytes
+[4/29/2026 10:17:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:17:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:17:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:17:35 PM] readPackets: 30 bytes
+[4/29/2026 10:17:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:17:35 PM] readPackets: 30 bytes
+[4/29/2026 10:17:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:17:35 PM] readPackets: 30 bytes
+[4/29/2026 10:17:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:18:05 PM] readPackets: 30 bytes
+[4/29/2026 10:18:05 PM] readPackets: 30 bytes
+[4/29/2026 10:18:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:18:05 PM] readPackets: 30 bytes
+[4/29/2026 10:18:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:18:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:18:35 PM] readPackets: 30 bytes
+[4/29/2026 10:18:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:18:35 PM] readPackets: 30 bytes
+[4/29/2026 10:18:35 PM] readPackets: 30 bytes
+[4/29/2026 10:18:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:18:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:19:05 PM] readPackets: 30 bytes
+[4/29/2026 10:19:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:19:05 PM] readPackets: 30 bytes
+[4/29/2026 10:19:05 PM] readPackets: 30 bytes
+[4/29/2026 10:19:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:19:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:19:35 PM] readPackets: 30 bytes
+[4/29/2026 10:19:35 PM] readPackets: 30 bytes
+[4/29/2026 10:19:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:19:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:19:35 PM] readPackets: 30 bytes
+[4/29/2026 10:19:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:20:05 PM] readPackets: 30 bytes
+[4/29/2026 10:20:05 PM] readPackets: 30 bytes
+[4/29/2026 10:20:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:20:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:20:05 PM] readPackets: 30 bytes
+[4/29/2026 10:20:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:20:35 PM] readPackets: 30 bytes
+[4/29/2026 10:20:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:20:35 PM] readPackets: 30 bytes
+[4/29/2026 10:20:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:20:36 PM] readPackets: 30 bytes
+[4/29/2026 10:20:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:20:40 PM] Removed inactive lobby 'APZX'
+[4/29/2026 10:20:40 PM] Removed inactive lobby 'UBBL'
+[4/29/2026 10:20:40 PM] Removed inactive lobby 'FAFL'
+[4/29/2026 10:21:05 PM] readPackets: 30 bytes
+[4/29/2026 10:21:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:21:06 PM] readPackets: 30 bytes
+[4/29/2026 10:21:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:21:06 PM] readPackets: 30 bytes
+[4/29/2026 10:21:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:21:35 PM] readPackets: 30 bytes
+[4/29/2026 10:21:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:21:35 PM] readPackets: 30 bytes
+[4/29/2026 10:21:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:21:35 PM] readPackets: 30 bytes
+[4/29/2026 10:21:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:22:05 PM] readPackets: 30 bytes
+[4/29/2026 10:22:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:22:05 PM] readPackets: 30 bytes
+[4/29/2026 10:22:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:22:06 PM] readPackets: 30 bytes
+[4/29/2026 10:22:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:22:35 PM] readPackets: 30 bytes
+[4/29/2026 10:22:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:22:35 PM] readPackets: 30 bytes
+[4/29/2026 10:22:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:22:36 PM] readPackets: 30 bytes
+[4/29/2026 10:22:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:23:05 PM] readPackets: 30 bytes
+[4/29/2026 10:23:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:23:05 PM] readPackets: 30 bytes
+[4/29/2026 10:23:05 PM] readPackets: 30 bytes
+[4/29/2026 10:23:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:23:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:23:35 PM] readPackets: 30 bytes
+[4/29/2026 10:23:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:23:35 PM] readPackets: 30 bytes
+[4/29/2026 10:23:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:23:35 PM] readPackets: 30 bytes
+[4/29/2026 10:23:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:24:05 PM] readPackets: 30 bytes
+[4/29/2026 10:24:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:24:05 PM] readPackets: 30 bytes
+[4/29/2026 10:24:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:24:05 PM] readPackets: 30 bytes
+[4/29/2026 10:24:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:24:35 PM] readPackets: 30 bytes
+[4/29/2026 10:24:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:24:35 PM] readPackets: 30 bytes
+[4/29/2026 10:24:35 PM] readPackets: 30 bytes
+[4/29/2026 10:24:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:24:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:25:05 PM] readPackets: 30 bytes
+[4/29/2026 10:25:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:25:05 PM] readPackets: 30 bytes
+[4/29/2026 10:25:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:25:06 PM] readPackets: 30 bytes
+[4/29/2026 10:25:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:25:35 PM] readPackets: 30 bytes
+[4/29/2026 10:25:35 PM] readPackets: 30 bytes
+[4/29/2026 10:25:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:25:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:25:35 PM] readPackets: 30 bytes
+[4/29/2026 10:25:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:26:05 PM] readPackets: 30 bytes
+[4/29/2026 10:26:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:26:05 PM] readPackets: 30 bytes
+[4/29/2026 10:26:05 PM] readPackets: 30 bytes
+[4/29/2026 10:26:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:26:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:26:35 PM] readPackets: 30 bytes
+[4/29/2026 10:26:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:26:36 PM] readPackets: 30 bytes
+[4/29/2026 10:26:36 PM] readPackets: 30 bytes
+[4/29/2026 10:26:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:26:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:27:05 PM] readPackets: 30 bytes
+[4/29/2026 10:27:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:27:05 PM] readPackets: 30 bytes
+[4/29/2026 10:27:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:27:05 PM] readPackets: 30 bytes
+[4/29/2026 10:27:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:27:35 PM] readPackets: 30 bytes
+[4/29/2026 10:27:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:27:35 PM] readPackets: 30 bytes
+[4/29/2026 10:27:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:27:35 PM] readPackets: 30 bytes
+[4/29/2026 10:27:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:28:05 PM] readPackets: 30 bytes
+[4/29/2026 10:28:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:28:05 PM] readPackets: 30 bytes
+[4/29/2026 10:28:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:28:05 PM] readPackets: 30 bytes
+[4/29/2026 10:28:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:28:35 PM] readPackets: 30 bytes
+[4/29/2026 10:28:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:28:35 PM] readPackets: 30 bytes
+[4/29/2026 10:28:35 PM] readPackets: 30 bytes
+[4/29/2026 10:28:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:28:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:29:05 PM] readPackets: 30 bytes
+[4/29/2026 10:29:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:29:05 PM] readPackets: 30 bytes
+[4/29/2026 10:29:05 PM] readPackets: 30 bytes
+[4/29/2026 10:29:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:29:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:29:35 PM] readPackets: 30 bytes
+[4/29/2026 10:29:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:29:35 PM] readPackets: 30 bytes
+[4/29/2026 10:29:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:29:35 PM] readPackets: 30 bytes
+[4/29/2026 10:29:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:30:05 PM] readPackets: 30 bytes
+[4/29/2026 10:30:05 PM] readPackets: 30 bytes
+[4/29/2026 10:30:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:30:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:30:05 PM] readPackets: 30 bytes
+[4/29/2026 10:30:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:30:35 PM] readPackets: 30 bytes
+[4/29/2026 10:30:35 PM] readPackets: 30 bytes
+[4/29/2026 10:30:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:30:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:30:35 PM] readPackets: 30 bytes
+[4/29/2026 10:30:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:31:05 PM] readPackets: 30 bytes
+[4/29/2026 10:31:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:31:05 PM] readPackets: 30 bytes
+[4/29/2026 10:31:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:31:05 PM] readPackets: 30 bytes
+[4/29/2026 10:31:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:31:35 PM] readPackets: 30 bytes
+[4/29/2026 10:31:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:31:35 PM] readPackets: 30 bytes
+[4/29/2026 10:31:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:31:36 PM] readPackets: 30 bytes
+[4/29/2026 10:31:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:32:05 PM] readPackets: 30 bytes
+[4/29/2026 10:32:05 PM] readPackets: 30 bytes
+[4/29/2026 10:32:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:32:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:32:06 PM] readPackets: 30 bytes
+[4/29/2026 10:32:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:32:35 PM] readPackets: 30 bytes
+[4/29/2026 10:32:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:32:36 PM] readPackets: 30 bytes
+[4/29/2026 10:32:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:32:36 PM] readPackets: 30 bytes
+[4/29/2026 10:32:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:33:05 PM] readPackets: 30 bytes
+[4/29/2026 10:33:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:33:05 PM] readPackets: 30 bytes
+[4/29/2026 10:33:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:33:05 PM] readPackets: 30 bytes
+[4/29/2026 10:33:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:33:36 PM] readPackets: 30 bytes
+[4/29/2026 10:33:36 PM] readPackets: 30 bytes
+[4/29/2026 10:33:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:33:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:33:36 PM] readPackets: 30 bytes
+[4/29/2026 10:33:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:34:05 PM] readPackets: 30 bytes
+[4/29/2026 10:34:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:34:05 PM] readPackets: 30 bytes
+[4/29/2026 10:34:05 PM] readPackets: 30 bytes
+[4/29/2026 10:34:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:34:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:34:35 PM] readPackets: 30 bytes
+[4/29/2026 10:34:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:34:35 PM] readPackets: 30 bytes
+[4/29/2026 10:34:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:34:36 PM] readPackets: 30 bytes
+[4/29/2026 10:34:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:35:05 PM] readPackets: 30 bytes
+[4/29/2026 10:35:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:35:06 PM] readPackets: 30 bytes
+[4/29/2026 10:35:06 PM] readPackets: 30 bytes
+[4/29/2026 10:35:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:35:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:35:36 PM] readPackets: 30 bytes
+[4/29/2026 10:35:36 PM] readPackets: 30 bytes
+[4/29/2026 10:35:36 PM] readPackets: 30 bytes
+[4/29/2026 10:35:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:35:50 PM] readPackets: 7 bytes
+[4/29/2026 10:35:50 PM] readPackets: packet type=ClientDisconnect objs=0
+[4/29/2026 10:35:50 PM] Client disconnected (127.0.0.1)
+[4/29/2026 10:36:05 PM] readPackets: 30 bytes
+[4/29/2026 10:36:05 PM] readPackets: 30 bytes
+[4/29/2026 10:36:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:36:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:36:35 PM] readPackets: 30 bytes
+[4/29/2026 10:36:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:36:35 PM] readPackets: 30 bytes
+[4/29/2026 10:36:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:37:05 PM] readPackets: 30 bytes
+[4/29/2026 10:37:05 PM] readPackets: 30 bytes
+[4/29/2026 10:37:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:37:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:37:35 PM] readPackets: 30 bytes
+[4/29/2026 10:37:35 PM] readPackets: 30 bytes
+[4/29/2026 10:37:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:37:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:38:06 PM] readPackets: 30 bytes
+[4/29/2026 10:38:06 PM] readPackets: 30 bytes
+[4/29/2026 10:38:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:38:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:38:35 PM] readPackets: 30 bytes
+[4/29/2026 10:38:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:38:35 PM] readPackets: 30 bytes
+[4/29/2026 10:38:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:39:05 PM] readPackets: 30 bytes
+[4/29/2026 10:39:05 PM] readPackets: 30 bytes
+[4/29/2026 10:39:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:39:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:39:36 PM] readPackets: 30 bytes
+[4/29/2026 10:39:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:39:36 PM] readPackets: 30 bytes
+[4/29/2026 10:39:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:40:05 PM] readPackets: 30 bytes
+[4/29/2026 10:40:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:40:06 PM] readPackets: 30 bytes
+[4/29/2026 10:40:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:40:35 PM] readPackets: 30 bytes
+[4/29/2026 10:40:35 PM] readPackets: 30 bytes
+[4/29/2026 10:40:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:40:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:41:05 PM] readPackets: 30 bytes
+[4/29/2026 10:41:05 PM] readPackets: 30 bytes
+[4/29/2026 10:41:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:41:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:41:35 PM] readPackets: 30 bytes
+[4/29/2026 10:41:35 PM] readPackets: 30 bytes
+[4/29/2026 10:41:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:41:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:42:05 PM] readPackets: 30 bytes
+[4/29/2026 10:42:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:42:05 PM] readPackets: 30 bytes
+[4/29/2026 10:42:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:42:35 PM] readPackets: 30 bytes
+[4/29/2026 10:42:35 PM] readPackets: 30 bytes
+[4/29/2026 10:42:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:42:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:43:05 PM] readPackets: 30 bytes
+[4/29/2026 10:43:05 PM] readPackets: 30 bytes
+[4/29/2026 10:43:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:43:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:43:35 PM] readPackets: 30 bytes
+[4/29/2026 10:43:35 PM] readPackets: 30 bytes
+[4/29/2026 10:43:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:43:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:44:05 PM] readPackets: 30 bytes
+[4/29/2026 10:44:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:44:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:44:35 PM] readPackets: 30 bytes
+[4/29/2026 10:44:35 PM] readPackets: 30 bytes
+[4/29/2026 10:44:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:44:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:45:05 PM] readPackets: 30 bytes
+[4/29/2026 10:45:05 PM] readPackets: 30 bytes
+[4/29/2026 10:45:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:45:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:45:35 PM] readPackets: 30 bytes
+[4/29/2026 10:45:35 PM] readPackets: 30 bytes
+[4/29/2026 10:45:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:45:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:46:05 PM] readPackets: 30 bytes
+[4/29/2026 10:46:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:46:05 PM] readPackets: 30 bytes
+[4/29/2026 10:46:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:46:35 PM] readPackets: 30 bytes
+[4/29/2026 10:46:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:46:36 PM] readPackets: 30 bytes
+[4/29/2026 10:46:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:47:05 PM] readPackets: 30 bytes
+[4/29/2026 10:47:05 PM] readPackets: 30 bytes
+[4/29/2026 10:47:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:47:35 PM] readPackets: 30 bytes
+[4/29/2026 10:47:35 PM] readPackets: 30 bytes
+[4/29/2026 10:47:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:47:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:48:05 PM] readPackets: 30 bytes
+[4/29/2026 10:48:05 PM] readPackets: 30 bytes
+[4/29/2026 10:48:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:48:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:48:36 PM] readPackets: 30 bytes
+[4/29/2026 10:48:36 PM] readPackets: 30 bytes
+[4/29/2026 10:48:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:48:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:49:05 PM] readPackets: 30 bytes
+[4/29/2026 10:49:05 PM] readPackets: 30 bytes
+[4/29/2026 10:49:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:49:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:49:35 PM] readPackets: 30 bytes
+[4/29/2026 10:49:35 PM] readPackets: 30 bytes
+[4/29/2026 10:49:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:49:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:50:05 PM] readPackets: 30 bytes
+[4/29/2026 10:50:05 PM] readPackets: 30 bytes
+[4/29/2026 10:50:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:50:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:50:35 PM] readPackets: 30 bytes
+[4/29/2026 10:50:35 PM] readPackets: 30 bytes
+[4/29/2026 10:50:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:50:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:51:05 PM] readPackets: 30 bytes
+[4/29/2026 10:51:05 PM] readPackets: 30 bytes
+[4/29/2026 10:51:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:51:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:51:35 PM] readPackets: 30 bytes
+[4/29/2026 10:51:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:51:35 PM] readPackets: 30 bytes
+[4/29/2026 10:51:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:52:05 PM] readPackets: 30 bytes
+[4/29/2026 10:52:05 PM] readPackets: 30 bytes
+[4/29/2026 10:52:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:52:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:52:35 PM] readPackets: 30 bytes
+[4/29/2026 10:52:35 PM] readPackets: 30 bytes
+[4/29/2026 10:52:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:52:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:53:05 PM] readPackets: 30 bytes
+[4/29/2026 10:53:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:53:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:53:35 PM] readPackets: 30 bytes
+[4/29/2026 10:53:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:53:35 PM] readPackets: 30 bytes
+[4/29/2026 10:53:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:54:06 PM] readPackets: 30 bytes
+[4/29/2026 10:54:06 PM] readPackets: 30 bytes
+[4/29/2026 10:54:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:54:35 PM] readPackets: 30 bytes
+[4/29/2026 10:54:35 PM] readPackets: 30 bytes
+[4/29/2026 10:54:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:54:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:55:05 PM] readPackets: 30 bytes
+[4/29/2026 10:55:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:55:05 PM] readPackets: 30 bytes
+[4/29/2026 10:55:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:55:35 PM] readPackets: 30 bytes
+[4/29/2026 10:55:35 PM] readPackets: 30 bytes
+[4/29/2026 10:55:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:55:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:56:05 PM] readPackets: 30 bytes
+[4/29/2026 10:56:05 PM] readPackets: 30 bytes
+[4/29/2026 10:56:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:56:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:56:35 PM] readPackets: 30 bytes
+[4/29/2026 10:56:35 PM] readPackets: 30 bytes
+[4/29/2026 10:56:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:56:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:57:05 PM] readPackets: 30 bytes
+[4/29/2026 10:57:05 PM] readPackets: 30 bytes
+[4/29/2026 10:57:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:57:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:57:35 PM] readPackets: 30 bytes
+[4/29/2026 10:57:35 PM] readPackets: 30 bytes
+[4/29/2026 10:57:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:57:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:58:06 PM] readPackets: 30 bytes
+[4/29/2026 10:58:06 PM] readPackets: 30 bytes
+[4/29/2026 10:58:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:58:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:58:35 PM] readPackets: 30 bytes
+[4/29/2026 10:58:35 PM] readPackets: 30 bytes
+[4/29/2026 10:58:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:58:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:59:06 PM] readPackets: 30 bytes
+[4/29/2026 10:59:06 PM] readPackets: 30 bytes
+[4/29/2026 10:59:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:59:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:59:35 PM] readPackets: 30 bytes
+[4/29/2026 10:59:35 PM] readPackets: 30 bytes
+[4/29/2026 10:59:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 10:59:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:00:05 PM] readPackets: 30 bytes
+[4/29/2026 11:00:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:00:05 PM] readPackets: 30 bytes
+[4/29/2026 11:00:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:00:35 PM] readPackets: 30 bytes
+[4/29/2026 11:00:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:00:35 PM] readPackets: 30 bytes
+[4/29/2026 11:00:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:01:05 PM] readPackets: 30 bytes
+[4/29/2026 11:01:05 PM] readPackets: 30 bytes
+[4/29/2026 11:01:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:01:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:01:35 PM] readPackets: 30 bytes
+[4/29/2026 11:01:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:01:35 PM] readPackets: 30 bytes
+[4/29/2026 11:01:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:02:05 PM] readPackets: 30 bytes
+[4/29/2026 11:02:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:02:05 PM] readPackets: 30 bytes
+[4/29/2026 11:02:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:02:35 PM] readPackets: 30 bytes
+[4/29/2026 11:02:35 PM] readPackets: 30 bytes
+[4/29/2026 11:02:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:03:05 PM] readPackets: 30 bytes
+[4/29/2026 11:03:05 PM] readPackets: 30 bytes
+[4/29/2026 11:03:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:03:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:03:35 PM] readPackets: 30 bytes
+[4/29/2026 11:03:35 PM] readPackets: 30 bytes
+[4/29/2026 11:03:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:04:05 PM] readPackets: 30 bytes
+[4/29/2026 11:04:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:04:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:04:35 PM] readPackets: 30 bytes
+[4/29/2026 11:04:35 PM] readPackets: 30 bytes
+[4/29/2026 11:04:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:04:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:05:06 PM] readPackets: 30 bytes
+[4/29/2026 11:05:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:05:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:05:35 PM] readPackets: 30 bytes
+[4/29/2026 11:05:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:05:35 PM] readPackets: 30 bytes
+[4/29/2026 11:05:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:06:05 PM] readPackets: 30 bytes
+[4/29/2026 11:06:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:06:06 PM] readPackets: 30 bytes
+[4/29/2026 11:06:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:06:35 PM] readPackets: 30 bytes
+[4/29/2026 11:06:35 PM] readPackets: 30 bytes
+[4/29/2026 11:06:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:06:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:07:05 PM] readPackets: 30 bytes
+[4/29/2026 11:07:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:07:06 PM] readPackets: 30 bytes
+[4/29/2026 11:07:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:07:36 PM] readPackets: 30 bytes
+[4/29/2026 11:07:36 PM] readPackets: 30 bytes
+[4/29/2026 11:07:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:07:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:08:06 PM] readPackets: 30 bytes
+[4/29/2026 11:08:06 PM] readPackets: 30 bytes
+[4/29/2026 11:08:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:08:35 PM] readPackets: 30 bytes
+[4/29/2026 11:08:35 PM] readPackets: 30 bytes
+[4/29/2026 11:08:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:08:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:09:06 PM] readPackets: 30 bytes
+[4/29/2026 11:09:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:09:06 PM] readPackets: 30 bytes
+[4/29/2026 11:09:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:09:35 PM] readPackets: 30 bytes
+[4/29/2026 11:09:35 PM] readPackets: 30 bytes
+[4/29/2026 11:09:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:09:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:10:05 PM] readPackets: 30 bytes
+[4/29/2026 11:10:05 PM] readPackets: 30 bytes
+[4/29/2026 11:10:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:10:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:10:35 PM] readPackets: 30 bytes
+[4/29/2026 11:10:35 PM] readPackets: 30 bytes
+[4/29/2026 11:10:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:10:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:11:05 PM] readPackets: 30 bytes
+[4/29/2026 11:11:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:11:05 PM] readPackets: 30 bytes
+[4/29/2026 11:11:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:11:35 PM] readPackets: 30 bytes
+[4/29/2026 11:11:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:11:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:12:06 PM] readPackets: 30 bytes
+[4/29/2026 11:12:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:12:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:12:06 PM] readPackets: 118 bytes
+[4/29/2026 11:12:06 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 11:12:06 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 11:12:06 PM] readPackets: 118 bytes
+[4/29/2026 11:12:06 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 11:12:06 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 11:12:35 PM] readPackets: 30 bytes
+[4/29/2026 11:12:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:12:36 PM] readPackets: 30 bytes
+[4/29/2026 11:12:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:13:05 PM] readPackets: 30 bytes
+[4/29/2026 11:13:05 PM] readPackets: 30 bytes
+[4/29/2026 11:13:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:13:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:13:36 PM] readPackets: 30 bytes
+[4/29/2026 11:13:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:13:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:14:05 PM] readPackets: 30 bytes
+[4/29/2026 11:14:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:14:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:14:35 PM] readPackets: 30 bytes
+[4/29/2026 11:14:35 PM] readPackets: 30 bytes
+[4/29/2026 11:14:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:14:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:15:05 PM] readPackets: 30 bytes
+[4/29/2026 11:15:05 PM] readPackets: 30 bytes
+[4/29/2026 11:15:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:15:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:15:35 PM] readPackets: 30 bytes
+[4/29/2026 11:15:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:15:35 PM] readPackets: 30 bytes
+[4/29/2026 11:15:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:16:06 PM] readPackets: 30 bytes
+[4/29/2026 11:16:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:16:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:16:35 PM] readPackets: 30 bytes
+[4/29/2026 11:16:35 PM] readPackets: 30 bytes
+[4/29/2026 11:16:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:16:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:17:05 PM] readPackets: 30 bytes
+[4/29/2026 11:17:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:17:06 PM] readPackets: 30 bytes
+[4/29/2026 11:17:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:17:35 PM] readPackets: 30 bytes
+[4/29/2026 11:17:35 PM] readPackets: 30 bytes
+[4/29/2026 11:17:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:17:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:18:05 PM] readPackets: 30 bytes
+[4/29/2026 11:18:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:18:05 PM] readPackets: 30 bytes
+[4/29/2026 11:18:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:18:35 PM] readPackets: 30 bytes
+[4/29/2026 11:18:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:18:35 PM] readPackets: 30 bytes
+[4/29/2026 11:18:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:19:05 PM] readPackets: 30 bytes
+[4/29/2026 11:19:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:19:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:19:35 PM] readPackets: 30 bytes
+[4/29/2026 11:19:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:19:36 PM] readPackets: 30 bytes
+[4/29/2026 11:19:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:20:05 PM] readPackets: 30 bytes
+[4/29/2026 11:20:05 PM] readPackets: 30 bytes
+[4/29/2026 11:20:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:20:35 PM] readPackets: 30 bytes
+[4/29/2026 11:20:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:20:36 PM] readPackets: 30 bytes
+[4/29/2026 11:20:36 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:21:05 PM] readPackets: 30 bytes
+[4/29/2026 11:21:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:21:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:21:35 PM] readPackets: 30 bytes
+[4/29/2026 11:21:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:22:05 PM] readPackets: 30 bytes
+[4/29/2026 11:22:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:22:06 PM] readPackets: 30 bytes
+[4/29/2026 11:22:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:22:35 PM] readPackets: 30 bytes
+[4/29/2026 11:22:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:22:35 PM] readPackets: 30 bytes
+[4/29/2026 11:22:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:23:05 PM] readPackets: 30 bytes
+[4/29/2026 11:23:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:23:05 PM] readPackets: 30 bytes
+[4/29/2026 11:23:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:23:35 PM] readPackets: 30 bytes
+[4/29/2026 11:23:35 PM] readPackets: 30 bytes
+[4/29/2026 11:23:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:23:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:24:05 PM] readPackets: 30 bytes
+[4/29/2026 11:24:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:24:06 PM] readPackets: 30 bytes
+[4/29/2026 11:24:06 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:24:35 PM] readPackets: 30 bytes
+[4/29/2026 11:24:35 PM] readPackets: 30 bytes
+[4/29/2026 11:24:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:24:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:25:05 PM] readPackets: 30 bytes
+[4/29/2026 11:25:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:25:05 PM] readPackets: 30 bytes
+[4/29/2026 11:25:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:25:35 PM] readPackets: 30 bytes
+[4/29/2026 11:25:35 PM] readPackets: 30 bytes
+[4/29/2026 11:25:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:25:35 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:26:05 PM] readPackets: 30 bytes
+[4/29/2026 11:26:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:26:05 PM] readPackets: 30 bytes
+[4/29/2026 11:26:05 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:26:25 PM] readPackets: 118 bytes
+[4/29/2026 11:26:25 PM] readPackets: 118 bytes
+[4/29/2026 11:26:25 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 11:26:25 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 11:26:25 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 11:26:25 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 11:26:50 PM] readPackets: 30 bytes
+[4/29/2026 11:26:50 PM] readPackets: 30 bytes
+[4/29/2026 11:26:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:26:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:27:20 PM] readPackets: 30 bytes
+[4/29/2026 11:27:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:27:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:27:51 PM] readPackets: 30 bytes
+[4/29/2026 11:27:51 PM] readPackets: 30 bytes
+[4/29/2026 11:27:51 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:27:51 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:28:20 PM] readPackets: 30 bytes
+[4/29/2026 11:28:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:28:20 PM] readPackets: 30 bytes
+[4/29/2026 11:28:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:28:50 PM] readPackets: 30 bytes
+[4/29/2026 11:28:50 PM] readPackets: 30 bytes
+[4/29/2026 11:28:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:29:20 PM] readPackets: 30 bytes
+[4/29/2026 11:29:20 PM] readPackets: 30 bytes
+[4/29/2026 11:29:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:29:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:29:50 PM] readPackets: 30 bytes
+[4/29/2026 11:29:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:29:50 PM] readPackets: 30 bytes
+[4/29/2026 11:29:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:30:20 PM] readPackets: 30 bytes
+[4/29/2026 11:30:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:30:20 PM] readPackets: 30 bytes
+[4/29/2026 11:30:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:30:45 PM] readPackets: 118 bytes
+[4/29/2026 11:30:45 PM] readPackets: 118 bytes
+[4/29/2026 11:30:45 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 11:30:45 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 11:30:45 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 11:30:45 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 11:31:10 PM] readPackets: 30 bytes
+[4/29/2026 11:31:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:31:11 PM] readPackets: 30 bytes
+[4/29/2026 11:31:11 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:31:40 PM] readPackets: 30 bytes
+[4/29/2026 11:31:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:31:40 PM] readPackets: 30 bytes
+[4/29/2026 11:31:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:32:10 PM] readPackets: 30 bytes
+[4/29/2026 11:32:11 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:32:40 PM] readPackets: 30 bytes
+[4/29/2026 11:32:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:32:40 PM] readPackets: 30 bytes
+[4/29/2026 11:32:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:33:10 PM] readPackets: 30 bytes
+[4/29/2026 11:33:10 PM] readPackets: 30 bytes
+[4/29/2026 11:33:11 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:33:11 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:33:41 PM] readPackets: 30 bytes
+[4/29/2026 11:33:41 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:33:41 PM] readPackets: 30 bytes
+[4/29/2026 11:33:41 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:34:10 PM] readPackets: 30 bytes
+[4/29/2026 11:34:10 PM] readPackets: 30 bytes
+[4/29/2026 11:34:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:34:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:34:40 PM] readPackets: 30 bytes
+[4/29/2026 11:34:40 PM] readPackets: 30 bytes
+[4/29/2026 11:34:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:34:40 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:35:10 PM] readPackets: 30 bytes
+[4/29/2026 11:35:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:35:10 PM] readPackets: 30 bytes
+[4/29/2026 11:35:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:35:40 PM] readPackets: 30 bytes
+[4/29/2026 11:35:40 PM] readPackets: 30 bytes
+[4/29/2026 11:35:41 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:36:10 PM] readPackets: 30 bytes
+[4/29/2026 11:36:10 PM] readPackets: 30 bytes
+[4/29/2026 11:36:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:36:10 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:36:19 PM] readPackets: 118 bytes
+[4/29/2026 11:36:19 PM] readPackets: 118 bytes
+[4/29/2026 11:36:19 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 11:36:19 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 11:36:19 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 11:36:19 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 11:36:45 PM] readPackets: 30 bytes
+[4/29/2026 11:36:45 PM] readPackets: 30 bytes
+[4/29/2026 11:36:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:36:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:37:15 PM] readPackets: 30 bytes
+[4/29/2026 11:37:15 PM] readPackets: 30 bytes
+[4/29/2026 11:37:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:37:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:37:46 PM] readPackets: 30 bytes
+[4/29/2026 11:37:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:37:46 PM] readPackets: 30 bytes
+[4/29/2026 11:37:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:38:16 PM] readPackets: 30 bytes
+[4/29/2026 11:38:16 PM] readPackets: 30 bytes
+[4/29/2026 11:38:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:38:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:38:46 PM] readPackets: 30 bytes
+[4/29/2026 11:38:46 PM] readPackets: 30 bytes
+[4/29/2026 11:38:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:38:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:39:15 PM] readPackets: 30 bytes
+[4/29/2026 11:39:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:39:15 PM] readPackets: 30 bytes
+[4/29/2026 11:39:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:39:45 PM] readPackets: 30 bytes
+[4/29/2026 11:39:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:39:45 PM] readPackets: 30 bytes
+[4/29/2026 11:39:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:40:16 PM] readPackets: 30 bytes
+[4/29/2026 11:40:16 PM] readPackets: 30 bytes
+[4/29/2026 11:40:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:40:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:40:45 PM] readPackets: 30 bytes
+[4/29/2026 11:40:45 PM] readPackets: 30 bytes
+[4/29/2026 11:40:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:40:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:41:15 PM] readPackets: 30 bytes
+[4/29/2026 11:41:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:41:16 PM] readPackets: 30 bytes
+[4/29/2026 11:41:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:41:45 PM] readPackets: 30 bytes
+[4/29/2026 11:41:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:41:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:42:15 PM] readPackets: 30 bytes
+[4/29/2026 11:42:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:42:16 PM] readPackets: 30 bytes
+[4/29/2026 11:42:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:42:45 PM] readPackets: 30 bytes
+[4/29/2026 11:42:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:42:46 PM] readPackets: 30 bytes
+[4/29/2026 11:42:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:43:15 PM] readPackets: 30 bytes
+[4/29/2026 11:43:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:43:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:43:46 PM] readPackets: 30 bytes
+[4/29/2026 11:43:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:43:46 PM] readPackets: 30 bytes
+[4/29/2026 11:43:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:44:15 PM] readPackets: 30 bytes
+[4/29/2026 11:44:15 PM] readPackets: 30 bytes
+[4/29/2026 11:44:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:44:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:44:45 PM] readPackets: 30 bytes
+[4/29/2026 11:44:45 PM] readPackets: 30 bytes
+[4/29/2026 11:44:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:44:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:45:15 PM] readPackets: 30 bytes
+[4/29/2026 11:45:15 PM] readPackets: 30 bytes
+[4/29/2026 11:45:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:45:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:45:45 PM] readPackets: 30 bytes
+[4/29/2026 11:45:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:45:46 PM] readPackets: 30 bytes
+[4/29/2026 11:45:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:46:16 PM] readPackets: 30 bytes
+[4/29/2026 11:46:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:46:16 PM] readPackets: 30 bytes
+[4/29/2026 11:46:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:46:45 PM] readPackets: 30 bytes
+[4/29/2026 11:46:45 PM] readPackets: 30 bytes
+[4/29/2026 11:46:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:47:15 PM] readPackets: 30 bytes
+[4/29/2026 11:47:15 PM] readPackets: 30 bytes
+[4/29/2026 11:47:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:47:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:47:45 PM] readPackets: 30 bytes
+[4/29/2026 11:47:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:47:46 PM] readPackets: 30 bytes
+[4/29/2026 11:47:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:48:15 PM] readPackets: 30 bytes
+[4/29/2026 11:48:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:48:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:48:45 PM] readPackets: 30 bytes
+[4/29/2026 11:48:45 PM] readPackets: 30 bytes
+[4/29/2026 11:48:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:48:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:49:15 PM] readPackets: 30 bytes
+[4/29/2026 11:49:15 PM] readPackets: 30 bytes
+[4/29/2026 11:49:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:49:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:49:45 PM] readPackets: 30 bytes
+[4/29/2026 11:49:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:49:45 PM] readPackets: 30 bytes
+[4/29/2026 11:49:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:50:15 PM] readPackets: 30 bytes
+[4/29/2026 11:50:15 PM] readPackets: 30 bytes
+[4/29/2026 11:50:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:50:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:50:45 PM] readPackets: 30 bytes
+[4/29/2026 11:50:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:50:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:51:15 PM] readPackets: 30 bytes
+[4/29/2026 11:51:15 PM] readPackets: 30 bytes
+[4/29/2026 11:51:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:51:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:51:45 PM] readPackets: 30 bytes
+[4/29/2026 11:51:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:51:45 PM] readPackets: 30 bytes
+[4/29/2026 11:51:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:52:16 PM] readPackets: 30 bytes
+[4/29/2026 11:52:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:52:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:52:45 PM] readPackets: 30 bytes
+[4/29/2026 11:52:45 PM] readPackets: 30 bytes
+[4/29/2026 11:52:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:52:46 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:53:15 PM] readPackets: 30 bytes
+[4/29/2026 11:53:15 PM] readPackets: 30 bytes
+[4/29/2026 11:53:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:53:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:53:45 PM] readPackets: 30 bytes
+[4/29/2026 11:53:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:53:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:54:15 PM] readPackets: 30 bytes
+[4/29/2026 11:54:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:54:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:54:45 PM] readPackets: 30 bytes
+[4/29/2026 11:54:45 PM] readPackets: 30 bytes
+[4/29/2026 11:54:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:54:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:55:15 PM] readPackets: 30 bytes
+[4/29/2026 11:55:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:55:15 PM] readPackets: 30 bytes
+[4/29/2026 11:55:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:55:45 PM] readPackets: 30 bytes
+[4/29/2026 11:55:45 PM] readPackets: 30 bytes
+[4/29/2026 11:55:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:56:16 PM] readPackets: 30 bytes
+[4/29/2026 11:56:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:56:45 PM] readPackets: 30 bytes
+[4/29/2026 11:56:45 PM] readPackets: 30 bytes
+[4/29/2026 11:56:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:56:45 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:57:15 PM] readPackets: 30 bytes
+[4/29/2026 11:57:15 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:57:16 PM] readPackets: 30 bytes
+[4/29/2026 11:57:16 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:57:23 PM] readPackets: 118 bytes
+[4/29/2026 11:57:23 PM] readPackets: 118 bytes
+[4/29/2026 11:57:23 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 11:57:23 PM] readPackets: packet type=ObjectData objs=1
+[4/29/2026 11:57:23 PM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/29/2026 11:57:50 PM] readPackets: 30 bytes
+[4/29/2026 11:57:50 PM] readPackets: 30 bytes
+[4/29/2026 11:57:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:57:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:58:20 PM] readPackets: 30 bytes
+[4/29/2026 11:58:20 PM] readPackets: 30 bytes
+[4/29/2026 11:58:21 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:58:21 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:58:50 PM] readPackets: 30 bytes
+[4/29/2026 11:58:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:58:50 PM] readPackets: 30 bytes
+[4/29/2026 11:58:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:59:20 PM] readPackets: 30 bytes
+[4/29/2026 11:59:20 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:59:21 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:59:50 PM] readPackets: 30 bytes
+[4/29/2026 11:59:50 PM] readPackets: 30 bytes
+[4/29/2026 11:59:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/29/2026 11:59:50 PM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:00:21 AM] readPackets: 30 bytes
+[4/30/2026 12:00:21 AM] readPackets: 30 bytes
+[4/30/2026 12:00:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:00:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:00:50 AM] readPackets: 30 bytes
+[4/30/2026 12:00:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:00:51 AM] readPackets: 30 bytes
+[4/30/2026 12:00:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:01:20 AM] readPackets: 30 bytes
+[4/30/2026 12:01:20 AM] readPackets: 30 bytes
+[4/30/2026 12:01:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:01:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:01:51 AM] readPackets: 30 bytes
+[4/30/2026 12:01:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:01:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:02:20 AM] readPackets: 30 bytes
+[4/30/2026 12:02:20 AM] readPackets: 30 bytes
+[4/30/2026 12:02:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:02:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:02:50 AM] readPackets: 30 bytes
+[4/30/2026 12:02:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:02:50 AM] readPackets: 30 bytes
+[4/30/2026 12:02:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:03:20 AM] readPackets: 30 bytes
+[4/30/2026 12:03:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:03:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:03:50 AM] readPackets: 30 bytes
+[4/30/2026 12:03:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:03:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:04:20 AM] readPackets: 30 bytes
+[4/30/2026 12:04:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:04:20 AM] readPackets: 30 bytes
+[4/30/2026 12:04:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:04:50 AM] readPackets: 30 bytes
+[4/30/2026 12:04:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:04:51 AM] readPackets: 30 bytes
+[4/30/2026 12:04:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:05:20 AM] readPackets: 30 bytes
+[4/30/2026 12:05:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:05:21 AM] readPackets: 30 bytes
+[4/30/2026 12:05:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:05:50 AM] readPackets: 30 bytes
+[4/30/2026 12:05:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:05:51 AM] readPackets: 30 bytes
+[4/30/2026 12:05:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:06:21 AM] readPackets: 30 bytes
+[4/30/2026 12:06:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:06:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:06:51 AM] readPackets: 30 bytes
+[4/30/2026 12:06:51 AM] readPackets: 30 bytes
+[4/30/2026 12:06:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:06:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:07:20 AM] readPackets: 30 bytes
+[4/30/2026 12:07:20 AM] readPackets: 30 bytes
+[4/30/2026 12:07:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:07:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:07:50 AM] readPackets: 30 bytes
+[4/30/2026 12:07:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:07:51 AM] readPackets: 30 bytes
+[4/30/2026 12:07:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:08:21 AM] readPackets: 30 bytes
+[4/30/2026 12:08:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:08:21 AM] readPackets: 30 bytes
+[4/30/2026 12:08:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:08:50 AM] readPackets: 30 bytes
+[4/30/2026 12:08:50 AM] readPackets: 30 bytes
+[4/30/2026 12:08:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:08:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:09:20 AM] readPackets: 30 bytes
+[4/30/2026 12:09:20 AM] readPackets: 30 bytes
+[4/30/2026 12:09:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:09:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:09:50 AM] readPackets: 30 bytes
+[4/30/2026 12:09:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:09:51 AM] readPackets: 30 bytes
+[4/30/2026 12:09:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:10:20 AM] readPackets: 30 bytes
+[4/30/2026 12:10:20 AM] readPackets: 30 bytes
+[4/30/2026 12:10:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:10:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:10:50 AM] readPackets: 30 bytes
+[4/30/2026 12:10:50 AM] readPackets: 30 bytes
+[4/30/2026 12:10:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:10:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:11:20 AM] readPackets: 30 bytes
+[4/30/2026 12:11:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:11:21 AM] readPackets: 30 bytes
+[4/30/2026 12:11:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:11:50 AM] readPackets: 30 bytes
+[4/30/2026 12:11:50 AM] readPackets: 30 bytes
+[4/30/2026 12:11:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:11:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:12:20 AM] readPackets: 30 bytes
+[4/30/2026 12:12:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:12:21 AM] readPackets: 30 bytes
+[4/30/2026 12:12:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:12:21 AM] readPackets: 118 bytes
+[4/30/2026 12:12:21 AM] readPackets: 118 bytes
+[4/30/2026 12:12:21 AM] readPackets: packet type=ObjectData objs=1
+[4/30/2026 12:12:21 AM] readPackets: packet type=ObjectData objs=1
+[4/30/2026 12:12:21 AM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/30/2026 12:12:21 AM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/30/2026 12:12:21 AM] readPackets: 118 bytes
+[4/30/2026 12:12:21 AM] readPackets: packet type=ObjectData objs=1
+[4/30/2026 12:12:21 AM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/30/2026 12:12:21 AM] readPackets: packet type=ObjectData objs=1
+[4/30/2026 12:12:21 AM] DispatchObjects: objectType=ClientBattleshipAttack
+[4/30/2026 12:12:50 AM] readPackets: 30 bytes
+[4/30/2026 12:12:50 AM] readPackets: 30 bytes
+[4/30/2026 12:12:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:12:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:13:20 AM] readPackets: 30 bytes
+[4/30/2026 12:13:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:13:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:13:50 AM] readPackets: 30 bytes
+[4/30/2026 12:13:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:13:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:14:20 AM] readPackets: 30 bytes
+[4/30/2026 12:14:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:14:20 AM] readPackets: 30 bytes
+[4/30/2026 12:14:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:14:50 AM] readPackets: 30 bytes
+[4/30/2026 12:14:50 AM] readPackets: 30 bytes
+[4/30/2026 12:14:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:14:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:15:20 AM] readPackets: 30 bytes
+[4/30/2026 12:15:20 AM] readPackets: 30 bytes
+[4/30/2026 12:15:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:15:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:15:50 AM] readPackets: 30 bytes
+[4/30/2026 12:15:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:15:51 AM] readPackets: 30 bytes
+[4/30/2026 12:15:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:16:20 AM] readPackets: 30 bytes
+[4/30/2026 12:16:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:16:20 AM] readPackets: 30 bytes
+[4/30/2026 12:16:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:16:50 AM] readPackets: 30 bytes
+[4/30/2026 12:16:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:16:51 AM] readPackets: 30 bytes
+[4/30/2026 12:16:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:17:20 AM] readPackets: 30 bytes
+[4/30/2026 12:17:20 AM] readPackets: 30 bytes
+[4/30/2026 12:17:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:17:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:17:50 AM] readPackets: 30 bytes
+[4/30/2026 12:17:50 AM] readPackets: 30 bytes
+[4/30/2026 12:17:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:17:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:18:20 AM] readPackets: 30 bytes
+[4/30/2026 12:18:20 AM] readPackets: 30 bytes
+[4/30/2026 12:18:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:18:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:18:50 AM] readPackets: 30 bytes
+[4/30/2026 12:18:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:18:51 AM] readPackets: 30 bytes
+[4/30/2026 12:18:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:19:20 AM] readPackets: 30 bytes
+[4/30/2026 12:19:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:19:21 AM] readPackets: 30 bytes
+[4/30/2026 12:19:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:19:50 AM] readPackets: 30 bytes
+[4/30/2026 12:19:50 AM] readPackets: 30 bytes
+[4/30/2026 12:19:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:19:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:20:20 AM] readPackets: 30 bytes
+[4/30/2026 12:20:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:20:21 AM] readPackets: 30 bytes
+[4/30/2026 12:20:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:20:51 AM] readPackets: 30 bytes
+[4/30/2026 12:20:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:20:51 AM] readPackets: 30 bytes
+[4/30/2026 12:20:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:21:20 AM] readPackets: 30 bytes
+[4/30/2026 12:21:20 AM] readPackets: 30 bytes
+[4/30/2026 12:21:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:21:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:21:50 AM] readPackets: 30 bytes
+[4/30/2026 12:21:50 AM] readPackets: 30 bytes
+[4/30/2026 12:21:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:21:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:22:21 AM] readPackets: 30 bytes
+[4/30/2026 12:22:21 AM] readPackets: 30 bytes
+[4/30/2026 12:22:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:22:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:22:50 AM] readPackets: 30 bytes
+[4/30/2026 12:22:50 AM] readPackets: 30 bytes
+[4/30/2026 12:22:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:22:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:23:20 AM] readPackets: 30 bytes
+[4/30/2026 12:23:20 AM] readPackets: 30 bytes
+[4/30/2026 12:23:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:23:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:23:50 AM] readPackets: 30 bytes
+[4/30/2026 12:23:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:23:51 AM] readPackets: 30 bytes
+[4/30/2026 12:23:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:24:20 AM] readPackets: 30 bytes
+[4/30/2026 12:24:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:24:20 AM] readPackets: 30 bytes
+[4/30/2026 12:24:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:24:50 AM] readPackets: 30 bytes
+[4/30/2026 12:24:50 AM] readPackets: 30 bytes
+[4/30/2026 12:24:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:24:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:25:20 AM] readPackets: 30 bytes
+[4/30/2026 12:25:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:25:21 AM] readPackets: 30 bytes
+[4/30/2026 12:25:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:25:50 AM] readPackets: 30 bytes
+[4/30/2026 12:25:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:25:50 AM] readPackets: 30 bytes
+[4/30/2026 12:25:50 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:26:20 AM] readPackets: 30 bytes
+[4/30/2026 12:26:20 AM] readPackets: 30 bytes
+[4/30/2026 12:26:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:26:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:26:50 AM] readPackets: 30 bytes
+[4/30/2026 12:26:50 AM] readPackets: 30 bytes
+[4/30/2026 12:26:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:26:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:27:20 AM] readPackets: 30 bytes
+[4/30/2026 12:27:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:27:21 AM] readPackets: 30 bytes
+[4/30/2026 12:27:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:27:51 AM] readPackets: 30 bytes
+[4/30/2026 12:27:51 AM] readPackets: 30 bytes
+[4/30/2026 12:27:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:27:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:28:20 AM] readPackets: 30 bytes
+[4/30/2026 12:28:20 AM] readPackets: 30 bytes
+[4/30/2026 12:28:20 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:28:21 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:28:51 AM] readPackets: 30 bytes
+[4/30/2026 12:28:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:28:51 AM] readPackets: 30 bytes
+[4/30/2026 12:28:51 AM] readPackets: packet type=KeepAlive objs=1
+[4/30/2026 12:29:11 AM] readPackets: 7 bytes
+[4/30/2026 12:29:11 AM] readPackets: packet type=ClientDisconnect objs=0
+[4/30/2026 12:29:11 AM] Client disconnected (127.0.0.1)
+[4/30/2026 12:29:12 AM] readPackets: 7 bytes
+[4/30/2026 12:29:12 AM] readPackets: packet type=ClientDisconnect objs=0
+[4/30/2026 12:29:12 AM] Client disconnected (127.0.0.1)
+[5/1/2026 6:30:11 PM] Hosting server on port 4501
+[5/1/2026 6:30:11 PM] Client connected (127.0.0.1)
+[5/1/2026 6:30:11 PM] Client connected (127.0.0.1)
+[5/1/2026 6:30:11 PM] Client connected (127.0.0.1)
+[5/1/2026 6:31:32 PM] Lobby 'QHQW' was created
+[5/1/2026 7:07:38 PM] Hosting server on port 4501
+[5/1/2026 7:07:39 PM] Client connected (127.0.0.1)
+[5/1/2026 7:07:39 PM] Client connected (127.0.0.1)
+[5/1/2026 7:07:39 PM] Client connected (127.0.0.1)
+[5/1/2026 7:07:49 PM] Lobby 'ATOR' was created
+[5/1/2026 7:12:02 PM] Client disconnected (127.0.0.1)
+[5/1/2026 7:16:05 PM] Hosting server on port 4501
+[5/1/2026 7:16:06 PM] Client connected (127.0.0.1)
+[5/1/2026 7:16:06 PM] Client connected (127.0.0.1)
+[5/1/2026 7:16:06 PM] Client connected (127.0.0.1)
+[5/1/2026 7:16:16 PM] Lobby 'YZFK' was created
+[5/1/2026 7:19:29 PM] Client disconnected (127.0.0.1)
+[5/1/2026 7:19:29 PM] Client disconnected (127.0.0.1)
+[5/1/2026 7:19:45 PM] Hosting server on port 4501
+[5/1/2026 7:19:45 PM] Client connected (127.0.0.1)
+[5/1/2026 7:19:45 PM] Client connected (127.0.0.1)
+[5/1/2026 7:19:45 PM] Client connected (127.0.0.1)
+[5/1/2026 7:20:05 PM] Lobby 'SKPD' was created
+[5/1/2026 7:21:55 PM] Client disconnected (127.0.0.1)
+[5/1/2026 7:22:20 PM] Hosting server on port 4501
+[5/1/2026 7:22:21 PM] Client connected (127.0.0.1)
+[5/1/2026 7:22:21 PM] Client connected (127.0.0.1)
+[5/1/2026 7:22:21 PM] Client connected (127.0.0.1)
+[5/1/2026 7:22:28 PM] Lobby 'RGTT' was created
+[5/1/2026 7:24:28 PM] PLACED team=0 by=KC
+[5/1/2026 7:24:28 PM] CONFIRM team=0 by=KC
+[5/1/2026 7:24:34 PM] PLACED team=1 by=KC
+[5/1/2026 7:24:35 PM] CONFIRM team=1 by=KC
+[5/1/2026 7:24:41 PM] AttackRequest from=KC onBehalfOf=KC index=50
+[5/1/2026 7:24:41 PM] ATTACK idx=50 attacker=1 defender=0 result=Hit
+[5/1/2026 7:24:41 PM] AttackRequest from=KC onBehalfOf=KC index=51
+[5/1/2026 7:24:41 PM] ATTACK idx=51 attacker=1 defender=0 result=Hit
+[5/1/2026 7:24:42 PM] AttackRequest from=KC onBehalfOf=KC index=52
+[5/1/2026 7:24:42 PM] ATTACK idx=52 attacker=1 defender=0 result=Sunk
+[5/1/2026 7:24:56 PM] Client disconnected (127.0.0.1)
+[5/1/2026 7:25:01 PM] Hosting server on port 4501
+[5/1/2026 7:25:01 PM] Client connected (127.0.0.1)
+[5/1/2026 7:25:01 PM] Client connected (127.0.0.1)
+[5/1/2026 7:25:01 PM] Client connected (127.0.0.1)
+[5/1/2026 7:25:07 PM] Lobby 'IXNB' was created
+[5/1/2026 7:28:15 PM] Client disconnected (127.0.0.1)
+[5/1/2026 7:29:03 PM] Hosting server on port 4501
+[5/1/2026 7:29:04 PM] Client connected (127.0.0.1)
+[5/1/2026 7:29:04 PM] Client connected (127.0.0.1)
+[5/1/2026 7:29:04 PM] Client connected (127.0.0.1)
+[5/1/2026 7:29:10 PM] Lobby 'JPEY' was created
+[5/1/2026 7:29:48 PM] PLACED team=1 by=KC
+[5/1/2026 7:29:48 PM] CONFIRM team=1 by=KC
+[5/1/2026 7:29:54 PM] PLACED team=0 by=KC
+[5/1/2026 7:29:54 PM] CONFIRM team=0 by=KC
+[5/1/2026 7:30:02 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[5/1/2026 7:30:02 PM] ATTACK idx=0 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:03 PM] AttackRequest from=KC onBehalfOf=KC index=1
+[5/1/2026 7:30:03 PM] ATTACK idx=1 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:03 PM] AttackRequest from=KC onBehalfOf=KC index=2
+[5/1/2026 7:30:03 PM] ATTACK idx=2 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:03 PM] AttackRequest from=KC onBehalfOf=KC index=4
+[5/1/2026 7:30:03 PM] ATTACK idx=4 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:04 PM] AttackRequest from=KC onBehalfOf=KC index=3
+[5/1/2026 7:30:04 PM] ATTACK idx=3 attacker=1 defender=0 result=Sunk
+[5/1/2026 7:30:04 PM] AttackRequest from=KC onBehalfOf=KC index=13
+[5/1/2026 7:30:04 PM] ATTACK idx=13 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:05 PM] AttackRequest from=KC onBehalfOf=KC index=12
+[5/1/2026 7:30:05 PM] ATTACK idx=12 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:05 PM] AttackRequest from=KC onBehalfOf=KC index=11
+[5/1/2026 7:30:05 PM] ATTACK idx=11 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:05 PM] AttackRequest from=KC onBehalfOf=KC index=10
+[5/1/2026 7:30:05 PM] ATTACK idx=10 attacker=1 defender=0 result=Sunk
+[5/1/2026 7:30:06 PM] AttackRequest from=KC onBehalfOf=KC index=20
+[5/1/2026 7:30:06 PM] ATTACK idx=20 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:06 PM] AttackRequest from=KC onBehalfOf=KC index=21
+[5/1/2026 7:30:06 PM] ATTACK idx=21 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:06 PM] AttackRequest from=KC onBehalfOf=KC index=22
+[5/1/2026 7:30:06 PM] ATTACK idx=22 attacker=1 defender=0 result=Sunk
+[5/1/2026 7:30:07 PM] AttackRequest from=KC onBehalfOf=KC index=22
+[5/1/2026 7:30:07 PM] ATTACK idx=22 attacker=1 defender=0 result=Miss
+[5/1/2026 7:30:07 PM] AttackRequest from=KC onBehalfOf=KC index=32
+[5/1/2026 7:30:07 PM] ATTACK idx=32 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:07 PM] AttackRequest from=KC onBehalfOf=KC index=30
+[5/1/2026 7:30:07 PM] ATTACK idx=30 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:08 PM] AttackRequest from=KC onBehalfOf=KC index=41
+[5/1/2026 7:30:08 PM] ATTACK idx=41 attacker=1 defender=0 result=Hit
+[5/1/2026 7:30:08 PM] AttackRequest from=KC onBehalfOf=KC index=31
+[5/1/2026 7:30:08 PM] ATTACK idx=31 attacker=1 defender=0 result=Sunk
+[5/1/2026 7:30:08 PM] AttackRequest from=KC onBehalfOf=KC index=40
+[5/1/2026 7:30:08 PM] ATTACK idx=40 attacker=1 defender=0 result=Sunk
+[5/1/2026 7:43:20 PM] Hosting server on port 4501
+[5/1/2026 7:43:20 PM] Client connected (127.0.0.1)
+[5/1/2026 7:43:20 PM] Client connected (127.0.0.1)
+[5/1/2026 7:43:20 PM] Client connected (127.0.0.1)
+[5/1/2026 7:43:28 PM] Lobby 'UYKJ' was created
+[5/1/2026 7:44:01 PM] PLACED team=3 by=KC
+[5/1/2026 7:44:01 PM] CONFIRM team=3 by=KC
+[5/1/2026 7:44:10 PM] PLACED team=0 by=KC
+[5/1/2026 7:44:10 PM] CONFIRM team=0 by=KC
+[5/1/2026 7:44:15 PM] AttackRequest from=KC onBehalfOf=KC index=46
+[5/1/2026 7:44:15 PM] ATTACK idx=46 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:17 PM] AttackRequest from=KC onBehalfOf=KC index=45
+[5/1/2026 7:44:17 PM] ATTACK idx=45 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:18 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[5/1/2026 7:44:18 PM] ATTACK idx=0 attacker=0 defender=3 result=Hit
+[5/1/2026 7:44:18 PM] AttackRequest from=KC onBehalfOf=KC index=30
+[5/1/2026 7:44:18 PM] ATTACK idx=30 attacker=0 defender=3 result=Hit
+[5/1/2026 7:44:18 PM] AttackRequest from=KC onBehalfOf=KC index=51
+[5/1/2026 7:44:18 PM] ATTACK idx=51 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:19 PM] AttackRequest from=KC onBehalfOf=KC index=72
+[5/1/2026 7:44:19 PM] ATTACK idx=72 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:19 PM] AttackRequest from=KC onBehalfOf=KC index=84
+[5/1/2026 7:44:19 PM] ATTACK idx=84 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:19 PM] AttackRequest from=KC onBehalfOf=KC index=66
+[5/1/2026 7:44:19 PM] ATTACK idx=66 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:19 PM] AttackRequest from=KC onBehalfOf=KC index=37
+[5/1/2026 7:44:19 PM] ATTACK idx=37 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:19 PM] AttackRequest from=KC onBehalfOf=KC index=27
+[5/1/2026 7:44:19 PM] ATTACK idx=27 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:19 PM] AttackRequest from=KC onBehalfOf=KC index=27
+[5/1/2026 7:44:19 PM] ATTACK idx=27 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:20 PM] AttackRequest from=KC onBehalfOf=KC index=36
+[5/1/2026 7:44:20 PM] ATTACK idx=36 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:20 PM] AttackRequest from=KC onBehalfOf=KC index=54
+[5/1/2026 7:44:20 PM] ATTACK idx=54 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:20 PM] AttackRequest from=KC onBehalfOf=KC index=64
+[5/1/2026 7:44:20 PM] ATTACK idx=64 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:23 PM] AttackRequest from=KC onBehalfOf=KC index=10
+[5/1/2026 7:44:23 PM] ATTACK idx=10 attacker=0 defender=3 result=Hit
+[5/1/2026 7:44:24 PM] AttackRequest from=KC onBehalfOf=KC index=20
+[5/1/2026 7:44:24 PM] ATTACK idx=20 attacker=0 defender=3 result=Hit
+[5/1/2026 7:44:24 PM] AttackRequest from=KC onBehalfOf=KC index=40
+[5/1/2026 7:44:24 PM] ATTACK idx=40 attacker=0 defender=3 result=Hit
+[5/1/2026 7:44:25 PM] AttackRequest from=KC onBehalfOf=KC index=50
+[5/1/2026 7:44:25 PM] ATTACK idx=50 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:25 PM] AttackRequest from=KC onBehalfOf=KC index=60
+[5/1/2026 7:44:25 PM] ATTACK idx=60 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:25 PM] AttackRequest from=KC onBehalfOf=KC index=70
+[5/1/2026 7:44:25 PM] ATTACK idx=70 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:26 PM] AttackRequest from=KC onBehalfOf=KC index=70
+[5/1/2026 7:44:26 PM] ATTACK idx=70 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:26 PM] AttackRequest from=KC onBehalfOf=KC index=90
+[5/1/2026 7:44:26 PM] ATTACK idx=90 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:27 PM] AttackRequest from=KC onBehalfOf=KC index=91
+[5/1/2026 7:44:27 PM] ATTACK idx=91 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:27 PM] AttackRequest from=KC onBehalfOf=KC index=81
+[5/1/2026 7:44:27 PM] ATTACK idx=81 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:28 PM] AttackRequest from=KC onBehalfOf=KC index=80
+[5/1/2026 7:44:28 PM] ATTACK idx=80 attacker=0 defender=3 result=Miss
+[5/1/2026 7:44:33 PM] AttackRequest from=KC onBehalfOf=KC index=0
+[5/1/2026 7:44:33 PM] ATTACK idx=0 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:34 PM] AttackRequest from=KC onBehalfOf=KC index=10
+[5/1/2026 7:44:34 PM] ATTACK idx=10 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:34 PM] AttackRequest from=KC onBehalfOf=KC index=20
+[5/1/2026 7:44:34 PM] ATTACK idx=20 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:34 PM] AttackRequest from=KC onBehalfOf=KC index=30
+[5/1/2026 7:44:34 PM] ATTACK idx=30 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:35 PM] AttackRequest from=KC onBehalfOf=KC index=40
+[5/1/2026 7:44:35 PM] ATTACK idx=40 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:35 PM] AttackRequest from=KC onBehalfOf=KC index=50
+[5/1/2026 7:44:35 PM] ATTACK idx=50 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:36 PM] AttackRequest from=KC onBehalfOf=KC index=60
+[5/1/2026 7:44:36 PM] ATTACK idx=60 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:36 PM] AttackRequest from=KC onBehalfOf=KC index=70
+[5/1/2026 7:44:36 PM] ATTACK idx=70 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:36 PM] AttackRequest from=KC onBehalfOf=KC index=80
+[5/1/2026 7:44:37 PM] ATTACK idx=80 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:37 PM] AttackRequest from=KC onBehalfOf=KC index=90
+[5/1/2026 7:44:37 PM] ATTACK idx=90 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:38 PM] AttackRequest from=KC onBehalfOf=KC index=91
+[5/1/2026 7:44:38 PM] ATTACK idx=91 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:39 PM] AttackRequest from=KC onBehalfOf=KC index=93
+[5/1/2026 7:44:39 PM] ATTACK idx=93 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:39 PM] AttackRequest from=KC onBehalfOf=KC index=92
+[5/1/2026 7:44:39 PM] ATTACK idx=92 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:40 PM] AttackRequest from=KC onBehalfOf=KC index=94
+[5/1/2026 7:44:40 PM] ATTACK idx=94 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:41 PM] AttackRequest from=KC onBehalfOf=KC index=95
+[5/1/2026 7:44:41 PM] ATTACK idx=95 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:41 PM] AttackRequest from=KC onBehalfOf=KC index=96
+[5/1/2026 7:44:41 PM] ATTACK idx=96 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:42 PM] AttackRequest from=KC onBehalfOf=KC index=97
+[5/1/2026 7:44:42 PM] ATTACK idx=97 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:42 PM] AttackRequest from=KC onBehalfOf=KC index=98
+[5/1/2026 7:44:42 PM] ATTACK idx=98 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:43 PM] AttackRequest from=KC onBehalfOf=KC index=99
+[5/1/2026 7:44:43 PM] ATTACK idx=99 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:43 PM] AttackRequest from=KC onBehalfOf=KC index=89
+[5/1/2026 7:44:43 PM] ATTACK idx=89 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:43 PM] AttackRequest from=KC onBehalfOf=KC index=88
+[5/1/2026 7:44:43 PM] ATTACK idx=88 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:44 PM] AttackRequest from=KC onBehalfOf=KC index=87
+[5/1/2026 7:44:44 PM] ATTACK idx=87 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:44 PM] AttackRequest from=KC onBehalfOf=KC index=86
+[5/1/2026 7:44:44 PM] ATTACK idx=86 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:45 PM] AttackRequest from=KC onBehalfOf=KC index=85
+[5/1/2026 7:44:45 PM] ATTACK idx=85 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:45 PM] AttackRequest from=KC onBehalfOf=KC index=84
+[5/1/2026 7:44:45 PM] ATTACK idx=84 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:46 PM] AttackRequest from=KC onBehalfOf=KC index=83
+[5/1/2026 7:44:46 PM] ATTACK idx=83 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:46 PM] AttackRequest from=KC onBehalfOf=KC index=83
+[5/1/2026 7:44:46 PM] ATTACK idx=83 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:47 PM] AttackRequest from=KC onBehalfOf=KC index=82
+[5/1/2026 7:44:47 PM] ATTACK idx=82 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:47 PM] AttackRequest from=KC onBehalfOf=KC index=81
+[5/1/2026 7:44:47 PM] ATTACK idx=81 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:48 PM] AttackRequest from=KC onBehalfOf=KC index=71
+[5/1/2026 7:44:48 PM] ATTACK idx=71 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:48 PM] AttackRequest from=KC onBehalfOf=KC index=72
+[5/1/2026 7:44:48 PM] ATTACK idx=72 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:49 PM] AttackRequest from=KC onBehalfOf=KC index=73
+[5/1/2026 7:44:49 PM] ATTACK idx=73 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:49 PM] AttackRequest from=KC onBehalfOf=KC index=74
+[5/1/2026 7:44:49 PM] ATTACK idx=74 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:50 PM] AttackRequest from=KC onBehalfOf=KC index=75
+[5/1/2026 7:44:50 PM] ATTACK idx=75 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:50 PM] AttackRequest from=KC onBehalfOf=KC index=77
+[5/1/2026 7:44:50 PM] ATTACK idx=77 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:51 PM] AttackRequest from=KC onBehalfOf=KC index=76
+[5/1/2026 7:44:51 PM] ATTACK idx=76 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:52 PM] AttackRequest from=KC onBehalfOf=KC index=78
+[5/1/2026 7:44:52 PM] ATTACK idx=78 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:53 PM] AttackRequest from=KC onBehalfOf=KC index=79
+[5/1/2026 7:44:53 PM] ATTACK idx=79 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:53 PM] AttackRequest from=KC onBehalfOf=KC index=69
+[5/1/2026 7:44:53 PM] ATTACK idx=69 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:57 PM] AttackRequest from=KC onBehalfOf=KC index=67
+[5/1/2026 7:44:57 PM] ATTACK idx=67 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:57 PM] AttackRequest from=KC onBehalfOf=KC index=68
+[5/1/2026 7:44:57 PM] ATTACK idx=68 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:58 PM] AttackRequest from=KC onBehalfOf=KC index=66
+[5/1/2026 7:44:58 PM] ATTACK idx=66 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:58 PM] AttackRequest from=KC onBehalfOf=KC index=65
+[5/1/2026 7:44:58 PM] ATTACK idx=65 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:59 PM] AttackRequest from=KC onBehalfOf=KC index=64
+[5/1/2026 7:44:59 PM] ATTACK idx=64 attacker=3 defender=0 result=Miss
+[5/1/2026 7:44:59 PM] AttackRequest from=KC onBehalfOf=KC index=63
+[5/1/2026 7:44:59 PM] ATTACK idx=63 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:00 PM] AttackRequest from=KC onBehalfOf=KC index=62
+[5/1/2026 7:45:00 PM] ATTACK idx=62 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:00 PM] AttackRequest from=KC onBehalfOf=KC index=61
+[5/1/2026 7:45:00 PM] ATTACK idx=61 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:00 PM] AttackRequest from=KC onBehalfOf=KC index=51
+[5/1/2026 7:45:00 PM] ATTACK idx=51 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:01 PM] AttackRequest from=KC onBehalfOf=KC index=52
+[5/1/2026 7:45:01 PM] ATTACK idx=52 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:01 PM] AttackRequest from=KC onBehalfOf=KC index=53
+[5/1/2026 7:45:01 PM] ATTACK idx=53 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:02 PM] AttackRequest from=KC onBehalfOf=KC index=54
+[5/1/2026 7:45:02 PM] ATTACK idx=54 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:02 PM] AttackRequest from=KC onBehalfOf=KC index=56
+[5/1/2026 7:45:02 PM] ATTACK idx=56 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:02 PM] AttackRequest from=KC onBehalfOf=KC index=55
+[5/1/2026 7:45:02 PM] ATTACK idx=55 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:03 PM] AttackRequest from=KC onBehalfOf=KC index=57
+[5/1/2026 7:45:03 PM] ATTACK idx=57 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:04 PM] AttackRequest from=KC onBehalfOf=KC index=58
+[5/1/2026 7:45:04 PM] ATTACK idx=58 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:04 PM] AttackRequest from=KC onBehalfOf=KC index=59
+[5/1/2026 7:45:04 PM] ATTACK idx=59 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:04 PM] AttackRequest from=KC onBehalfOf=KC index=49
+[5/1/2026 7:45:04 PM] ATTACK idx=49 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:05 PM] AttackRequest from=KC onBehalfOf=KC index=48
+[5/1/2026 7:45:05 PM] ATTACK idx=48 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:06 PM] AttackRequest from=KC onBehalfOf=KC index=47
+[5/1/2026 7:45:06 PM] ATTACK idx=47 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:06 PM] AttackRequest from=KC onBehalfOf=KC index=46
+[5/1/2026 7:45:06 PM] ATTACK idx=46 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:06 PM] AttackRequest from=KC onBehalfOf=KC index=45
+[5/1/2026 7:45:06 PM] ATTACK idx=45 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:07 PM] AttackRequest from=KC onBehalfOf=KC index=44
+[5/1/2026 7:45:07 PM] ATTACK idx=44 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:07 PM] AttackRequest from=KC onBehalfOf=KC index=43
+[5/1/2026 7:45:07 PM] ATTACK idx=43 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:08 PM] AttackRequest from=KC onBehalfOf=KC index=42
+[5/1/2026 7:45:08 PM] ATTACK idx=42 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:08 PM] AttackRequest from=KC onBehalfOf=KC index=41
+[5/1/2026 7:45:08 PM] ATTACK idx=41 attacker=3 defender=0 result=Sunk
+[5/1/2026 7:45:09 PM] AttackRequest from=KC onBehalfOf=KC index=31
+[5/1/2026 7:45:09 PM] ATTACK idx=31 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:09 PM] AttackRequest from=KC onBehalfOf=KC index=32
+[5/1/2026 7:45:09 PM] ATTACK idx=32 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:09 PM] AttackRequest from=KC onBehalfOf=KC index=33
+[5/1/2026 7:45:09 PM] ATTACK idx=33 attacker=3 defender=0 result=Sunk
+[5/1/2026 7:45:10 PM] AttackRequest from=KC onBehalfOf=KC index=34
+[5/1/2026 7:45:10 PM] ATTACK idx=34 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:10 PM] AttackRequest from=KC onBehalfOf=KC index=35
+[5/1/2026 7:45:10 PM] ATTACK idx=35 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:10 PM] AttackRequest from=KC onBehalfOf=KC index=36
+[5/1/2026 7:45:10 PM] ATTACK idx=36 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:11 PM] AttackRequest from=KC onBehalfOf=KC index=37
+[5/1/2026 7:45:11 PM] ATTACK idx=37 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:11 PM] AttackRequest from=KC onBehalfOf=KC index=37
+[5/1/2026 7:45:11 PM] ATTACK idx=37 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:11 PM] AttackRequest from=KC onBehalfOf=KC index=39
+[5/1/2026 7:45:11 PM] ATTACK idx=39 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:12 PM] AttackRequest from=KC onBehalfOf=KC index=39
+[5/1/2026 7:45:12 PM] ATTACK idx=39 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:12 PM] AttackRequest from=KC onBehalfOf=KC index=38
+[5/1/2026 7:45:12 PM] ATTACK idx=38 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:13 PM] AttackRequest from=KC onBehalfOf=KC index=28
+[5/1/2026 7:45:13 PM] ATTACK idx=28 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:13 PM] AttackRequest from=KC onBehalfOf=KC index=29
+[5/1/2026 7:45:13 PM] ATTACK idx=29 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:14 PM] AttackRequest from=KC onBehalfOf=KC index=27
+[5/1/2026 7:45:14 PM] ATTACK idx=27 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:14 PM] AttackRequest from=KC onBehalfOf=KC index=26
+[5/1/2026 7:45:14 PM] ATTACK idx=26 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:15 PM] AttackRequest from=KC onBehalfOf=KC index=25
+[5/1/2026 7:45:15 PM] ATTACK idx=25 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:15 PM] AttackRequest from=KC onBehalfOf=KC index=24
+[5/1/2026 7:45:15 PM] ATTACK idx=24 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:16 PM] AttackRequest from=KC onBehalfOf=KC index=23
+[5/1/2026 7:45:16 PM] ATTACK idx=23 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:16 PM] AttackRequest from=KC onBehalfOf=KC index=22
+[5/1/2026 7:45:16 PM] ATTACK idx=22 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:17 PM] AttackRequest from=KC onBehalfOf=KC index=21
+[5/1/2026 7:45:17 PM] ATTACK idx=21 attacker=3 defender=0 result=Sunk
+[5/1/2026 7:45:17 PM] AttackRequest from=KC onBehalfOf=KC index=11
+[5/1/2026 7:45:17 PM] ATTACK idx=11 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:18 PM] AttackRequest from=KC onBehalfOf=KC index=12
+[5/1/2026 7:45:18 PM] ATTACK idx=12 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:18 PM] AttackRequest from=KC onBehalfOf=KC index=13
+[5/1/2026 7:45:18 PM] ATTACK idx=13 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:19 PM] AttackRequest from=KC onBehalfOf=KC index=14
+[5/1/2026 7:45:19 PM] ATTACK idx=14 attacker=3 defender=0 result=Sunk
+[5/1/2026 7:45:19 PM] AttackRequest from=KC onBehalfOf=KC index=16
+[5/1/2026 7:45:19 PM] ATTACK idx=16 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:20 PM] AttackRequest from=KC onBehalfOf=KC index=15
+[5/1/2026 7:45:20 PM] ATTACK idx=15 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:21 PM] AttackRequest from=KC onBehalfOf=KC index=17
+[5/1/2026 7:45:21 PM] ATTACK idx=17 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:21 PM] AttackRequest from=KC onBehalfOf=KC index=19
+[5/1/2026 7:45:21 PM] ATTACK idx=19 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:22 PM] AttackRequest from=KC onBehalfOf=KC index=18
+[5/1/2026 7:45:22 PM] ATTACK idx=18 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:22 PM] AttackRequest from=KC onBehalfOf=KC index=9
+[5/1/2026 7:45:22 PM] ATTACK idx=9 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:23 PM] AttackRequest from=KC onBehalfOf=KC index=9
+[5/1/2026 7:45:23 PM] ATTACK idx=9 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:24 PM] AttackRequest from=KC onBehalfOf=KC index=8
+[5/1/2026 7:45:24 PM] ATTACK idx=8 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:24 PM] AttackRequest from=KC onBehalfOf=KC index=7
+[5/1/2026 7:45:24 PM] ATTACK idx=7 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:25 PM] AttackRequest from=KC onBehalfOf=KC index=6
+[5/1/2026 7:45:25 PM] ATTACK idx=6 attacker=3 defender=0 result=Miss
+[5/1/2026 7:45:25 PM] AttackRequest from=KC onBehalfOf=KC index=5
+[5/1/2026 7:45:25 PM] ATTACK idx=5 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:26 PM] AttackRequest from=KC onBehalfOf=KC index=4
+[5/1/2026 7:45:26 PM] ATTACK idx=4 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:27 PM] AttackRequest from=KC onBehalfOf=KC index=3
+[5/1/2026 7:45:27 PM] ATTACK idx=3 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:28 PM] AttackRequest from=KC onBehalfOf=KC index=2
+[5/1/2026 7:45:28 PM] ATTACK idx=2 attacker=3 defender=0 result=Hit
+[5/1/2026 7:45:28 PM] AttackRequest from=KC onBehalfOf=KC index=1
+[5/1/2026 7:45:28 PM] ATTACK idx=1 attacker=3 defender=0 result=Sunk
+[5/1/2026 7:51:12 PM] Client disconnected (127.0.0.1)
+[5/1/2026 7:51:12 PM] Client disconnected (127.0.0.1)
+[5/1/2026 7:51:32 PM] Hosting server on port 4501
+[5/1/2026 7:51:33 PM] Client connected (127.0.0.1)
+[5/1/2026 7:51:33 PM] Client connected (127.0.0.1)
+[5/1/2026 7:51:33 PM] Client connected (127.0.0.1)
+[5/1/2026 7:51:41 PM] Lobby 'XWRY' was created
+[5/1/2026 7:52:32 PM] PLACED team=3 by=KC
+[5/1/2026 7:52:32 PM] CONFIRM team=3 by=KC
+[5/1/2026 7:52:37 PM] PLACED team=5 by=KC
+[5/1/2026 7:52:37 PM] CONFIRM team=5 by=KC
+[5/1/2026 7:52:45 PM] AttackRequest from=KC onBehalfOf=KC index=45
+[5/1/2026 7:52:45 PM] ATTACK idx=45 attacker=5 defender=3 result=Miss
+[5/1/2026 7:52:50 PM] AttackRequest from=KC onBehalfOf=KC index=47
+[5/1/2026 7:52:50 PM] ATTACK idx=47 attacker=5 defender=3 result=Miss

@@ -48,6 +48,9 @@ namespace EldenBingoServer
         [JsonProperty]
         public bool BoardAlreadyUsed { get; set; }
 
+        [JsonProperty]
+        public ServerBattleshipGame? BattleshipGame { get; set; }
+
         public BingoClientInRoom AddUser(BingoClientModel client, string nick, string adminPass, int team)
         {
             client.Room = this;
@@ -189,6 +192,11 @@ namespace EldenBingoServer
             {
                 if (Match.MatchMilliseconds < 0)
                     restartAndListenToTimer(Match.MatchMilliseconds * -1);
+            }
+            else if (Match.MatchStatus == MatchStatus.ShipPlacement)
+            {
+                // No timer for ship placement - it waits for both teams to confirm
+                stopTimer();
             }
             else
             {

@@ -26,7 +26,10 @@ namespace EldenBingo
                 nameof(ServerScoreboardUpdate),
                 nameof(ServerBingoAchievedUpdate),
                 nameof(ServerSquareUpdate),
-                nameof(ServerUserChecked)
+                nameof(ServerUserChecked),
+                nameof(ServerAttackResult),
+                nameof(ServerBattleshipTeamView),
+                nameof(ServerBattleshipGameOver)
             };
             Disconnected += client_Disconnected;
         }
@@ -35,6 +38,13 @@ namespace EldenBingo
 
         internal event EventHandler<RoomChangedEventArgs>? OnRoomChanged;
 
+        // Battleship events
+        internal event EventHandler<BattleshipConfigEventArgs>? OnBattleshipConfig;
+        internal event EventHandler<BattleshipTeamViewEventArgs>? OnBattleshipTeamView;
+        internal event EventHandler<AttackResultEventArgs>? OnAttackResult;
+        internal event EventHandler? OnAllShipsPlaced;
+        internal event EventHandler<BattleshipGameOverEventArgs>? OnBattleshipGameOver;
+
         /// <summary>
         /// Artificial delay for all match related packets, in milliseconds
         /// </summary>
@@ -42,6 +52,7 @@ namespace EldenBingo
 
         public UserInRoom? LocalUser { get; private set; }
         public BingoBoard? BingoBoard => Room?.Match.Board;
+        public bool IsBattleshipMode { get; private set; }
 
         public override string Version => EldenBingoCommon.Version.CurrentVersion;
 
@@ -58,7 +69,10 @@ namespace EldenBingo
                     var oldRoom = _room;
                     _room = value;
                     if (_room == null)
+                    {
                         LocalUser = null;
+                        IsBattleshipMode = false;
+                    }
                     fireOnRoomChanged(oldRoom);
                 }
             }
@@ -99,6 +113,16 @@ namespace EldenBingo
             Room = null;
             FireOnStatus("Left lobby");
             await SendPacketToServer(new Packet(new ClientRequestLeaveRoom()));
+        }
+
+        public async Task PlaceShips(ShipPlacement[] placements)
+        {
+            await SendPacketToServer(new Packet(new ClientPlaceShips(placements)));
+        }
+
+        public async Task ConfirmShipPlacement()
+        {
+            await SendPacketToServer(new Packet(new ClientConfirmShipPlacement()));
         }
 
         protected override async void DispatchObjects(ClientModel? sender, IEnumerable<object> objects)
@@ -146,6 +170,11 @@ namespace EldenBingo
             AddListener<ServerJoinRoomAccepted>(joinRoomAccepted);
             AddListener<ServerEntireBingoBoardUpdate>(entireBingoBoardUpdate);
             AddListener<ServerMatchStatusUpdate>(matchStatusUpdate);
+            AddListener<ServerBattleshipConfig>(battleshipConfig);
+            AddListener<ServerBattleshipTeamView>(battleshipTeamView);
+            AddListener<ServerAttackResult>(attackResult);
+            AddListener<ServerAllShipsPlaced>(allShipsPlaced);
+            AddListener<ServerBattleshipGameOver>(battleshipGameOver);
         }
 
         private void userJoinedRoom(ClientModel? _, ServerUserJoinedRoom userJoined)
@@ -212,6 +241,37 @@ namespace EldenBingo
             {
                 Room.Match.UpdateMatchStatus(matchStatus.MatchStatus, matchStatus.Paused, matchStatus.Timer);
             }
+            // Ensure battleship mode flag is cleared when the match leaves battleship state
+            if (matchStatus.MatchStatus == MatchStatus.NotRunning || matchStatus.MatchStatus == MatchStatus.Finished)
+            {
+                IsBattleshipMode = false;
+            }
+        }
+
+        private void battleshipConfig(ClientModel? _, ServerBattleshipConfig config)
+        {
+            IsBattleshipMode = true;
+            OnBattleshipConfig?.Invoke(this, new BattleshipConfigEventArgs(config.Ships, config.BoardSize));
+        }
+
+        private void battleshipTeamView(ClientModel? _, ServerBattleshipTeamView view)
+        {
+            OnBattleshipTeamView?.Invoke(this, new BattleshipTeamViewEventArgs(view.TeamView));
+        }
+
+        private void attackResult(ClientModel? _, ServerAttackResult result)
+        {
+            OnAttackResult?.Invoke(this, new AttackResultEventArgs(result.Index, result.Result, result.AttackingTeam, result.DefendingTeam, result.SunkShip));
+        }
+
+        private void allShipsPlaced(ClientModel? _, ServerAllShipsPlaced msg)
+        {
+            OnAllShipsPlaced?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void battleshipGameOver(ClientModel? _, ServerBattleshipGameOver gameOver)
+        {
+            OnBattleshipGameOver?.Invoke(this, new BattleshipGameOverEventArgs(gameOver.WinningTeam, gameOver.WinningTeamName));
         }
 
         private void fireOnRoomChanged(Room? oldRoom)

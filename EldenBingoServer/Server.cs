@@ -76,6 +76,47 @@ namespace EldenBingoServer
             }
         }
 
+        private async void clientBattleshipAttack(BingoClientModel? sender, ClientBattleshipAttack attack)
+        {
+            if (sender?.Room == null)
+                return;
+
+            var room = sender.Room;
+            if (room.Match?.Board is not ServerBingoBoard board)
+                return;
+
+            // Battleship only, and only while the match is live
+            if (room.GameSettings.GameMode != GameMode.Battleship || room.BattleshipGame == null)
+                return;
+            if (room.Match?.MatchStatus != MatchStatus.Running)
+                return;
+
+            var userInfo = room.GetUser(sender.ClientGuid);
+            if (userInfo == null)
+                return;
+
+            // Prevent any spectator from issuing attacks.
+            if (userInfo.IsSpectator)
+            {
+                await sendAdminErrorMessage(sender, "Spectators cannot perform attacks");
+                try { FireOnStatus($"[Server] Blocked attack attempt by spectator '{userInfo.Nick}' (Admin={userInfo.IsAdmin}) on index {attack.Index}"); } catch { }
+                return;
+            }
+
+            var targetUserGuid = attack.ForUser;
+            if (targetUserGuid != sender.ClientGuid && !(userInfo.IsAdmin && userInfo.IsSpectator))
+                return; // Not allowed to act for others
+
+            var userToSet = targetUserGuid == sender.ClientGuid ? userInfo : room.GetUser(targetUserGuid);
+            if (userToSet == null)
+                return;
+
+            FireOnStatus($"AttackRequest from={userInfo.Nick} onBehalfOf={userToSet.Nick} index={attack.Index}");
+
+            // Ignore requested target team: attacks now apply to all other teams
+            await processBattleshipAttack(room, userToSet.Team, attack.Index);
+        }
+
         public override string Version => EldenBingoCommon.Version.CurrentVersion;
         public IEnumerable<ServerRoom> Rooms => _rooms.Values;
 
@@ -129,7 +170,7 @@ namespace EldenBingoServer
                     ContractResolver = new DefaultContractResolver
                     {
                         NamingStrategy = new CamelCaseNamingStrategy(),
-                        
+                        // Optional: You can make everything private or internal serializable
                         SerializeCompilerGeneratedMembers = true
                     },
                     Formatting = Formatting.Indented,
@@ -257,6 +298,7 @@ namespace EldenBingoServer
             AddListener<ClientRandomizeBoard>(clientRandomizeBoard);
             AddListener<ClientChangeMatchStatus>(clientChangeMatchStatus);
             AddListener<ClientTryCheck>(clientTryCheck);
+            AddListener<ClientBattleshipAttack>(clientBattleshipAttack);
             AddListener<ClientTryMark>(clientTryMark);
             AddListener<ClientTrySetCounter>(clientTrySetCounter);
             AddListener<ClientRequestCurrentGameSettings>(clientRequestGameSettings);
@@ -264,6 +306,8 @@ namespace EldenBingoServer
             AddListener<ClientTogglePause>(clientTogglePause);
             AddListener<ClientSetTeamName>(clientSetTeamName);
             AddListener<ClientRequestTeamChange>(clientTeamChange);
+            AddListener<ClientPlaceShips>(clientPlaceShips);
+            AddListener<ClientConfirmShipPlacement>(clientConfirmShipPlacement);
         }
 
         private async void roomNameRequested(BingoClientModel? sender, ClientRequestRoomName request)
@@ -331,7 +375,11 @@ namespace EldenBingoServer
             //Start game when countdown reaches 0
             if (room.Match.MatchStatus == MatchStatus.Starting)
             {
-                if (room.GameSettings.PreparationTime > 0)
+                if (room.GameSettings.GameMode == GameMode.Battleship)
+                {
+                    await startShipPlacement(room);
+                }
+                else if (room.GameSettings.PreparationTime > 0)
                 {
                     await startPreparation(room);
                 }
@@ -433,60 +481,24 @@ namespace EldenBingoServer
             {
                 var token = JToken.Parse(bingoJson.Json);
                 JArray? squares = null;
-                JObject? rootObject = null;
-
-                if (token is JArray arr)
+                if (token is JArray)
                 {
-                    // Legacy format: bare array of squares
-                    rootObject = new JObject
-                    {
-                        ["squares"] = arr
-                    };
-                    squares = arr;
-                }
-                else if (token is JObject jobj && jobj.TryGetValue("squares", out var sqTok) && sqTok is JArray jarr)
+                    squares = (JArray)token;
+                } 
+                else if (token is JObject jobj && jobj.ContainsKey("squares") && jobj["squares"] is JArray jarr)
                 {
                     squares = jarr;
-
-                    // Wrapped format: { "squares": [...] }
-                    rootObject = new JObject
+                    if (jobj.ContainsKey("category limits") && jobj["category limits"] is JObject configObject)
                     {
-                        ["squares"] = jarr
-                    };
-
-                    // carry region limits through to the generator (ONLY for wrapped-object format)
-                    if (jobj.TryGetValue("setRegionLimits", StringComparison.OrdinalIgnoreCase, out var rlTok)
-                        && rlTok is JArray regionLimits)
-                    {
-                        rootObject["setRegionLimits"] = regionLimits;
-                    }
-
-                    // keep your current category-limits key exactly to work with previous square sets
-                    if (jobj.TryGetValue("category limits", out var clTok) && clTok is JObject configObject)
-                    {
-                        rootObject["category limits"] = configObject;
-
                         var config = CategoryConfig.ParseConfig(configObject);
                         sender.Room.CategoryConfig = config;
                     }
-
-                    if (jobj.TryGetValue("category minimums", StringComparison.OrdinalIgnoreCase, out var minTok)
-                        && minTok is JObject minsObject)
-                    {
-                        // ensure room config exists
-                        sender.Room.CategoryConfig ??= new CategoryConfig();
-                        sender.Room.CategoryConfig.ParseMinimums(minsObject);
-                    }
                 }
-
-                if (squares == null || rootObject == null)
+                if (squares == null)
                     throw new Exception("Could not parse square data");
-
-                // Pass the wrapped JObject instead of bare JArray
-                var bg = new BingoBoardGenerator(rootObject, sender.Room.GameSettings.RandomSeed);
+                var bg = new BingoBoardGenerator(squares, sender.Room.GameSettings.RandomSeed);
                 sender.Room.BoardGenerator = bg;
-
-                // Don't update bingo board if match is running
+                //Don't update bingo board if match is running
                 if (sender.Room.Match.MatchStatus == MatchStatus.NotRunning || sender.Room.Match.MatchStatus == MatchStatus.Finished)
                 {
                     board = sender.Room.BoardGenerator.CreateBingoBoard(sender.Room);
@@ -506,15 +518,11 @@ namespace EldenBingoServer
             if (board != null)
             {
                 await setRoomBingoBoard(sender.Room, board);
-                await sendAdminStatusMessage(sender,
-                    $"Bingo json file successfully uploaded and bingo board generated!",
-                    Color.Green);
+                await sendAdminStatusMessage(sender, $"Bingo json file successfully uploaded and bingo board generated!", Color.Green);
             }
             else
             {
-                await sendAdminStatusMessage(sender,
-                    $"Bingo json file successfully uploaded!",
-                    Color.Green);
+                await sendAdminStatusMessage(sender, $"Bingo json file successfully uploaded!", Color.Green);
             }
         }
 
@@ -578,8 +586,6 @@ namespace EldenBingoServer
                 }
             }
 
-            
-
             //Can always change status to "Not running", all others require that bingo board is generated
             if (matchStatus.MatchStatus > MatchStatus.NotRunning && !await confirm(sender, hasBingoBoard: true))
                 return;
@@ -632,6 +638,10 @@ namespace EldenBingoServer
                     if (userToSet == null)
                         return;
 
+                    // In battleship mode, don't allow unchecking (toggle-off) already-checked squares
+                    if (sender.Room.GameSettings.GameMode == GameMode.Battleship && board.CheckStatus[tryCheck.Index].IsChecked(userToSet.Team))
+                        return;
+
                     var bingosBefore = board.BingoSet;
                     if (board.UserClicked(tryCheck.Index, userInfo, userToSet, out int teamChanged))
                     {
@@ -658,6 +668,8 @@ namespace EldenBingoServer
                             }
                         }
                         await Task.WhenAll(tasks);
+
+                        // Battleship attacks are handled via dedicated ClientBattleshipAttack packets
                     }
                 }
             }
@@ -674,15 +686,24 @@ namespace EldenBingoServer
                 if (userInfo == null)
                     return;
 
-                if (board.UserMarked(tryMark.Index, userInfo))
+                try
                 {
-                    var check = board.CheckStatus[tryMark.Index];
-                    ServerSquareUpdate squareUpdate;
-                    lock (check)
+                    var changed = board.UserMarked(tryMark.Index, userInfo);
+                    try { FireOnStatus($"[Server] Mark attempt by '{userInfo.Nick}' (Spectator={userInfo.IsSpectator}) on index {tryMark.Index} -> {(changed ? "CHANGED" : "NO_CHANGE")}"); } catch { }
+                    if (changed)
                     {
-                        squareUpdate = new ServerSquareUpdate(board.GetSquareDataForUser(userInfo, tryMark.Index), tryMark.Index);
+                        var check = board.CheckStatus[tryMark.Index];
+                        ServerSquareUpdate squareUpdate;
+                        lock (check)
+                        {
+                            squareUpdate = new ServerSquareUpdate(board.GetSquareDataForUser(userInfo, tryMark.Index), tryMark.Index);
+                        }
+                        await SendPacketToClient(new Packet(squareUpdate), sender);
                     }
-                    await SendPacketToClient(new Packet(squareUpdate), sender);
+                }
+                catch (Exception ex)
+                {
+                    try { FireOnStatus($"[Server] Exception handling mark from '{userInfo.Nick}' index {tryMark.Index}: {ex}"); } catch { }
                 }
             }
         }
@@ -896,7 +917,24 @@ namespace EldenBingoServer
             var teams = room.GetActiveTeams();
             var teamScores = new List<TeamScore>(teams.Select(t => new TeamScore(t.Index, t.Name, 0)));
 
-            if (room.Match.Board is ServerBingoBoard board)
+            if (room.BattleshipGame is { } bsGame)
+            {
+                // Score = number of cells this team has attacked on any opponent board
+                for (int i = 0; i < teamScores.Count; ++i)
+                {
+                    int attackerTeam = teamScores[i].Team;
+                    int attackCount = 0;
+                    foreach (var kvp in bsGame.TeamBoards)
+                    {
+                        if (kvp.Key == attackerTeam) continue;
+                        attackCount += kvp.Value.AttackedGrid.Count(cell => cell == attackerTeam);
+                    }
+                    var score = teamScores[i];
+                    score.Score = attackCount;
+                    teamScores[i] = score;
+                }
+            }
+            else if (room.Match.Board is ServerBingoBoard board)
             {
                 var squaresPerTeam = board.GetSquaresPerTeam();
                 var bingosPerTeam = board.BingosPerTeam;
@@ -955,6 +993,38 @@ namespace EldenBingoServer
                     packet.AddObject(createEntireBoardPacket(board, clientInRoom));
                 }
             }
+
+            // If a battleship game exists, include its state for the joining client so late-joining spectators/players
+            // receive the config and the appropriate team views (spectators see all teams, players see their own).
+            if (room.BattleshipGame != null)
+            {
+                // Send battleship config so the client can initialize the battleship UI
+                packet.AddObject(new ServerBattleshipConfig(BattleshipConstants.ClassicShips, room.GameSettings.BoardSize));
+
+                // Spectators should receive views for all teams; regular players only their own team
+                if (clientInRoom.IsSpectator)
+                {
+                    foreach (var teamId in room.BattleshipGame.TeamBoards.Keys)
+                    {
+                        var view = room.BattleshipGame.GetViewForUser(teamId);
+                        if (view != null)
+                            packet.AddObject(new ServerBattleshipTeamView(view.Value));
+                    }
+                }
+                else
+                {
+                    if (room.BattleshipGame.TeamBoards.ContainsKey(clientInRoom.Team))
+                    {
+                        var view = room.BattleshipGame.GetViewForUser(clientInRoom.Team);
+                        if (view != null)
+                            packet.AddObject(new ServerBattleshipTeamView(view.Value));
+                    }
+                }
+
+                // If placements were already confirmed, indicate that to the newly joined client
+                if (room.BattleshipGame.AllPlacementsConfirmed())
+                    packet.AddObject(new ServerAllShipsPlaced());
+            }
             packet.AddObject(scoreboard);
             //Send all users currently present in the room to the new client
             await SendPacketToClient(packet, client);
@@ -976,6 +1046,31 @@ namespace EldenBingoServer
                 //Send user leaving packet to all users remaining in the room
                 await sendPacketToRoom(new Packet(leftPacket, scoreboard), room);
             }
+        }
+
+        private async Task startShipPlacement(ServerRoom room)
+        {
+            // Determine the participating teams (allow 2+ teams)
+            var teams = room.GetActiveTeams().Where(t => t.Index >= 0).Select(t => t.Index).ToList();
+            if (teams.Count < 2)
+            {
+                // Need at least 2 teams for battleship
+                await setRoomMatchStatus(room, MatchStatus.NotRunning);
+                return;
+            }
+
+            var battleshipGame = new ServerBattleshipGame(
+                room.GameSettings.BoardSize,
+                BattleshipConstants.ClassicShips,
+                teams
+            );
+            room.BattleshipGame = battleshipGame;
+
+            await setRoomMatchStatus(room, MatchStatus.ShipPlacement);
+
+            // Send battleship config to all players
+            var configPacket = new Packet(new ServerBattleshipConfig(BattleshipConstants.ClassicShips, room.GameSettings.BoardSize));
+            await sendPacketToRoom(configPacket, room);
         }
 
         private async Task startPreparation(ServerRoom room)
@@ -1097,9 +1192,19 @@ namespace EldenBingoServer
                         error = "Match already started";
                         break;
                     }
-                case MatchStatus.Preparation:
+                case MatchStatus.ShipPlacement:
                     {
                         if (currentStatus != MatchStatus.Starting)
+                        {
+                            error = "Match not in starting phase";
+                            break;
+                        }
+                        room.Match.UpdateMatchStatus(status, 0, null);
+                        break;
+                    }
+                case MatchStatus.Preparation:
+                    {
+                        if (currentStatus != MatchStatus.Starting && currentStatus != MatchStatus.ShipPlacement)
                         {
                             error = "Match not starting";
                             break;
@@ -1113,7 +1218,7 @@ namespace EldenBingoServer
                     }
                 case MatchStatus.Running:
                     {
-                        if (currentStatus == MatchStatus.Starting || currentStatus == MatchStatus.Preparation)
+                        if (currentStatus == MatchStatus.Starting || currentStatus == MatchStatus.Preparation || currentStatus == MatchStatus.ShipPlacement)
                         {
                             room.Match.UpdateMatchStatus(status, 0, null);
                             break;
@@ -1131,7 +1236,13 @@ namespace EldenBingoServer
                     }
             }
             if (error == null)
+            {
+                // Clear battleship state on match end or reset
+                if (status == MatchStatus.NotRunning || status == MatchStatus.Finished)
+                    room.BattleshipGame = null;
+
                 await sendMatchStatus(room);
+            }
             return new SetRoomStatusResult(error == null, error);
         }
 
@@ -1180,6 +1291,157 @@ namespace EldenBingoServer
             if (_rooms.Remove(roomName, out var room))
             {
                 room.TimerElapsed -= onRoomTimerElapsed;
+            }
+        }
+
+        private async void clientPlaceShips(BingoClientModel? sender, ClientPlaceShips placeShips)
+        {
+            if (sender?.Room == null)
+                return;
+
+            var room = sender.Room;
+            if (room.Match.MatchStatus != MatchStatus.ShipPlacement || room.BattleshipGame == null)
+                return;
+
+            var userInfo = room.GetUser(sender.ClientGuid);
+            if (userInfo == null || userInfo.IsSpectator)
+                return;
+
+            var game = room.BattleshipGame;
+            if (!game.TeamBoards.ContainsKey(userInfo.Team))
+                return;
+
+            var teamBoard = game.TeamBoards[userInfo.Team];
+            if (teamBoard.PlacementConfirmed)
+            {
+                await sendAdminStatusMessage(sender, "Ship placement already confirmed", Color.Red);
+                return;
+            }
+
+            if (!teamBoard.TryPlaceShips(placeShips.Placements))
+            {
+                await sendAdminStatusMessage(sender, "Invalid ship placement", Color.Red);
+                return;
+            }
+
+            // Send updated view to all team members
+            await sendBattleshipViewToTeam(room, userInfo.Team);
+            await sendAdminStatusMessage(sender, "Ships placed! Confirm when ready.", Color.Green);
+            FireOnStatus($"PLACED team={userInfo.Team} by={userInfo.Nick}");
+        }
+
+        private async void clientConfirmShipPlacement(BingoClientModel? sender, ClientConfirmShipPlacement confirm)
+        {
+            if (sender?.Room == null)
+                return;
+
+            var room = sender.Room;
+            if (room.Match.MatchStatus != MatchStatus.ShipPlacement || room.BattleshipGame == null)
+                return;
+
+            var userInfo = room.GetUser(sender.ClientGuid);
+            if (userInfo == null || userInfo.IsSpectator)
+                return;
+
+            var game = room.BattleshipGame;
+            if (!game.TeamBoards.ContainsKey(userInfo.Team))
+                return;
+
+            var teamBoard = game.TeamBoards[userInfo.Team];
+            if (teamBoard.Placements == null || teamBoard.Placements.Length == 0)
+            {
+                await sendAdminStatusMessage(sender, "Place your ships first", Color.Red);
+                return;
+            }
+
+            teamBoard.PlacementConfirmed = true;
+            await sendAdminStatusMessage(sender, "Ship placement confirmed!", Color.Green);
+
+            // Notify all players in the room
+            var statusMsg = $"{BingoConstants.GetTeamName(userInfo.Team)} has confirmed ship placement!";
+            await sendPacketToRoom(new Packet(new ServerAdminStatusMessage(statusMsg, Color.Cyan.ToArgb())), room);
+            FireOnStatus($"CONFIRM team={userInfo.Team} by={userInfo.Nick}");
+
+            // Check if both teams are ready
+            if (game.AllPlacementsConfirmed())
+            {
+                // Transition: ShipPlacement -> Preparation or Running
+                await sendPacketToRoom(new Packet(new ServerAllShipsPlaced()), room);
+
+                if (room.GameSettings.PreparationTime > 0)
+                {
+                    await startPreparation(room);
+                }
+                else
+                {
+                    await startMatch(room);
+                }
+            }
+        }
+
+        private async Task sendBattleshipViewToTeam(ServerRoom room, int team)
+        {
+            if (room.BattleshipGame == null)
+                return;
+
+            var view = room.BattleshipGame.GetViewForUser(team);
+            if (view == null)
+                return;
+
+            var packet = new Packet(new ServerBattleshipTeamView(view.Value));
+            var teamClients = room.Users.Where(u => u.Team == team || u.IsSpectator).Select(u => u.Client);
+            await SendPacketToClients(packet, teamClients);
+        }
+
+        private async Task sendBattleshipViewToAll(ServerRoom room)
+        {
+            if (room.BattleshipGame == null)
+                return;
+
+            foreach (var team in room.BattleshipGame.TeamBoards.Keys)
+            {
+                await sendBattleshipViewToTeam(room, team);
+            }
+        }
+
+        private async Task processBattleshipAttack(ServerRoom room, int attackingTeam, int cellIndex)
+        {
+            var game = room.BattleshipGame;
+            if (game == null)
+                return;
+
+            // Apply attack to all other teams' boards
+            foreach (var kv in game.TeamBoards.OrderBy(k => k.Key))
+            {
+                int defendingTeam = kv.Key;
+                if (defendingTeam == attackingTeam)
+                    continue;
+
+                var board = kv.Value;
+                var (attackResult, sunkShip) = board.ReceiveAttack(cellIndex, attackingTeam);
+
+                // Send attack result to all players (per defending team)
+                var attackPacket = new Packet(new ServerAttackResult(cellIndex, attackResult, attackingTeam, defendingTeam, sunkShip));
+                await sendPacketToRoom(attackPacket, room);
+                FireOnStatus($"ATTACK idx={cellIndex} attacker={attackingTeam} defender={defendingTeam} result={attackResult}");
+            }
+
+            // Send updated views to everyone
+            await sendBattleshipViewToAll(room);
+
+            // Update scoreboard with new attack counts
+            await sendScoreboard(room);
+
+            // Check for game over
+            int winner = game.CheckGameOver();
+            if (winner >= 0)
+            {
+                var winnerName = room.GetTeamNameIgnoreUsers(winner);
+                var gameOverPacket = new Packet(new ServerBattleshipGameOver(winner, winnerName));
+                await sendPacketToRoom(gameOverPacket, room);
+
+                // End the match
+                await setRoomMatchStatus(room, MatchStatus.Finished);
             }
         }
 
