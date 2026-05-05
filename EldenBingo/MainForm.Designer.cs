@@ -331,7 +331,6 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(1420, 1032);
             Controls.Add(tabControl1);
-            Controls.Add(splitContainer1);
             Controls.Add(panel1);
             Controls.Add(toolStrip1);
             Margin = new Padding(4);

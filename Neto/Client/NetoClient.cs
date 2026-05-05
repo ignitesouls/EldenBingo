@@ -2,6 +2,7 @@
 using Neto.Shared;
 using System.Net;
 using System.Net.Sockets;
+using System.IO;
 
 namespace Neto.Client
 {
@@ -171,12 +172,13 @@ namespace Neto.Client
             byte[] data;
             try
             {
+                // normal send path
                 data = MessagePackSerializer.Serialize(p, GetMessagePackOptions());
                 data = PacketHelper.ConcatBytes(data, NetConstants.EndOfMessage);
             }
             catch (Exception e)
             {
-                FireOnError(e.Message);
+                FireOnError($"Serialization error: {e.Message}");
                 return;
             }
             try

@@ -2,12 +2,15 @@
 using EldenBingo.Settings;
 using EldenBingoCommon;
 using Neto.Shared;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace EldenBingo.UI
 {
     internal partial class AdminControl : ClientUserControl
     {
         private System.Windows.Forms.Timer? _hideAdminMessageTimer;
+        private Dictionary<string, Rectangle>? _originalBounds;
 
         public AdminControl()
         {
@@ -21,6 +24,105 @@ namespace EldenBingo.UI
                 _bingoJsonTextBox.Text = Properties.Settings.Default.LastBingoFile;
             }
             setFeatureToAllControls(this);
+
+            // Capture original control bounds so we can restore when resizing
+            try
+            {
+                if (_originalBounds == null)
+                {
+                    _originalBounds = new Dictionary<string, Rectangle>();
+                    foreach (Control c in Controls)
+                    {
+                        if (!string.IsNullOrEmpty(c.Name) && !_originalBounds.ContainsKey(c.Name))
+                            _originalBounds[c.Name] = c.Bounds;
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Adjusts the admin control layout to fit within a narrow parent.
+        /// If <paramref name="parentWidth"/> is below a threshold, stack action
+        /// controls vertically to avoid horizontal overflow.
+        /// </summary>
+        public void AdjustLayoutForParentWidth(int parentWidth)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action(() => AdjustLayoutForParentWidth(parentWidth)));
+                return;
+            }
+
+            try
+            {
+                const int threshold = 380; // when narrower than this, switch to vertical layout
+                if (parentWidth <= 0)
+                    return;
+
+                if (parentWidth < threshold)
+                {
+                    int margin = 8;
+                    int x = margin;
+                    int y = margin;
+                    int w = Math.Max(100, parentWidth - margin * 2);
+
+                    // Title
+                    label3.Location = new Point(x, y);
+                    y += label3.Height + 6;
+
+                    // Hide the legacy inline 'Upload Bingo JSON' label when in narrow stacked layout
+                    try { label1.Visible = false; } catch { }
+
+                    // JSON input
+                    _bingoJsonTextBox.SetBounds(x, y, w, _bingoJsonTextBox.Height);
+                    y += _bingoJsonTextBox.Height + 6;
+
+                    // Browse / Upload as full-width buttons stacked
+                    _browseJsonButton.SetBounds(x, y, w, _browseJsonButton.Height);
+                    y += _browseJsonButton.Height + 6;
+                    _uploadJsonButton.SetBounds(x, y, w, _uploadJsonButton.Height);
+                    y += _uploadJsonButton.Height + 8;
+
+                    // Main actions: stack the action buttons full-width (no bottom-right anchoring)
+                    var actionButtons = new List<Control>() { _lobbySettingsButton, _generateNewBoardButton, _startMatchButton, _pauseMatchButton, _stopMatchButton };
+                    int spacing = 6;
+                    foreach (var b in actionButtons)
+                    {
+                        b.SetBounds(x, y, w, b.Height);
+                        b.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                        y += b.Height + spacing;
+                    }
+
+                    // Status label below the buttons
+                    _adminStatusLabel.SetBounds(x, y, w, _adminStatusLabel.Height);
+                    y += _adminStatusLabel.Height + margin;
+
+                    // Resize control height to fit stacked content
+                    this.Width = parentWidth;
+                    this.Height = Math.Min(Math.Max(y, 120), 1000);
+                }
+                else
+                {
+                    // restore original bounds if available
+                    if (_originalBounds != null)
+                    {
+                        foreach (Control c in Controls)
+                        {
+                            if (!string.IsNullOrEmpty(c.Name) && _originalBounds.ContainsKey(c.Name))
+                                c.Bounds = _originalBounds[c.Name];
+                        }
+                        // restore size
+                        if (_originalBounds.ContainsKey(this.Name))
+                        {
+                            this.Bounds = _originalBounds[this.Name];
+                        }
+                        // Ensure the upload label is visible again in restored layout
+                        try { label1.Visible = true; } catch { }
+                    }
+                }
+            }
+            catch { }
         }
 
         /// <summary>

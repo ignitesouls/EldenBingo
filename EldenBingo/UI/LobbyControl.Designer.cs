@@ -38,6 +38,7 @@
             this._matchStatusLabel = new System.Windows.Forms.Label();
             this._bingoBoardPanel = new System.Windows.Forms.Panel();
             this._bingoControl = new EldenBingo.UI.BingoControl();
+            this._battleshipControl = new EldenBingo.UI.BattleshipControl();
             this.adminControl1 = new EldenBingo.UI.AdminControl();
             this._clientList = new EldenBingo.UI.ClientListControl();
             this._adminInfoLabel = new System.Windows.Forms.Label();
@@ -54,17 +55,21 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer1.BackColor = System.Drawing.Color.White;
+            this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.splitContainer1.Panel1.Controls.Add(this._lobbyStatusPanel);
             this.splitContainer1.Panel1.Controls.Add(this._bingoBoardPanel);
             this.splitContainer1.Panel1.Controls.Add(this.adminControl1);
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.splitContainer1.Panel2.Controls.Add(this._clientList);
             this.splitContainer1.Panel2.Controls.Add(this._adminInfoLabel);
             this.splitContainer1.Panel2MinSize = 80;
@@ -98,8 +103,8 @@
             // 
             this._logBoxBorderPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this._logBoxBorderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(110)))), ((int)(((byte)(97)))));
-            this._logBoxBorderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._logBoxBorderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this._logBoxBorderPanel.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._logBoxBorderPanel.Controls.Add(this._logTextBox);
             this._logBoxBorderPanel.Controls.Add(this._chatTextBox);
             this._logBoxBorderPanel.Location = new System.Drawing.Point(5, 104);
@@ -168,11 +173,24 @@
             // _bingoBoardPanel
             // 
             this._bingoBoardPanel.Controls.Add(this._bingoControl);
+            this._bingoBoardPanel.Controls.Add(this._battleshipControl);
             this._bingoBoardPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this._bingoBoardPanel.Location = new System.Drawing.Point(0, 0);
             this._bingoBoardPanel.Name = "_bingoBoardPanel";
             this._bingoBoardPanel.Size = new System.Drawing.Size(581, 421);
             this._bingoBoardPanel.TabIndex = 1;
+            // 
+            // _battleshipControl
+            // 
+            this._battleshipControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._battleshipControl.Client = null;
+            this._battleshipControl.Location = new System.Drawing.Point(5, 5);
+            this._battleshipControl.Name = "_battleshipControl";
+            this._battleshipControl.Size = new System.Drawing.Size(568, 408);
+            this._battleshipControl.TabIndex = 1;
+            this._battleshipControl.Visible = false;
             // 
             // _bingoControl
             // 
@@ -196,7 +214,7 @@
             // 
             // _clientList
             // 
-            this._clientList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._clientList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._clientList.Client = null;
             this._clientList.Dock = System.Windows.Forms.DockStyle.Fill;
             this._clientList.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -245,6 +263,7 @@
         private Label _matchStatusLabel;
         private AdminControl adminControl1;
         private BingoControl _bingoControl;
+        private BattleshipControl _battleshipControl;
         private RichTextBoxCustom _logTextBox;
         private Panel _logBoxBorderPanel;
         private Label _adminInfoLabel;

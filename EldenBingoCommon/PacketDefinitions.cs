@@ -22,6 +22,13 @@ public record ServerTeamNameChanged(Guid UserGuid, int Team, string TeamColorNam
 public record ServerBroadcastMessage(string Message);
 public record ServerUserChangedTeam(Guid UserGuid, int Team, string TeamColorName, UserInRoom[] Users);
 
+// Battleship packets
+public record ServerBattleshipConfig(ShipDefinition[] Ships, int BoardSize);
+public record ServerBattleshipTeamView(BattleshipTeamView TeamView);
+public record ServerAttackResult(int Index, AttackResult Result, int AttackingTeam, int DefendingTeam, ShipSunkInfo? SunkShip);
+public record ServerAllShipsPlaced();
+public record ServerBattleshipGameOver(int WinningTeam, string WinningTeamName);
+
 #endregion Server to client
 
 #region Client to server
@@ -43,5 +50,10 @@ public record ClientSetGameSettings(BingoGameSettings GameSettings);
 public record ClientRequestCurrentGameSettings();
 public record ClientSetTeamName(int Team, string Name);
 public record ClientRequestTeamChange(int Team);
+
+// Battleship packets
+public record ClientPlaceShips(ShipPlacement[] Placements);
+public record ClientConfirmShipPlacement();
+public record ClientBattleshipAttack(int Index, int TargetTeam, Guid ForUser);
 
 #endregion Client to server

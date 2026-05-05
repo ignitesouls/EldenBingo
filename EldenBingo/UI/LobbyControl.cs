@@ -1,6 +1,8 @@
 ﻿using EldenBingo.Net;
 using EldenBingoCommon;
 using Neto.Shared;
+using System.Drawing.Drawing2D;
+using System.Linq;
 
 namespace EldenBingo.UI
 {
@@ -11,12 +13,140 @@ namespace EldenBingo.UI
         private MatchStatus _lastMatchStatus;
         private bool _lastPaused;
         private System.Timers.Timer? _timer;
+        private Panel _battleshipSpectatorLegendPanel = null!;
+        private const bool EnableStatusDebugOverlay = false;
+        private TransparentOverlayPanel? _statusOverlayPanel;
+        private Panel? _adminHostPanel;
+        private string _battleshipLegendTeamAName = "Team A";
+        private string _battleshipLegendTeamBName = "Team B";
+        private Color _battleshipLegendTeamAColor = Color.LightCyan;
+        private Color _battleshipLegendTeamBColor = Color.LightCoral;
 
         public LobbyControl() : base()
         {
             InitializeComponent();
+
+            // Move admin controls into the right-side roster panel so admin-only sizing
+            // doesn't change the main bingo board layout. Do this at runtime to avoid
+            // editing designer generated parent/anchor code.
+            try
+            {
+                if (splitContainer1 != null && adminControl1 != null)
+                {
+                    if (splitContainer1.Panel1.Controls.Contains(adminControl1))
+                        splitContainer1.Panel1.Controls.Remove(adminControl1);
+
+                    // Create a stacked right-side layout: top = roster/log, bottom = admin host.
+                    int adminHeight = Math.Max(140, adminControl1.Height);
+
+                    _adminHostPanel = new Panel()
+                    {
+                        BackColor = Properties.Settings.Default.ControlBackColor,
+                        Height = adminHeight,
+                        Dock = DockStyle.Fill,
+                    };
+
+                    // Move existing Panel2 children (usually _clientList and _adminInfoLabel)
+                    // into a new top panel, then create a TableLayoutPanel to stack top + admin.
+                    var existing = splitContainer1.Panel2.Controls.Cast<Control>().ToList();
+                    foreach (var c in existing)
+                    {
+                        try { splitContainer1.Panel2.Controls.Remove(c); } catch { }
+                    }
+
+                    // Create a simple stacked layout: top fills, bottom reserved for admin.
+                    var rightTopPanel = new Panel() { Dock = DockStyle.Fill, BackColor = Properties.Settings.Default.ControlBackColor };
+                    var rightBottomPanel = new Panel() { Dock = DockStyle.Bottom, Height = adminHeight, BackColor = Properties.Settings.Default.ControlBackColor };
+
+                    // Move existing Panel2 children (usually _clientList and _adminInfoLabel)
+                    // into the new top panel.
+                    foreach (var c in existing)
+                    {
+                        try
+                        {
+                            if (c == _clientList)
+                                c.Dock = DockStyle.Fill;
+                            else if (c == _adminInfoLabel)
+                                c.Dock = DockStyle.Bottom;
+                            else
+                                c.Dock = DockStyle.Top;
+                            rightTopPanel.Controls.Add(c);
+                        }
+                        catch { }
+                    }
+
+                    // Use the bottom panel as the admin host so we preserve its reserved height
+                    _adminHostPanel = rightBottomPanel;
+                    _adminHostPanel.Controls.Add(adminControl1);
+                    adminControl1.Dock = DockStyle.Fill;
+
+                    // Add top then bottom so bottom stays docked to bottom
+                    splitContainer1.Panel2.Controls.Add(rightTopPanel);
+                    splitContainer1.Panel2.Controls.Add(rightBottomPanel);
+                    try { rightTopPanel.BringToFront(); adminControl1.BringToFront(); } catch { }
+
+                    // Adjust admin layout to fit the host panel width and compute a host height
+                    try { adminControl1.AdjustLayoutForParentWidth(_adminHostPanel.ClientSize.Width); } catch { }
+
+                    void recomputeAdminHostHeight()
+                    {
+                        try
+                        {
+                            var pref = adminControl1.GetPreferredSize(new Size(_adminHostPanel.ClientSize.Width > 0 ? _adminHostPanel.ClientSize.Width : 300, 0));
+                            var target = Math.Min(Math.Max(pref.Height, 120), 400); // clamp height between 120 and 400
+                            _adminHostPanel.Height = target;
+                        }
+                        catch { }
+                    }
+
+                    // Initial height calculation and on size changes
+                    recomputeAdminHostHeight();
+                    _adminHostPanel.SizeChanged += (s, e) => { try { adminControl1.AdjustLayoutForParentWidth(_adminHostPanel.ClientSize.Width); recomputeAdminHostHeight(); } catch { } };
+                    splitContainer1.Panel2.SizeChanged += (s, e) => { try { adminControl1.AdjustLayoutForParentWidth(_adminHostPanel.ClientSize.Width); recomputeAdminHostHeight(); } catch { } };
+                }
+            }
+            catch { }
+
             _instance = this;
             _adminHeight = adminControl1.Height;
+
+            // Host battleship placement panel in the right-side status area
+            _lobbyStatusPanel.Controls.Add(_battleshipControl.PlacementPanel);
+            _battleshipControl.PlacementPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            _battleshipControl.PlacementPanel.VisibleChanged += (s, e) => updateScoreboardControlLocationAndSize();
+
+            // Use the app control background color for the status area to match the right-hand pane
+            var statusBlue = Properties.Settings.Default.ControlBackColor;
+            _lobbyStatusPanel.BackColor = statusBlue;
+            _timerLabel.BackColor = statusBlue;
+            _matchStatusLabel.BackColor = statusBlue;
+
+            // Ensure the placement panel is opaque and matches the status background
+            _battleshipControl.PlacementPanel.BackColor = statusBlue;
+
+            _battleshipSpectatorLegendPanel = new Panel
+            {
+                Visible = false,
+                BackColor = Properties.Settings.Default.ControlBackColor,
+                BorderStyle = BorderStyle.None,
+                Height = 120,
+            };
+            _battleshipSpectatorLegendPanel.Paint += drawBattleshipSpectatorLegend;
+            _lobbyStatusPanel.Controls.Add(_battleshipSpectatorLegendPanel);
+
+            // Temporary debug overlay: draws bounds for status-area controls when enabled and spectator
+            if (EnableStatusDebugOverlay)
+            {
+                _statusOverlayPanel = new TransparentOverlayPanel
+                {
+                    BackColor = Color.Transparent,
+                    Dock = DockStyle.Fill,
+                    Visible = true,
+                };
+                _statusOverlayPanel.Paint += StatusOverlay_Paint;
+                _lobbyStatusPanel.Controls.Add(_statusOverlayPanel);
+                _statusOverlayPanel.BringToFront();
+            }
 
             listenToSettingsChanged();
             Load += lobbyControl_Load;
@@ -65,13 +195,17 @@ namespace EldenBingo.UI
             Client.AddListener<ServerBingoAchievedUpdate>(bingoAchieved);
             Client.AddListener<ServerTeamNameChanged>(teamNameChanged);
             Client.AddListener<ServerUserChangedTeam>(userChangedTeam);
-
             Client.AddListener<ServerBroadcastMessage>(serverMessage);
+            Client.OnBattleshipConfig += client_BattleshipConfig;
+            Client.OnAllShipsPlaced += client_AllShipsPlaced;
+            Client.OnBattleshipGameOver += client_BattleshipGameOver;
+            Client.OnAttackResult += client_AttackResult;
         }
 
         protected override void ClientChanged()
         {
             _bingoControl.Client = Client;
+            _battleshipControl.Client = Client;
             _clientList.Client = Client;
             _scoreboardControl.Client = Client;
             if (adminControl1 != null)
@@ -96,6 +230,10 @@ namespace EldenBingo.UI
             Client.RemoveListener<ServerEntireBingoBoardUpdate>(gotBingoBoard);
             Client.RemoveListener<ServerUserChat>(userChat);
             Client.RemoveListener<ServerBingoAchievedUpdate>(bingoAchieved);
+            Client.OnBattleshipConfig -= client_BattleshipConfig;
+            Client.OnAllShipsPlaced -= client_AllShipsPlaced;
+            Client.OnBattleshipGameOver -= client_BattleshipGameOver;
+            Client.OnAttackResult -= client_AttackResult;
         }
 
         private void userChecked(ClientModel? _, ServerUserChecked userCheckedArgs)
@@ -108,7 +246,8 @@ namespace EldenBingo.UI
                 Color? checkColor = userCheckedArgs.Team > -1 ? BingoConstants.GetTeamColorBright(userCheckedArgs.Team) : playerColor;
 
                 var square = Client.BingoBoard.Squares[userCheckedArgs.Index];
-                updateMatchLog(new[] { playerName, square.IsChecked(userCheckedArgs.Team) ? "marked" : "unmarked", square.Text },
+                bool isChecked = square.IsChecked(userCheckedArgs.Team);
+                updateMatchLog(new[] { playerName, isChecked ? "marked" : "unmarked", square.Text },
                                new Color?[] { playerColor, null, checkColor }, true);
             }
         }
@@ -202,6 +341,7 @@ namespace EldenBingo.UI
                         new string[] { user.Nick, $"changed name of", teamNameChanged.TeamColorName, "to", teamNameChanged.Name },
                         new Color?[] { BingoConstants.GetTeamColorBright(user.Team), null, teamColor, null, teamColor },
                         true);
+                    updateBattleshipSpectatorLegend();
                 }
             }
         }
@@ -220,6 +360,7 @@ namespace EldenBingo.UI
                         new string[] { user.Nick, $"changed team to", teamChanged.TeamColorName },
                         new Color?[] { oldTeamColor, null, newTeamColor },
                         true);
+                    updateBattleshipSpectatorLegend();
                 }
             }
         }
@@ -227,6 +368,69 @@ namespace EldenBingo.UI
         private void serverMessage(ClientModel? model, ServerBroadcastMessage message)
         {
             updateMatchLog(new[] { $"Server: {message.Message}" }, new Color?[] { Color.Orange }, true);
+        }
+
+        private void client_BattleshipConfig(object? sender, BattleshipConfigEventArgs e)
+        {
+            void update()
+            {
+                // Switch to battleship view
+                _bingoControl.Visible = false;
+                _battleshipControl.Visible = true;
+                updateBattleshipSpectatorLegend();
+                updateBingoPanelSize();
+            }
+            if (InvokeRequired)
+                BeginInvoke(update);
+            else
+                update();
+            updateMatchLog(new[] { "Battleship mode! Place your ships." }, new Color?[] { Color.Cyan }, true);
+        }
+
+        private void client_AllShipsPlaced(object? sender, EventArgs e)
+        {
+            updateMatchLog(new[] { "All ships placed! The battle begins!" }, new Color?[] { Color.Lime }, true);
+        }
+
+        private void client_BattleshipGameOver(object? sender, BattleshipGameOverEventArgs e)
+        {
+            updateMatchLog(
+                new[] { "GAME OVER!", e.WinningTeamName, "wins!" },
+                new Color?[] { Color.Gold, BingoConstants.GetTeamColorBright(e.WinningTeam), Color.Gold },
+                true);
+        }
+
+        private void client_AttackResult(object? sender, AttackResultEventArgs e)
+        {
+            string resultStr = e.Result switch
+            {
+                AttackResult.Miss => "Miss!",
+                AttackResult.Hit => "Hit!",
+                AttackResult.Sunk => "SUNK!",
+                _ => ""
+            };
+            Color resultColor = e.Result switch
+            {
+                AttackResult.Miss => Color.LightBlue,
+                AttackResult.Hit => Color.Orange,
+                AttackResult.Sunk => Color.Red,
+                _ => Color.White
+            };
+            string attacker = BingoConstants.GetTeamName(e.AttackingTeam);
+            string defender = BingoConstants.GetTeamName(e.DefendingTeam);
+            string squareName = Client?.BingoBoard?.Squares.ElementAtOrDefault(e.Index).Text ?? "";
+            string squarePart = string.IsNullOrWhiteSpace(squareName) ? "" : $" ({squareName})";
+            updateMatchLog(
+                new[] { attacker, "attacks", defender + squarePart + ":", resultStr },
+                new Color?[] { BingoConstants.GetTeamColorBright(e.AttackingTeam), null, BingoConstants.GetTeamColorBright(e.DefendingTeam), resultColor },
+                true);
+            if (e.SunkShip != null)
+            {
+                updateMatchLog(
+                    new[] { $"  {defender}'s {e.SunkShip.Value.ShipName} has been sunk!" },
+                    new Color?[] { Color.Red },
+                    false);
+            }
         }
 
         private void _scoreboardControl_SizeChanged(object sender, EventArgs e)
@@ -239,8 +443,27 @@ namespace EldenBingo.UI
             void update()
             {
                 var startPosY = _scoreboardControl.Bottom + 3;
+
+                if (_battleshipSpectatorLegendPanel.Visible)
+                {
+                    _battleshipSpectatorLegendPanel.Location = new Point(5, startPosY);
+                    _battleshipSpectatorLegendPanel.Width = _lobbyStatusPanel.Width - 10;
+                    startPosY = _battleshipSpectatorLegendPanel.Bottom + 3;
+                }
+
+                // If battleship placement panel is visible, position it between scoreboard and log
+                var placementPanel = _battleshipControl.PlacementPanel;
+                if (placementPanel.Visible)
+                {
+                    placementPanel.Location = new Point(_logBoxBorderPanel.Left, startPosY);
+                    placementPanel.Width = _logBoxBorderPanel.Width;
+                    placementPanel.Height = 180;
+                    startPosY = placementPanel.Bottom + 3;
+                }
+
                 _logBoxBorderPanel.Location = new Point(_logBoxBorderPanel.Location.X, startPosY);
                 _logBoxBorderPanel.Height = _lobbyStatusPanel.Height - _logBoxBorderPanel.Location.Y - 3;
+                _statusOverlayPanel?.Invalidate();
             }
             if (InvokeRequired)
             {
@@ -248,6 +471,150 @@ namespace EldenBingo.UI
                 return;
             }
             update();
+        }
+
+        private void StatusOverlay_Paint(object? sender, PaintEventArgs e)
+        {
+            if (!EnableStatusDebugOverlay)
+                return;
+            if (Client?.LocalUser == null)
+                return;
+            // Allow overlay for spectators and admins so we can debug admin-only artifacts
+            if (Client.LocalUser.IsSpectator != true && Client.LocalUser.IsAdmin != true)
+                return;
+
+            var g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.None;
+
+            using var penLegend = new Pen(Color.FromArgb(200, Color.Red), 2);
+            using var penPlacement = new Pen(Color.FromArgb(200, Color.Lime), 2);
+            using var penLog = new Pen(Color.FromArgb(200, Color.Cyan), 2);
+            using var penScore = new Pen(Color.FromArgb(200, Color.Magenta), 2);
+            using var font = new Font("Segoe UI", 8, FontStyle.Bold);
+
+            try
+            {
+                if (_battleshipSpectatorLegendPanel != null && _battleshipSpectatorLegendPanel.Visible)
+                {
+                    var r = _battleshipSpectatorLegendPanel.Bounds;
+                    g.DrawRectangle(penLegend, r.X, r.Y, r.Width - 1, r.Height - 1);
+                    g.DrawString("Legend", font, Brushes.White, r.X + 4, r.Y + 4);
+                }
+
+                var placement = _battleshipControl.PlacementPanel;
+                if (placement != null && placement.Visible)
+                {
+                    var r = placement.Bounds;
+                    g.DrawRectangle(penPlacement, r.X, r.Y, r.Width - 1, r.Height - 1);
+                    g.DrawString("PlacementPanel", font, Brushes.White, r.X + 4, r.Y + 4);
+                }
+
+                var rLog = _logBoxBorderPanel.Bounds;
+                g.DrawRectangle(penLog, rLog.X, rLog.Y, rLog.Width - 1, rLog.Height - 1);
+                g.DrawString("Log", font, Brushes.White, rLog.X + 4, rLog.Y + 4);
+
+                var rScore = _scoreboardControl.Bounds;
+                g.DrawRectangle(penScore, rScore.X, rScore.Y, rScore.Width - 1, rScore.Height - 1);
+                g.DrawString("Scoreboard", font, Brushes.White, rScore.X + 4, rScore.Y + 4);
+            }
+            catch
+            {
+                // Swallow any painting exceptions during debug overlay
+            }
+        }
+
+        private void updateBattleshipSpectatorLegend()
+        {
+            void update()
+            {
+                bool show = _battleshipControl.Visible && Client?.LocalUser?.IsSpectator == true;
+                _battleshipSpectatorLegendPanel.Visible = show;
+                if (!show)
+                    return;
+
+                var teams = Client?.Room?.Users?
+                    .Where(u => u.Team >= 0)
+                    .Select(u => u.Team)
+                    .Distinct()
+                    .OrderBy(t => t)
+                    .Take(2)
+                    .ToList() ?? new List<int>();
+
+                string teamA = teams.Count > 0 ? BingoConstants.GetTeamName(teams[0]) : "Team A";
+                string teamB = teams.Count > 1 ? BingoConstants.GetTeamName(teams[1]) : "Team B";
+
+                Color teamAColor = teams.Count > 0 ? BingoConstants.GetTeamColorBright(teams[0]) : Color.LightCyan;
+                Color teamBColor = teams.Count > 1 ? BingoConstants.GetTeamColorBright(teams[1]) : Color.LightCoral;
+
+                _battleshipLegendTeamAName = teamA;
+                _battleshipLegendTeamBName = teamB;
+                _battleshipLegendTeamAColor = teamAColor;
+                _battleshipLegendTeamBColor = teamBColor;
+                _battleshipSpectatorLegendPanel.Invalidate();
+
+                updateScoreboardControlLocationAndSize();
+            }
+
+            if (InvokeRequired)
+            {
+                BeginInvoke(update);
+                return;
+            }
+            update();
+        }
+
+        private void drawBattleshipSpectatorLegend(object? sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            Rectangle bounds = _battleshipSpectatorLegendPanel.ClientRectangle;
+
+            // Draw a filled background (no framed border to avoid visible boxed artifact)
+            using (var bg = new SolidBrush(_battleshipSpectatorLegendPanel.BackColor))
+            {
+                g.FillRectangle(bg, bounds);
+            }
+
+            int x = 8;
+            int y = 6;
+            int iconSize = 12;
+            int lineHeight = 22;
+
+            using var headerFont = new Font("Segoe UI", 8.75f, FontStyle.Bold);
+            using var itemFont = new Font("Segoe UI", 8.25f, FontStyle.Regular);
+            using var whiteBrush = new SolidBrush(Color.White);
+            using var dimBrush = new SolidBrush(Color.FromArgb(210, 210, 210));
+            using var sunkPen = new Pen(Color.White, 2f);
+            using var shipBrush = new SolidBrush(Color.FromArgb(70, 120, 120, 120));
+
+            // Header
+            g.DrawString("Spectator Legend", headerFont, whiteBrush, x, y);
+            y += 20;
+
+            // Team A hit/miss markers
+            using var teamABrush = new SolidBrush(_battleshipLegendTeamAColor);
+            using var teamAPen = new Pen(_battleshipLegendTeamAColor, 2f);
+            g.DrawEllipse(teamAPen, x, y + 1, iconSize, iconSize);
+            g.FillEllipse(teamABrush, x + 19, y + 4, 6, 6);
+            g.DrawString($"O / dot = {_battleshipLegendTeamAName}", itemFont, teamABrush, x + 32, y);
+            y += lineHeight;
+
+            // Team B hit/miss markers
+            using var teamBBrush = new SolidBrush(_battleshipLegendTeamBColor);
+            using var teamBPen = new Pen(_battleshipLegendTeamBColor, 2f);
+            g.DrawRectangle(teamBPen, x, y + 1, iconSize, iconSize);
+            g.FillRectangle(teamBBrush, x + 19, y + 4, 6, 6);
+            g.DrawString($"[] / square = {_battleshipLegendTeamBName}", itemFont, teamBBrush, x + 32, y);
+            y += lineHeight;
+
+            // Ship tint and sunk markers
+            g.FillRectangle(shipBrush, x, y + 1, iconSize, iconSize);
+            g.DrawRectangle(Pens.Gray, x, y + 1, iconSize, iconSize);
+            g.DrawRectangle(sunkPen, x + 19, y + 1, iconSize, iconSize);
+            g.DrawString("Tint = ship, white border = sunk", itemFont, dimBrush, x + 36, y);
+
+            // Bottom subtle separator removed to avoid visible framed line when legend is transparent
         }
 
         private void _timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
@@ -284,6 +651,8 @@ namespace EldenBingo.UI
                 restartAndListenToTimer();
                 e.NewRoom.Match.MatchStatusChanged += match_MatchStatusChanged;
             }
+            updateBattleshipSpectatorLegend();
+            updateScoreboardControlLocationAndSize();
         }
 
         private void default_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -410,8 +779,26 @@ namespace EldenBingo.UI
             void showHide()
             {
                 var isAdmin = Client?.LocalUser?.IsAdmin == true;
-                adminControl1.Visible = isAdmin;
-                adminControl1.Height = isAdmin ? _adminHeight : 0;
+                // If we hosted the admin control in a right-side panel, keep the host visible
+                // so the bottom area reserves its height, but only show the admin content
+                // when the local user is an admin.
+                if (_adminHostPanel != null)
+                {
+                    try
+                    {
+                        _adminHostPanel.Visible = true; // reserve the bottom area height
+                        adminControl1.Visible = isAdmin; // show content only for admins
+                        adminControl1.Enabled = isAdmin;
+                        _adminHostPanel.BringToFront();
+                        adminControl1.BringToFront();
+                    }
+                    catch { }
+                }
+                else
+                {
+                    adminControl1.Visible = isAdmin;
+                    adminControl1.Height = isAdmin ? _adminHeight : 0;
+                }
                 _adminInfoLabel.Visible = isAdmin && Client?.LocalUser?.IsSpectator == true;
                 updateBingoPanelSize();
             }
@@ -437,8 +824,23 @@ namespace EldenBingo.UI
 
         private void updateBingoPanelSize()
         {
-            var maxWidth = splitContainer1.Panel1.Width - splitContainer1.SplitterWidth - Convert.ToInt32(270f * this.DefaultScaleFactors().Width);
-            var maxHeight = splitContainer1.Panel1.Height - (adminControl1.Visible ? _adminHeight : 0);
+            int statusPanelWidth = Convert.ToInt32(270f * this.DefaultScaleFactors().Width);
+            var maxWidth = splitContainer1.Panel1.Width - statusPanelWidth;
+            // Only subtract admin height from Panel1 if the admin control is still docked in Panel1
+            var adminInLeftPanel = adminControl1.Parent == splitContainer1.Panel1;
+            var maxHeight = splitContainer1.Panel1.Height - (adminInLeftPanel && adminControl1.Visible ? _adminHeight : 0);
+
+            if (maxWidth < 120)
+                maxWidth = 120;
+
+            if (_battleshipControl.Visible)
+            {
+                // Battleship board is square, constrained by height.
+                _bingoBoardPanel.Width = Math.Min(maxWidth, maxHeight + 10);
+                updateBingoSize();
+                return;
+            }
+
             if (Properties.Settings.Default.BingoBoardMaximumSize)
             {
                 maxWidth = Math.Min(maxWidth, Properties.Settings.Default.BingoMaxSizeX + _bingoControl.Location.X + 3);
@@ -515,6 +917,14 @@ namespace EldenBingo.UI
                 {
                     updateMatchLog(new[] { "Match status changed to", Match.MatchStatusToString(match.MatchStatus, match.Paused, out var color2) }, new Color?[] { null, color2 }, true);
                 }
+                // Reset battleship/bingo visibility when match fully resets (not on Finished — keep battleship view up)
+                if (match.MatchStatus == MatchStatus.NotRunning)
+                {
+                    _battleshipControl.Visible = false;
+                    _bingoControl.Visible = true;
+                    updateBattleshipSpectatorLegend();
+                    updateBingoPanelSize();
+                }
                 _lastMatchStatus = match.MatchStatus;
                 _lastPaused = match.Paused;
             }
@@ -574,6 +984,39 @@ namespace EldenBingo.UI
             {
                 updateMatchLog(ex.Message, Color.Red, false);
             }
+        }
+    }
+
+    internal class TransparentOverlayPanel : Panel
+    {
+        public TransparentOverlayPanel()
+        {
+            SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+            BackColor = Color.Transparent;
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cp = base.CreateParams;
+                const int WS_EX_TRANSPARENT = 0x20;
+                cp.ExStyle |= WS_EX_TRANSPARENT;
+                return cp;
+            }
+        }
+
+        // Make the overlay ignore mouse hit tests so clicks pass through to underlying controls
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_NCHITTEST = 0x0084;
+            const int HTTRANSPARENT = -1;
+            if (m.Msg == WM_NCHITTEST)
+            {
+                m.Result = (IntPtr)HTTRANSPARENT;
+                return;
+            }
+            base.WndProc(ref m);
         }
     }
 }

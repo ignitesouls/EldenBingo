@@ -251,6 +251,8 @@ namespace EldenBingoServer
             if (i < 0 || i >= SquareCount)
                 return false;
 
+            // Mark/unmark is allowed for any user (including spectators).
+
             var check = CheckStatus[i];
             lock (check)
             {

@@ -240,6 +240,11 @@ namespace EldenBingoServerStandalone
         private static void server_OnStatus(object? sender, StringEventArgs e)
         {
             output(e.Message, StatusColor);
+            try
+            {
+                log(e.Message);
+            }
+            catch { }
         }
 
         private static void server_OnError(object? sender, StringEventArgs e)

@@ -6,6 +6,7 @@ using Neto.Shared;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Timers;
+using System.IO;
 
 namespace EldenBingo.UI
 {
@@ -297,7 +298,7 @@ namespace EldenBingo.UI
 
         private async void keyPressed(object? sender, KeyEventArgs e)
         {
-            if (Squares == null)
+            if (Squares == null || !Visible || e.Handled)
                 return;
 
             BingoSquareControl? square;
@@ -624,6 +625,7 @@ namespace EldenBingo.UI
 
         private async void square_MouseDown(object? sender, MouseEventArgs e)
         {
+            
             if (Client == null || sender is not BingoSquareControl c)
                 return;
 
@@ -642,6 +644,8 @@ namespace EldenBingo.UI
                 await markSquare(c);
             }
         }
+
+        
 
         private void square_MouseEntered(object? sender, EventArgs e)
         {
@@ -682,7 +686,6 @@ namespace EldenBingo.UI
             //No room or no board set in room
             if (Client?.Room?.Match?.Board == null)
                 return;
-
             var p = new Packet(new ClientTryMark(c.Index));
             await Client.SendPacketToServer(p);
         }

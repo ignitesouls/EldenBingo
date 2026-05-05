@@ -4,6 +4,7 @@ using MessagePack.Resolvers;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Linq;
 
 namespace Neto.Shared
 {
@@ -113,8 +114,11 @@ namespace Neto.Shared
                     messagePackReader.ReadRaw(NetConstants.EndOfMessage.Length);
                 }
             }
-            catch (MessagePackSerializationException)
+            catch (MessagePackSerializationException ex)
             {
+                var headBytes = bytes.Take(Math.Min(16, bytes.Length)).ToArray();
+                var headHex = headBytes.Length > 0 ? BitConverter.ToString(headBytes) : "";
+                FireOnError($"MessagePackSerializationException reading packets: {ex.Message} bytesLen={bytes.Length} head={headHex}");
                 packets.Add(null);
             }
             return packets.ToArray();
@@ -127,10 +131,10 @@ namespace Neto.Shared
                 try
                 {
                     GetOrRegisterDispatcher(o.GetType())?.Dispatch(sender, o);
-                } 
-                catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    FireOnError($"Exception when dispatching event ${o.GetType().Name}: {ex.Message}");
+                    try { FireOnError($"Exception when dispatching event {o?.GetType().Name}: {ex.Message}"); } catch { }
                 }
             }
         }
