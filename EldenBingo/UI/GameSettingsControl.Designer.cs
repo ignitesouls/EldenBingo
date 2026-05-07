@@ -79,7 +79,7 @@
             _classesListBox.FormattingEnabled = true;
             _classesListBox.Location = new Point(0, 29);
             _classesListBox.Name = "_classesListBox";
-            _classesListBox.Size = new Size(248, 184);
+            _classesListBox.Size = new Size(260, 184);
             _classesListBox.TabIndex = 17;
             // 
             // _classLimitCheckBox
@@ -98,7 +98,7 @@
             label2.AutoSize = true;
             label2.Location = new Point(4, 4);
             label2.Name = "label2";
-            label2.Size = new Size(169, 15);
+            label2.Size = new Size(168, 15);
             label2.TabIndex = 19;
             label2.Text = "Max squares in same category:";
             // 
@@ -209,7 +209,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(256, 30);
+            panel1.Size = new Size(268, 30);
             panel1.TabIndex = 0;
             // 
             // _lockoutCheckBox
@@ -230,7 +230,7 @@
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 30);
             panel2.Name = "panel2";
-            panel2.Size = new Size(256, 30);
+            panel2.Size = new Size(268, 30);
             panel2.TabIndex = 3;
             // 
             // panel3
@@ -241,7 +241,7 @@
             panel3.Dock = DockStyle.Top;
             panel3.Location = new Point(0, 60);
             panel3.Name = "panel3";
-            panel3.Size = new Size(256, 30);
+            panel3.Size = new Size(268, 30);
             panel3.TabIndex = 7;
             // 
             // panel4
@@ -251,7 +251,7 @@
             panel4.Dock = DockStyle.Top;
             panel4.Location = new Point(0, 90);
             panel4.Name = "panel4";
-            panel4.Size = new Size(256, 30);
+            panel4.Size = new Size(268, 30);
             panel4.TabIndex = 11;
             // 
             // panel5
@@ -262,7 +262,7 @@
             panel5.Dock = DockStyle.Top;
             panel5.Location = new Point(0, 120);
             panel5.Name = "panel5";
-            panel5.Size = new Size(256, 216);
+            panel5.Size = new Size(268, 216);
             panel5.TabIndex = 14;
             // 
             // panel6
@@ -272,7 +272,7 @@
             panel6.Dock = DockStyle.Top;
             panel6.Location = new Point(0, 336);
             panel6.Name = "panel6";
-            panel6.Size = new Size(256, 30);
+            panel6.Size = new Size(268, 30);
             panel6.TabIndex = 18;
             // 
             // GameSettingsControl
@@ -286,7 +286,7 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             Name = "GameSettingsControl";
-            Size = new Size(256, 367);
+            Size = new Size(268, 396);
             ((System.ComponentModel.ISupportInitialize)_numClassesUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)_maxCategoryUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)_randomSeedUpDown).EndInit();

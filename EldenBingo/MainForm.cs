@@ -593,8 +593,8 @@ namespace EldenBingo
             if (e.PropertyName == nameof(Properties.Settings.Default.CheckForUpdates))
             {
                 //If user just enabled "check for updates", do a little check
-                if (!_hasCheckedUpdates && Properties.Settings.Default.CheckForUpdates)
-                    checkForUpdates();
+                //if (!_hasCheckedUpdates && Properties.Settings.Default.CheckForUpdates)
+                //    checkForUpdates();
             }
         }
 
@@ -684,7 +684,7 @@ namespace EldenBingo
 
             if (Properties.Settings.Default.CheckForUpdates)
             {
-                checkForUpdates();
+                //checkForUpdates();
             }
             //_eventManager = new EventManager(_processHandler, _client);
         }

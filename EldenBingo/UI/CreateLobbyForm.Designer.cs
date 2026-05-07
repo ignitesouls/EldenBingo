@@ -105,7 +105,7 @@
             label5.AutoSize = true;
             label5.Location = new Point(6, 57);
             label5.Name = "label5";
-            label5.Size = new Size(38, 15);
+            label5.Size = new Size(39, 15);
             label5.TabIndex = 4;
             label5.Text = "Team:";
             // 
@@ -156,7 +156,7 @@
             // _cancelButton
             // 
             _cancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            _cancelButton.Location = new Point(172, 223);
+            _cancelButton.Location = new Point(172, 263);
             _cancelButton.Name = "_cancelButton";
             _cancelButton.Size = new Size(75, 23);
             _cancelButton.TabIndex = 11;
@@ -167,7 +167,7 @@
             // _createButton
             // 
             _createButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            _createButton.Location = new Point(91, 223);
+            _createButton.Location = new Point(91, 263);
             _createButton.Name = "_createButton";
             _createButton.Size = new Size(75, 23);
             _createButton.TabIndex = 10;
@@ -206,7 +206,7 @@
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             CancelButton = _cancelButton;
-            ClientSize = new Size(258, 256);
+            ClientSize = new Size(274, 296);
             Controls.Add(_seedLabel);
             Controls.Add(_lobbySettingsButton);
             Controls.Add(_createButton);
