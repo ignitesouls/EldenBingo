@@ -124,23 +124,20 @@ namespace EldenBingoServer
             var squares = new List<BingoJsonObj>();
             var categoryCount = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
-            //Add Region
             var usedRegionsByGroup = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
             foreach (var g in _regionLimitConfig.Groups)
                 usedRegionsByGroup[g.Name] = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            //Add Region
 
             var numSquares = room.GameSettings.BoardSize * room.GameSettings.BoardSize;
             bool anySquareFailedCategoryLimit = false;
+            bool minimumSquaresWereForced = false;
 
-            //var anyCenterSpecifics = squareList.Any(s => s.CenterType > CenterType.None);
             BingoJsonObj? centerSquare = null;
 
             if (numSquares % 2 == 1)
             {
                 for (int i = squareList.Count - 1; i >= 0; --i)
                 {
-                    //Remove all forced center squares (backwards) and pick the first one to be center square
                     if (squareList[i].CenterType == CenterType.ForcedCenter)
                     {
                         centerSquare = squareList[i];
@@ -148,22 +145,20 @@ namespace EldenBingoServer
                     }
                 }
             }
-            //If center square was found, increase all its categories used by 1
+
             if (centerSquare.HasValue)
             {
-                //Decrease how many squares we're looking for
                 --numSquares;
+
                 foreach (var category in centerSquare.Value.Categories)
                 {
                     categoryCount.TryGetValue(category, out int count);
                     categoryCount[category] = count + 1;
                 }
-                //Add Region
+
                 ApplySquareRegions(centerSquare.Value, usedRegionsByGroup);
-                //Add Region
             }
 
-            //For Minimums
             var remainingMin = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
             if (room.CategoryConfig != null)
@@ -175,21 +170,18 @@ namespace EldenBingoServer
                 }
             }
 
-            // If center square exists, it already "counts" toward mins
             if (centerSquare.HasValue && remainingMin.Count > 0)
             {
                 DecrementMinimums(remainingMin, centerSquare.Value.Categories);
             }
 
-            // Greedily satisfy minimums first
             int guard = 0;
             while (remainingMin.Count > 0 && AnyMinimumsRemaining(remainingMin))
             {
                 guard++;
-                if (guard > 50000) // safety against infinite loops in bad configs
+                if (guard > 50000)
                     return null;
 
-                // Find best candidate that helps minimums
                 int bestIndex = -1;
                 int bestScore = 0;
 
@@ -198,23 +190,22 @@ namespace EldenBingoServer
                     var sq = squareList[i];
 
                     int score = ScoreSquareForMinimums(remainingMin, sq);
-                    if (score <= 0) continue;
+                    if (score <= 0)
+                        continue;
 
-                    // Must pass normal checks (max categories + region)
-                    if (!PassesMaxCategoryLimits(room, sq, categoryCount)) continue;
-                    if (!PassesRegionDistinctLimit(sq, usedRegionsByGroup)) continue;
+                    if (!PassesMaxCategoryLimits(room, sq, categoryCount))
+                        continue;
+
+                    if (!PassesRegionDistinctLimit(sq, usedRegionsByGroup))
+                        continue;
 
                     if (score > bestScore)
                     {
                         bestScore = score;
                         bestIndex = i;
-
-                        // early-exit: can't do better than all unmet categories it has
-                        if (bestScore >= 3) { /* optional */ }
                     }
                 }
 
-                // No way to satisfy remaining mins => impossible board
                 if (bestIndex == -1)
                     return null;
 
@@ -222,34 +213,35 @@ namespace EldenBingoServer
                 squareList.RemoveAt(bestIndex);
 
                 squares.Add(picked);
+                minimumSquaresWereForced = true;
 
                 foreach (var category in picked.Categories)
                 {
                     categoryCount.TryGetValue(category, out int count);
                     categoryCount[category] = count + 1;
                 }
-                ApplySquareRegions(picked, usedRegionsByGroup);
 
+                ApplySquareRegions(picked, usedRegionsByGroup);
                 DecrementMinimums(remainingMin, picked.Categories);
 
                 if (squares.Count >= numSquares)
                     break;
             }
-            //For Minimums
 
             while (squareList.Count > 0 && squares.Count < numSquares)
             {
                 bool thisSquareFailedCategoryCheck = false;
-                //Pick the first square in queue as the potential square (since we already removed all ForcedCenter squares)
+
                 BingoJsonObj potentialSquare = squareList[0];
                 squareList.RemoveAt(0);
+
                 foreach (var category in potentialSquare.Categories)
                 {
                     int limit = room.GameSettings.CategoryLimit > 0 ? room.GameSettings.CategoryLimit : 99999;
+
                     if (room.CategoryConfig != null)
-                    {
                         limit = Math.Min(limit, room.CategoryConfig.GetCategoryLimit(category));
-                    }
+
                     if (categoryCount.TryGetValue(category, out int count) && count + 1 > limit)
                     {
                         anySquareFailedCategoryLimit = true;
@@ -257,51 +249,39 @@ namespace EldenBingoServer
                         break;
                     }
                 }
+
                 if (thisSquareFailedCategoryCheck)
-                {
-                    //Try next square instead
                     continue;
-                }
 
-                //Add Region
                 if (!PassesRegionDistinctLimit(potentialSquare, usedRegionsByGroup))
-                { 
-                    continue; 
-                }
-                //Add Region
+                    continue;
 
-                //YES, include the square on the board
                 squares.Add(potentialSquare);
-                //Increment count of each category by 1
+
                 foreach (var category in potentialSquare.Categories)
                 {
                     categoryCount.TryGetValue(category, out int count);
                     categoryCount[category] = count + 1;
                 }
 
-                //Add Region
                 ApplySquareRegions(potentialSquare, usedRegionsByGroup);
-                //Add Region
             }
+
             if (squares.Count != numSquares)
-            {
                 return null;
-            }
-            //If category limit was exceeded by any square:
-            //Shuffle the final squares, so we don't get a bias of category-less squares late in the board
-            if (anySquareFailedCategoryLimit)
+
+            if (anySquareFailedCategoryLimit || minimumSquaresWereForced)
                 squares = shuffleList(squares, _random).ToList();
 
             if (centerSquare.HasValue)
             {
-                //Add center square to the middle of the board, after reshuffle
                 squares.Insert(numSquares / 2, centerSquare.Value);
             }
-            //Balance the board, lock center square if it's set
+
             balanceBoard(squares, centerSquare.HasValue);
 
             EldenRingClasses[] classes;
-            //Always randomize classes, even if they're not needed - to ensure consistency in random number generation
+
             if (room.GameSettings.RandomClasses && room.GameSettings.NumberOfClasses > 0)
             {
                 classes = randomizeAvailableClasses(room.GameSettings.ValidClasses, room.GameSettings.NumberOfClasses);
@@ -309,9 +289,11 @@ namespace EldenBingoServer
             else
             {
                 classes = Array.Empty<EldenRingClasses>();
-                _random.Next(); //Skip a number to ensure consistency in random number generation
+                _random.Next();
             }
-            return new ServerBingoBoard(room,
+
+            return new ServerBingoBoard(
+                room,
                 room.GameSettings.BoardSize,
                 room.GameSettings.Lockout,
                 squares.Select(s =>
@@ -323,7 +305,8 @@ namespace EldenBingoServer
                         Array.Empty<SquareCounter>()
                     )
                 ).ToArray(),
-            classes);
+                classes
+            );
         }
 
         private EldenRingClasses[] randomizeAvailableClasses(IEnumerable<EldenRingClasses> availableClasses, int numberOfClasses)
