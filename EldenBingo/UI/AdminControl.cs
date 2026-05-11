@@ -23,6 +23,11 @@ namespace EldenBingo.UI
             {
                 _bingoJsonTextBox.Text = Properties.Settings.Default.LastBingoFile;
             }
+
+            // This label overlaps/pops back over the JSON path when the admin controls resize.
+            // Keep it hidden permanently since the stacked layout already makes the JSON controls clear.
+            try { label1.Visible = false; } catch { }
+
             setFeatureToAllControls(this);
 
             // Capture original control bounds so we can restore when resizing
@@ -71,7 +76,7 @@ namespace EldenBingo.UI
                     label3.Location = new Point(x, y);
                     y += label3.Height + 6;
 
-                    // Hide the legacy inline 'Upload Bingo JSON' label when in narrow stacked layout
+                    // Keep the legacy inline label hidden. It overlaps the JSON textbox.
                     try { label1.Visible = false; } catch { }
 
                     // JSON input
@@ -85,7 +90,15 @@ namespace EldenBingo.UI
                     y += _uploadJsonButton.Height + 8;
 
                     // Main actions: stack the action buttons full-width (no bottom-right anchoring)
-                    var actionButtons = new List<Control>() { _lobbySettingsButton, _generateNewBoardButton, _startMatchButton, _pauseMatchButton, _stopMatchButton };
+                    var actionButtons = new List<Control>()
+                    {
+                        _lobbySettingsButton,
+                        _generateNewBoardButton,
+                        _startMatchButton,
+                        _pauseMatchButton,
+                        _stopMatchButton
+                    };
+
                     int spacing = 6;
                     foreach (var b in actionButtons)
                     {
@@ -112,14 +125,18 @@ namespace EldenBingo.UI
                             if (!string.IsNullOrEmpty(c.Name) && _originalBounds.ContainsKey(c.Name))
                                 c.Bounds = _originalBounds[c.Name];
                         }
+
                         // restore size
                         if (_originalBounds.ContainsKey(this.Name))
                         {
                             this.Bounds = _originalBounds[this.Name];
                         }
-                        // Ensure the upload label is visible again in restored layout
-                        try { label1.Visible = true; } catch { }
                     }
+
+                    // IMPORTANT:
+                    // Do not make label1 visible again.
+                    // This is what caused "Upload Bingo JSON" to pop up over/near the path textbox.
+                    try { label1.Visible = false; } catch { }
                 }
             }
             catch { }
@@ -223,7 +240,6 @@ namespace EldenBingo.UI
             await tryChangeMatchStatus(MatchStatus.Starting);
         }
 
-
         private async void _stopMatchButton_Click(object sender, EventArgs e)
         {
             clearFocus();
@@ -241,7 +257,6 @@ namespace EldenBingo.UI
         {
             label3.Focus();
         }
-
 
         private void client_Connected(object? sender, EventArgs e)
         {
