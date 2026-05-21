@@ -11,9 +11,8 @@ namespace EldenBingoServer
         private int _randomSeed;
         private Random _random;
 
-        //New Code
-        private readonly RegionLimitConfig _regionLimitConfig;
-        //New Code
+        private readonly RegionLimitConfig _regionLimitConfig; //Set RegionLimitConfig
+
 
         public BingoBoardGenerator(JObject root, int randomSeed)
         {
@@ -22,10 +21,8 @@ namespace EldenBingoServer
 
             
             var categoryConfig = CategoryConfig.FromJson(root);
-
-            //New Initialization
             _regionLimitConfig = RegionLimitConfig.FromJson(root);
-            //New Initialization
+
 
             var squareArray = root["squares"] as JArray
                 ?? throw new Exception("Missing 'squares' array");
@@ -73,8 +70,6 @@ namespace EldenBingoServer
                     }
                 }
 
-                //Adding Region Parsing
-
                 var tokenDict = new Dictionary<string, string[]>();
                 foreach (var textToken in getTokens(name))
                 {
@@ -96,9 +91,7 @@ namespace EldenBingoServer
                     categories.ToArray(),
                     tokenDict.Count == 0 ? null : tokenDict,
                     (CenterType)center.GetValueOrDefault(0),
-                    //Add Region
                     regions.Count == 0 ? null : regions.ToArray()
-                    //Add Region
                 ));
             }
         }
@@ -302,6 +295,7 @@ namespace EldenBingoServer
                         s.Tooltip,
                         Array.Empty<int>(),
                         false,
+                        false,
                         Array.Empty<SquareCounter>()
                     )
                 ).ToArray(),
@@ -402,8 +396,6 @@ namespace EldenBingoServer
                 return _regionToGroups.TryGetValue(region, out var list) ? list : Array.Empty<Group>();
             }
         }
-        //Add New Function
-
 
         //Added to handle Minimums
         private static void DecrementMinimums(Dictionary<string, int> remainingMin, ISet<string> categories)
@@ -443,8 +435,6 @@ namespace EldenBingoServer
             return true;
         }
 
-        //Added to handle Minimums
-
         private IEnumerable<string> getTokens(string text)
         {
             return Regex.Matches(text, @"%(\w+)%").Select(m => m.Groups[1].Value);
@@ -468,7 +458,6 @@ namespace EldenBingoServer
             return items[_random.Next(items.Count)];
         }
 
-        // Add Regions
         private bool PassesRegionDistinctLimit(
             BingoJsonObj sq,
             Dictionary<string, HashSet<string>> usedRegionsByGroup)
@@ -518,8 +507,6 @@ namespace EldenBingoServer
             }
         }
 
-        //Add Regions
-
         private struct BingoJsonObj
         {
             public BingoJsonObj(string text, string? tooltip = null, int weight = 1, string[]? categories = null, IDictionary<string, string[]>? tokens = null, CenterType center = CenterType.None, string[]? regions = null)
@@ -539,9 +526,7 @@ namespace EldenBingoServer
             public ISet<string> Categories { get; init; }            
             public IDictionary<string, string[]>? Tokens { get; init; }
             public CenterType CenterType { get; init; }
-            //Add regions
             public ISet<string> Regions { get; init; }
-            //Add regions
 
             public override string ToString()
             {

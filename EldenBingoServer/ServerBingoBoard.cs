@@ -10,6 +10,7 @@ namespace EldenBingoServer
         {
             Teams = new List<int>();
             MarkedBy = new HashSet<Guid>();
+            HighlightedBy = new HashSet<Guid>();
             PlayerCounters = new ConcurrentDictionary<Guid, int>();
         }
         [JsonProperty]
@@ -18,6 +19,8 @@ namespace EldenBingoServer
         private IDictionary<Guid, int> PlayerCounters { get; init; }
         [JsonProperty]
         private ISet<Guid> MarkedBy { get; init; }
+        [JsonProperty]
+        private ISet<Guid> HighlightedBy { get; init; }
 
         public bool IsChecked()
         {
@@ -59,6 +62,20 @@ namespace EldenBingoServer
         public bool IsMarked(UserInRoom player)
         {
             return MarkedBy.Contains(player.Guid);
+        }
+        public bool Highlight(UserInRoom player)
+        {
+            return HighlightedBy.Add(player.Guid);
+        }
+
+        public bool Unhighlight(UserInRoom player)
+        {
+            return HighlightedBy.Remove(player.Guid);
+        }
+
+        public bool IsHighlighted(UserInRoom player)
+        {
+            return HighlightedBy.Contains(player.Guid);
         }
 
         public int? GetCounter(UserInRoom player)
@@ -177,6 +194,7 @@ namespace EldenBingoServer
                     Squares[index].Tooltip,
                     status.Teams.ToArray(),
                     status.IsMarked(user),
+                    status.IsHighlighted(user),
                     status.GetCountersForPlayer(user, Room.Users, teams));
             }
         }
@@ -260,6 +278,22 @@ namespace EldenBingoServer
                     return check.Unmark(user);
                 else
                     return check.Mark(user);
+            }
+        }
+        public bool UserHighlighted(int i, UserInRoom user)
+        {
+            if (i < 0 || i >= SquareCount)
+                return false;
+
+            // Same idea as star marking: allow any user to privately toggle it.
+            var check = CheckStatus[i];
+
+            lock (check)
+            {
+                if (check.IsHighlighted(user))
+                    return check.Unhighlight(user);
+
+                return check.Highlight(user);
             }
         }
 

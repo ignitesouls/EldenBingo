@@ -42,7 +42,7 @@ namespace EldenBingo
             //_processHandler = new GameProcessHandler();
             //_processHandler.StatusChanged += _processHandler_StatusChanged;
             //_processHandler.CoordinatesChanged += _processHandler_CoordinatesChanged;
-
+            
             _sounds = new SoundLibrary();
             _sounds.SetAudioDevice(Properties.Settings.Default.OutputDevice);
             _rawInput = new RawInputHandler(Handle);
@@ -139,7 +139,7 @@ namespace EldenBingo
             var v = getCleanVersionString();
             if (v != null)
             {
-                Text += " " + v;
+                //Text += " " + v;
             }
         }
 

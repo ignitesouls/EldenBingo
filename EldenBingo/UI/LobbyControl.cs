@@ -829,7 +829,8 @@ namespace EldenBingo.UI
             // Only subtract admin height from Panel1 if the admin control is still docked in Panel1
             var adminInLeftPanel = adminControl1.Parent == splitContainer1.Panel1;
             var maxHeight = splitContainer1.Panel1.Height - (adminInLeftPanel && adminControl1.Visible ? _adminHeight : 0);
-
+            splitContainer1.SplitterWidth = 2;
+            
             if (maxWidth < 120)
                 maxWidth = 120;
 

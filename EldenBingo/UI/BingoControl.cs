@@ -603,6 +603,8 @@ namespace EldenBingo.UI
             var teamsBefore = Squares[index].Teams;
             Squares[index].Teams = s.Team;
             Squares[index].Marked = s.Marked;
+            Squares[index].Highlighted = s.Highlighted;
+            Squares[index].HighlightTeam = Client?.Room?.GetUser(Client.ClientGuid)?.Team ?? -1;
             Squares[index].Counters = s.Counters;
             if (highlightNewSquares)
             {
@@ -625,13 +627,10 @@ namespace EldenBingo.UI
 
         private async void square_MouseDown(object? sender, MouseEventArgs e)
         {
-            
-            if (Client == null || sender is not BingoSquareControl c)
-                return;
+            if (Client == null || sender is not BingoSquareControl c) return;
 
-            //No room or no board set in room
-            if (Client.Room?.Match?.Board == null)
-                return;
+            // No room or no board set in room
+            if (Client.Room?.Match?.Board == null) return;
 
             BingoBoard board = Client.Room.Match.Board;
 
@@ -639,13 +638,19 @@ namespace EldenBingo.UI
             {
                 await clickSquare(c);
             }
+
             if (e.Button == MouseButtons.Right && Client.Room.Match.MatchStatus >= MatchStatus.Preparation)
             {
                 await markSquare(c);
             }
+
+            if (e.Button == MouseButtons.Middle && Client.Room.Match.MatchStatus >= MatchStatus.Preparation)
+            {
+                await highlightSquare(c);
+            }
         }
 
-        
+
 
         private void square_MouseEntered(object? sender, EventArgs e)
         {
@@ -687,6 +692,16 @@ namespace EldenBingo.UI
             if (Client?.Room?.Match?.Board == null)
                 return;
             var p = new Packet(new ClientTryMark(c.Index));
+            await Client.SendPacketToServer(p);
+        }
+
+        private async Task highlightSquare(BingoSquareControl c)
+        {
+            // No room or no board set in room
+            if (Client?.Room?.Match?.Board == null)
+                return;
+
+            var p = new Packet(new ClientTryHighlight(c.Index));
             await Client.SendPacketToServer(p);
         }
 
@@ -772,6 +787,8 @@ namespace EldenBingo.UI
             private int[] _activeTeams;
             private SquareCounter[] _counters;
             private bool _marked;
+            private bool _highlighted;
+            public int HighlightTeam { get; set; } = -1;
             private SolidBrush _brush;
             private LinearGradientBrush _gradientBrush;
             private ImageAttributes _imageAttributes;
@@ -905,6 +922,19 @@ namespace EldenBingo.UI
                 }
             }
 
+            public bool Highlighted
+            {
+                get { return _highlighted; }
+                set
+                {
+                    if (_highlighted != value)
+                    {
+                        _highlighted = value;
+                        Invalidate();
+                    }
+                }
+            }
+
             public string ToolTip
             {
                 get { return _toolTip.GetToolTip(this); }
@@ -920,15 +950,18 @@ namespace EldenBingo.UI
                 base.OnPaint(e);
 
                 drawRectangle(e);
-
                 drawBingoText(e);
 
                 if (Marked)
                     drawMarkedStar(e);
 
-                //Don't draw counters in lockout mode if a square is claimed
+                // Don't draw counters in lockout mode if a square is claimed
                 if (!Lockout || Teams.Length == 0)
                     drawCounters(e);
+
+                // Draw highlight border last so it stays visible above text/star/counters.
+                if (Highlighted)
+                    drawUserHighlightBorder(e);
             }
 
             private static string? findLongestWord(Graphics g, string text, Font font)
@@ -997,16 +1030,24 @@ namespace EldenBingo.UI
                         continue;
                     var size = TextRenderer.MeasureText(c.Counter.ToString(), counterFont);
                     int leftXPos;
+                    int counterSidePadding = Math.Max(4, Width / 18);
+                    int counterBottomPadding = Math.Max(6, Height / 14);
+
                     if (i == 0)
-                        leftXPos = 0;
+                    {
+                        leftXPos = counterSidePadding;
+                    }
                     else if (i == _counters.Length - 1)
-                        leftXPos = Width - size.Width;
+                    {
+                        leftXPos = Width - size.Width - counterSidePadding;
+                    }
                     else
                     {
-                        var widthBetweenLeftAndRight = Width - size.Width;
-                        leftXPos = Convert.ToInt32(i * (widthBetweenLeftAndRight / (_counters.Length - 1f)));
+                        var usableWidth = Width - size.Width - counterSidePadding * 2;
+                        leftXPos = counterSidePadding + Convert.ToInt32(i * (usableWidth / (_counters.Length - 1f)));
                     }
-                    int yPos = Height - size.Height;
+
+                    int yPos = Height - size.Height - counterBottomPadding;
                     var color = BingoConstants.GetTeamColorBright(c.Team);
                     TextRenderer.DrawText(e, c.Counter.ToString(), counterFont, new Rectangle(leftXPos + 1, yPos + 1, size.Width, size.Height), shadowColor, flags: counterFlags);
                     TextRenderer.DrawText(e, c.Counter.ToString(), counterFont, new Rectangle(leftXPos, yPos, size.Width, size.Height), color, flags: counterFlags);
@@ -1016,12 +1057,46 @@ namespace EldenBingo.UI
             private void drawMarkedStar(PaintEventArgs e)
             {
                 var scale = Width / 96f;
-                var x = 3f * scale;
-                var y = 3f * scale;
+                var x = 6f * scale;
+                var y = 6f * scale;
                 var width = _starImage.Width * scale * 0.7f;
                 var height = _starImage.Height * scale * 0.7f;
                 e.Graphics.DrawImage(_starImage, x, y, width, height);
             }
+
+            private void drawUserHighlightBorder(PaintEventArgs e)
+            {
+                if (HighlightTeam < 0)
+                    return;
+
+                var color = BingoConstants.GetTeamColorBright(HighlightTeam);
+                var width = Math.Max(2f, Width / 36f);
+
+                using var pen = new Pen(color, width);
+
+                var oldSmoothing = e.Graphics.SmoothingMode;
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+                var inset = width / 2f + 2f;
+
+                var rect = new RectangleF(
+                    inset,
+                    inset,
+                    Width - inset * 2f,
+                    Height - inset * 2f
+                );
+
+                e.Graphics.DrawRectangle(
+                    pen,
+                    rect.X,
+                    rect.Y,
+                    rect.Width,
+                    rect.Height
+                );
+
+                e.Graphics.SmoothingMode = oldSmoothing;
+            }
+
 
             private void drawRectangle(PaintEventArgs e)
             {

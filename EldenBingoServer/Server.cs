@@ -300,6 +300,7 @@ namespace EldenBingoServer
             AddListener<ClientTryCheck>(clientTryCheck);
             AddListener<ClientBattleshipAttack>(clientBattleshipAttack);
             AddListener<ClientTryMark>(clientTryMark);
+            AddListener<ClientTryHighlight>(clientTryHighlight);
             AddListener<ClientTrySetCounter>(clientTrySetCounter);
             AddListener<ClientRequestCurrentGameSettings>(clientRequestGameSettings);
             AddListener<ClientSetGameSettings>(clientSetGameSettings);
@@ -746,6 +747,61 @@ namespace EldenBingoServer
                 catch (Exception ex)
                 {
                     try { FireOnStatus($"[Server] Exception handling mark from '{userInfo.Nick}' index {tryMark.Index}: {ex}"); } catch { }
+                }
+            }
+        }
+
+        private async void clientTryHighlight(BingoClientModel? sender, ClientTryHighlight tryHighlight)
+        {
+            if (sender?.Room == null)
+                return;
+
+            if (sender.Room.Match?.Board is ServerBingoBoard board)
+            {
+                var userInfo = sender.Room.GetUser(sender.ClientGuid);
+                if (userInfo == null)
+                    return;
+
+                try
+                {
+                    var changed = board.UserHighlighted(tryHighlight.Index, userInfo);
+
+                    try
+                    {
+                        FireOnStatus(
+                            $"[Server] Highlight attempt by '{userInfo.Nick}' " +
+                            $"(Spectator={userInfo.IsSpectator}) on index {tryHighlight.Index} -> " +
+                            $"{(changed ? "CHANGED" : "NO_CHANGE")}"
+                        );
+                    }
+                    catch { }
+
+                    if (changed)
+                    {
+                        var check = board.CheckStatus[tryHighlight.Index];
+                        ServerSquareUpdate squareUpdate;
+
+                        lock (check)
+                        {
+                            squareUpdate = new ServerSquareUpdate(
+                                board.GetSquareDataForUser(userInfo, tryHighlight.Index),
+                                tryHighlight.Index
+                            );
+                        }
+
+                        await SendPacketToClient(new Packet(squareUpdate), sender);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        FireOnStatus(
+                            $"[Server] Exception handling highlight from '{userInfo.Nick}' " +
+                            $"index {tryHighlight.Index}: {ex}"
+                        );
+                    }
+                    catch { }
                 }
             }
         }
