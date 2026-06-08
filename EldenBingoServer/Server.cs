@@ -603,7 +603,7 @@ namespace EldenBingoServer
                 if (matchStatus.MatchStatus == MatchStatus.Finished)
                 {
                     sender.Room.BoardAlreadyUsed = true;
-                    if (MatchLogging && sender.Room.MatchEvents.Count > 0)
+                    if (MatchLogging)
                     {
                         var log = new MatchLog() { Room = sender.Room.Name, Events = sender.Room.MatchEvents.ToArray() };
                         log.Save(MatchLogDirectory, sender.Room);

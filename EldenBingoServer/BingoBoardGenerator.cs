@@ -123,7 +123,7 @@ namespace EldenBingoServer
 
         public ServerBingoBoard? CreateBingoBoard(ServerRoom room)
         {
-            var squareList = new List<BingoJsonObj>(shuffleList(_list, _random));
+            var squareList = new List<BingoJsonObj>(weightedShuffleSquares(_list));
             var squares = new List<BingoJsonObj>();
             var categoryCount = new Dictionary<string, decimal>(StringComparer.OrdinalIgnoreCase);
 
@@ -328,6 +328,21 @@ namespace EldenBingoServer
         private IEnumerable<T> shuffleList<T>(IEnumerable<T> squares, Random random)
         {
             return squares.OrderBy(s => random.Next()).ToList();
+        }
+
+        private IEnumerable<BingoJsonObj> weightedShuffleSquares(IEnumerable<BingoJsonObj> squares)
+        {
+            // Weighted sampling without replacement: lower weights tend to appear later,
+            // where category and region limits make them less likely to reach the boardish.
+            return squares
+                .Select(square => new
+                {
+                    Square = square,
+                    Priority = -Math.Log(1d - _random.NextDouble()) / (double)square.Weight
+                })
+                .OrderBy(item => item.Priority)
+                .Select(item => item.Square)
+                .ToList();
         }
 
         private void balanceBoard(IList<BingoJsonObj> squares, bool centerLocked)

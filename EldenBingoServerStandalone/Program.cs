@@ -17,6 +17,7 @@ namespace EldenBingoServerStandalone
         private static Thread _keyboardListenThread;
 
         private static string _jsonFile;
+        private static string _matchLogDirectory;
 
         private static bool _readInput;
 
@@ -26,16 +27,27 @@ namespace EldenBingoServerStandalone
             {'r', new("List all rooms", printRooms)},
             {'j', new("Print path to server data json", showJsonPath)},
             {'l', new("Toggle match logging", toggleLogging)},
+            {'f', new("Analyze square frequency from match logs", analyzeFrequency)},
             {'m', new("Enable Maintenance mode", maintenanceMode)},
         };
 
         public static void Main(string[] args)
         {
             int port = BingoConstants.DefaultPort;
+            bool analyzeRequested = args.Any(a => string.Equals(a, "--analyze", StringComparison.OrdinalIgnoreCase));
+            var configArgs = args
+                .Where(a => !string.Equals(a, "--analyze", StringComparison.OrdinalIgnoreCase))
+                .ToArray();
 
             var config = new ConfigurationBuilder()
-                .AddCommandLine(args)
+                .AddCommandLine(configArgs)
                 .Build();
+
+            if (config["simulate"] != null)
+            {
+                simulateBoards(config);
+                return;
+            }
 
             if (config["port"] != null)
             {
@@ -59,12 +71,20 @@ namespace EldenBingoServerStandalone
             }
             if (config["matchlogdir"] != null)
             {
-                _server.MatchLogDirectory = config["matchlogdir"];
+                _matchLogDirectory = config["matchlogdir"];
             }
             else
             {
-                _server.MatchLogDirectory = getApplicationDirectory();
+                _matchLogDirectory = getApplicationDirectory();
             }
+            _server.MatchLogDirectory = _matchLogDirectory;
+
+            if (analyzeRequested || config["analyze"] != null)
+            {
+                analyzeFrequency();
+                return;
+            }
+
             _server.OnError += server_OnError;
             _server.OnStatus += server_OnStatus;
             _server.Host();
@@ -211,6 +231,96 @@ namespace EldenBingoServerStandalone
             {
                 output("Match logging disabled");
             }
+        }
+
+        private static void analyzeFrequency()
+        {
+            try
+            {
+                var report = new MatchFrequencyAnalyzer().AnalyzeDirectory(_server.MatchLogDirectory);
+                output($"---- Square Frequency ({report.MatchesAnalyzed} matches) ----", InfoColor);
+                output($"{"Pop up",8} {"Used",8} {"Boards",8} {"Uses",8}  Square");
+
+                foreach (var square in report.Squares)
+                {
+                    output(
+                        $"{square.AppearanceProbability,7:P1} " +
+                        $"{square.UseRate,7:P1} " +
+                        $"{square.MatchesAppeared,8} " +
+                        $"{square.Uses,8}  " +
+                        square.Square,
+                        DefaultColor);
+                }
+
+                if (report.SkippedFiles > 0)
+                    output($"Skipped {report.SkippedFiles} non-match or invalid JSON file(s).", StatusColor);
+                output("----------------------------------------", InfoColor);
+            }
+            catch (Exception ex)
+            {
+                output($"Frequency analysis failed: {ex.Message}", ErrorColor);
+            }
+        }
+
+        private static void simulateBoards(IConfiguration config)
+        {
+            try
+            {
+                string jsonPath = config["simulate"]!;
+                int boards = parsePositiveInt(config["boards"], 1000, "boards");
+                int size = parsePositiveInt(config["size"], 5, "size");
+                int categoryLimit = parseNonNegativeInt(config["categorylimit"], 0, "categorylimit");
+                int seed = parseNonNegativeInt(config["seed"], 0, "seed");
+
+                var report = new BoardFrequencySimulator().Simulate(
+                    jsonPath,
+                    boards,
+                    size,
+                    categoryLimit,
+                    seed);
+
+                output(
+                    $"---- Simulated Square Frequency " +
+                    $"({report.GeneratedBoards}/{report.RequestedBoards} boards, {report.BoardSize}x{report.BoardSize}) ----",
+                    InfoColor);
+                output($"{"Pop up",8} {"Boards",8} {"Slots",8}  Square");
+
+                foreach (var square in report.Squares)
+                {
+                    output(
+                        $"{square.AppearanceProbability,7:P1} " +
+                        $"{square.BoardsContaining,8} " +
+                        $"{square.Appearances,8}  " +
+                        square.Square,
+                        DefaultColor);
+                }
+
+                if (report.FailedBoards > 0)
+                    output($"{report.FailedBoards} board(s) could not be generated.", StatusColor);
+                output("----------------------------------------", InfoColor);
+            }
+            catch (Exception ex)
+            {
+                output($"Board simulation failed: {ex.Message}", ErrorColor);
+            }
+        }
+
+        private static int parsePositiveInt(string? value, int defaultValue, string option)
+        {
+            if (value == null)
+                return defaultValue;
+            if (int.TryParse(value, out int result) && result > 0)
+                return result;
+            throw new ArgumentException($"--{option} must be a positive whole number.");
+        }
+
+        private static int parseNonNegativeInt(string? value, int defaultValue, string option)
+        {
+            if (value == null)
+                return defaultValue;
+            if (int.TryParse(value, out int result) && result >= 0)
+                return result;
+            throw new ArgumentException($"--{option} must be a non-negative whole number.");
         }
 
         private static void showJsonPath()
