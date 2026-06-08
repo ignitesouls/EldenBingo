@@ -294,7 +294,7 @@ namespace EldenBingo.UI
                 errorProvider1.SetError(_bingoJsonTextBox, null);
                 errorProvider1.SetError(_uploadJsonButton, null);
 
-                var p = new Packet(new ClientBingoJson(json));
+                var p = new Packet(new ClientBingoJson(json, Path.GetFileName(file)));
                 await Client.SendPacketToServer(p);
             }
             catch (IOException ex)

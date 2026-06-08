@@ -36,6 +36,7 @@
             this._chatTextBox = new System.Windows.Forms.TextBox();
             this._timerLabel = new System.Windows.Forms.Label();
             this._matchStatusLabel = new System.Windows.Forms.Label();
+            this._exportJsonButton = new System.Windows.Forms.Button();
             this._bingoBoardPanel = new System.Windows.Forms.Panel();
             this._bingoControl = new EldenBingo.UI.BingoControl();
             this.adminControl1 = new EldenBingo.UI.AdminControl();
@@ -78,6 +79,7 @@
             this._lobbyStatusPanel.Controls.Add(this._logBoxBorderPanel);
             this._lobbyStatusPanel.Controls.Add(this._timerLabel);
             this._lobbyStatusPanel.Controls.Add(this._matchStatusLabel);
+            this._lobbyStatusPanel.Controls.Add(this._exportJsonButton);
             this._lobbyStatusPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this._lobbyStatusPanel.Location = new System.Drawing.Point(581, 0);
             this._lobbyStatusPanel.Name = "_lobbyStatusPanel";
@@ -165,6 +167,17 @@
             this._matchStatusLabel.TabIndex = 7;
             this._matchStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // _exportJsonButton
+            // 
+            this._exportJsonButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._exportJsonButton.Location = new System.Drawing.Point(174, 4);
+            this._exportJsonButton.Name = "_exportJsonButton";
+            this._exportJsonButton.Size = new System.Drawing.Size(90, 23);
+            this._exportJsonButton.TabIndex = 11;
+            this._exportJsonButton.Text = "Export JSON";
+            this._exportJsonButton.UseVisualStyleBackColor = true;
+            this._exportJsonButton.Click += new System.EventHandler(this._exportJsonButton_Click);
+            // 
             // _bingoBoardPanel
             // 
             this._bingoBoardPanel.Controls.Add(this._bingoControl);
@@ -245,6 +258,7 @@
         private Label _matchStatusLabel;
         private AdminControl adminControl1;
         private BingoControl _bingoControl;
+        private Button _exportJsonButton;
         private RichTextBoxCustom _logTextBox;
         private Panel _logBoxBorderPanel;
         private Label _adminInfoLabel;

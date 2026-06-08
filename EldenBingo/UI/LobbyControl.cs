@@ -1,6 +1,7 @@
 ﻿using EldenBingo.Net;
 using EldenBingoCommon;
 using Neto.Shared;
+using Newtonsoft.Json;
 
 namespace EldenBingo.UI
 {
@@ -11,12 +12,16 @@ namespace EldenBingo.UI
         private MatchStatus _lastMatchStatus;
         private bool _lastPaused;
         private System.Timers.Timer? _timer;
+        private readonly Dictionary<(int Index, int Team), SquareMarkInfo> _squareMarks;
+        private MatchExportInfo _matchInfo;
 
         public LobbyControl() : base()
         {
             InitializeComponent();
             _instance = this;
             _adminHeight = adminControl1.Height;
+            _squareMarks = new Dictionary<(int Index, int Team), SquareMarkInfo>();
+            _matchInfo = new MatchExportInfo(string.Empty, Array.Empty<string>(), Array.Empty<PlayerExportInfo>(), string.Empty, null, null, null);
 
             listenToSettingsChanged();
             Load += lobbyControl_Load;
@@ -61,6 +66,7 @@ namespace EldenBingo.UI
             Client.AddListener<ServerUserJoinedRoom>(userJoined);
             Client.AddListener<ServerUserLeftRoom>(userLeft);
             Client.AddListener<ServerEntireBingoBoardUpdate>(gotBingoBoard);
+            Client.AddListener<ServerMatchStatusUpdate>(matchStatusUpdate);
             Client.AddListener<ServerUserChat>(userChat);
             Client.AddListener<ServerBingoAchievedUpdate>(bingoAchieved);
             Client.AddListener<ServerTeamNameChanged>(teamNameChanged);
@@ -94,6 +100,7 @@ namespace EldenBingo.UI
             Client.RemoveListener<ServerUserJoinedRoom>(userJoined);
             Client.RemoveListener<ServerUserLeftRoom>(userLeft);
             Client.RemoveListener<ServerEntireBingoBoardUpdate>(gotBingoBoard);
+            Client.RemoveListener<ServerMatchStatusUpdate>(matchStatusUpdate);
             Client.RemoveListener<ServerUserChat>(userChat);
             Client.RemoveListener<ServerBingoAchievedUpdate>(bingoAchieved);
         }
@@ -108,7 +115,22 @@ namespace EldenBingo.UI
                 Color? checkColor = userCheckedArgs.Team > -1 ? BingoConstants.GetTeamColorBright(userCheckedArgs.Team) : playerColor;
 
                 var square = Client.BingoBoard.Squares[userCheckedArgs.Index];
-                updateMatchLog(new[] { playerName, square.IsChecked(userCheckedArgs.Team) ? "marked" : "unmarked", square.Text },
+                var isMarked = square.IsChecked(userCheckedArgs.Team);
+                if (isMarked)
+                {
+                    _squareMarks[(userCheckedArgs.Index, userCheckedArgs.Team)] = new SquareMarkInfo(
+                        userCheckedArgs.Index,
+                        userCheckedArgs.Team,
+                        userCheckedArgs.UserGuid,
+                        playerName,
+                        userCheckedArgs.MarkedAt);
+                }
+                else
+                {
+                    _squareMarks.Remove((userCheckedArgs.Index, userCheckedArgs.Team));
+                }
+
+                updateMatchLog(new[] { playerName, isMarked ? "marked" : "unmarked", square.Text },
                                new Color?[] { playerColor, null, checkColor }, true);
             }
         }
@@ -133,6 +155,13 @@ namespace EldenBingo.UI
 
         private void gotBingoBoard(ClientModel? _, ServerEntireBingoBoardUpdate bingoBoardArgs)
         {
+            _matchInfo = bingoBoardArgs.MatchInfo;
+            _squareMarks.Clear();
+            foreach (var mark in bingoBoardArgs.MarkedSquares)
+            {
+                _squareMarks[(mark.Index, mark.Team)] = mark;
+            }
+
             if (bingoBoardArgs.AvailableClasses.Length <= 0)
                 return;
 
@@ -229,6 +258,11 @@ namespace EldenBingo.UI
             updateMatchLog(new[] { $"Server: {message.Message}" }, new Color?[] { Color.Orange }, true);
         }
 
+        private void matchStatusUpdate(ClientModel? _, ServerMatchStatusUpdate matchStatus)
+        {
+            _matchInfo = matchStatus.MatchInfo;
+        }
+
         private void _scoreboardControl_SizeChanged(object sender, EventArgs e)
         {
             updateScoreboardControlLocationAndSize();
@@ -268,6 +302,8 @@ namespace EldenBingo.UI
 
         private void client_RoomChanged(object? sender, RoomChangedEventArgs e)
         {
+            _squareMarks.Clear();
+            _matchInfo = new MatchExportInfo(string.Empty, Array.Empty<string>(), Array.Empty<PlayerExportInfo>(), string.Empty, null, null, null);
             if (e.PreviousRoom != null)
             {
                 e.PreviousRoom.Match.MatchStatusChanged -= match_MatchStatusChanged;
@@ -361,6 +397,10 @@ namespace EldenBingo.UI
         {
             if (Client?.Room != null)
             {
+                if (Client.Room.Match.MatchStatus == MatchStatus.Starting)
+                {
+                    _squareMarks.Clear();
+                }
                 updateMatchStatus(Client.Room.Match);
                 restartAndListenToTimer();
             }
@@ -561,6 +601,91 @@ namespace EldenBingo.UI
             openUrl(e.LinkText);
         }
 
+        private void _exportJsonButton_Click(object? sender, EventArgs e)
+        {
+            ExportMarkedSquaresJson();
+        }
+
+        public void ExportMarkedSquaresJson()
+        {
+            if (Client?.BingoBoard == null)
+            {
+                MessageBox.Show(this, "There is no bingo board to export.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            using var dialog = new SaveFileDialog()
+            {
+                Title = "Export square status",
+                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                FileName = $"elden-bingo-square-export-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.json",
+                DefaultExt = "json",
+                AddExtension = true,
+            };
+
+            if (dialog.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            var json = JsonConvert.SerializeObject(createSquareExport(), Formatting.Indented);
+            File.WriteAllText(dialog.FileName, json);
+        }
+
+        private BoardSquareExport createSquareExport()
+        {
+            var board = Client?.BingoBoard;
+            if (board == null)
+                return new BoardSquareExport(createMatchInfoExport(), Array.Empty<MarkedSquareExport>(), Array.Empty<RemainingSquareExport>());
+
+            var markedSquares = _squareMarks.Values
+                .Where(mark => mark.Index >= 0 && mark.Index < board.SquareCount && board.Squares[mark.Index].IsChecked(mark.Team))
+                .OrderBy(mark => mark.Index)
+                .ThenBy(mark => mark.Team)
+                .Select(mark => new MarkedSquareExport(
+                    board.Squares[mark.Index].Text,
+                    mark.UserName,
+                    mark.MarkedAt,
+                    getPosition(mark.Index, board.Size)))
+                .ToArray();
+
+            var remainingSquares = Enumerable.Range(0, board.SquareCount)
+                .Where(index => board.Squares[index].Team.Length == 0)
+                .Select(index => new RemainingSquareExport(
+                    board.Squares[index].Text,
+                    getPosition(index, board.Size)))
+                .ToArray();
+
+            return new BoardSquareExport(createMatchInfoExport(), markedSquares, remainingSquares);
+        }
+
+        private MatchInfoExport createMatchInfoExport()
+        {
+            return new MatchInfoExport(
+                _matchInfo.LobbyName,
+                _matchInfo.Admins,
+                _matchInfo.Players.Select(player => new PlayerInfoExport(
+                    player.Name,
+                    player.Team,
+                    player.TeamName,
+                    player.IsAdmin,
+                    player.IsSpectator)).ToArray(),
+                _matchInfo.SquareSetJsonFileName,
+                formatDateTime(_matchInfo.MatchStartedAt),
+                formatDateTime(_matchInfo.MatchEndedAt),
+                _matchInfo.MatchEndedAtSeconds);
+        }
+
+        private static string? formatDateTime(DateTime? dateTime)
+        {
+            return dateTime?.ToString("O");
+        }
+
+        private static string getPosition(int index, int boardSize)
+        {
+            var column = index % boardSize + 1;
+            var row = index / boardSize + 1;
+            return $"C{column}R{row}";
+        }
+
         private void openUrl(string? url)
         {
             try
@@ -575,5 +700,36 @@ namespace EldenBingo.UI
                 updateMatchLog(ex.Message, Color.Red, false);
             }
         }
+
+        private record MarkedSquareExport(
+            [property: JsonProperty("squareName")] string SquareName,
+            [property: JsonProperty("markedBy")] string MarkedBy,
+            [property: JsonProperty("markedAt")] int MarkedAt,
+            [property: JsonProperty("position")] string Position);
+
+        private record RemainingSquareExport(
+            [property: JsonProperty("squareName")] string SquareName,
+            [property: JsonProperty("position")] string Position);
+
+        private record BoardSquareExport(
+            [property: JsonProperty("matchInfo")] MatchInfoExport MatchInfo,
+            [property: JsonProperty("markedSquares")] MarkedSquareExport[] MarkedSquares,
+            [property: JsonProperty("remainingSquares")] RemainingSquareExport[] RemainingSquares);
+
+        private record MatchInfoExport(
+            [property: JsonProperty("lobbyName")] string LobbyName,
+            [property: JsonProperty("admins")] string[] Admins,
+            [property: JsonProperty("players")] PlayerInfoExport[] Players,
+            [property: JsonProperty("squareSetJsonFileName")] string SquareSetJsonFileName,
+            [property: JsonProperty("matchStartedAt")] string? MatchStartedAt,
+            [property: JsonProperty("matchEndedAt")] string? MatchEndedAt,
+            [property: JsonProperty("matchEndedAtSeconds")] int? MatchEndedAtSeconds);
+
+        private record PlayerInfoExport(
+            [property: JsonProperty("name")] string Name,
+            [property: JsonProperty("team")] int Team,
+            [property: JsonProperty("teamName")] string TeamName,
+            [property: JsonProperty("isAdmin")] bool IsAdmin,
+            [property: JsonProperty("isSpectator")] bool IsSpectator);
     }
 }
