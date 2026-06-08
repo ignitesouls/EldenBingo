@@ -11,21 +11,19 @@ namespace EldenBingoServer
         private int _randomSeed;
         private Random _random;
 
-        //New Code
         private readonly RegionLimitConfig _regionLimitConfig;
-        //New Code
+
 
         public BingoBoardGenerator(JObject root, int randomSeed)
         {
             RandomSeed = randomSeed;
             _list = new List<BingoJsonObj>();
 
-            
+
             var categoryConfig = CategoryConfig.FromJson(root);
 
-            //New Initialization
             _regionLimitConfig = RegionLimitConfig.FromJson(root);
-            //New Initialization
+
 
             var squareArray = root["squares"] as JArray
                 ?? throw new Exception("Missing 'squares' array");
@@ -59,7 +57,6 @@ namespace EldenBingoServer
                     }
                 }
 
-                //Adding Region Parsing
                 var regions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
                 string? region = square.Value<string>("region");
@@ -76,7 +73,6 @@ namespace EldenBingoServer
                     }
                 }
 
-                //Adding Region Parsing
 
                 var tokenDict = new Dictionary<string, string[]>();
                 foreach (var textToken in getTokens(name))
@@ -101,7 +97,7 @@ namespace EldenBingoServer
                     (CenterType)center.GetValueOrDefault(0),
                     //Add Region
                     regions.Count == 0 ? null : regions.ToArray()
-                    //Add Region
+                //Add Region
                 ));
             }
         }
@@ -123,7 +119,7 @@ namespace EldenBingoServer
 
         public ServerBingoBoard? CreateBingoBoard(ServerRoom room)
         {
-            var squareList = new List<BingoJsonObj>(shuffleList(_list, _random));
+            var squareList = new List<BingoJsonObj>(weightedShuffleSquares(_list));
             var squares = new List<BingoJsonObj>();
             var categoryCount = new Dictionary<string, decimal>(StringComparer.OrdinalIgnoreCase);
 
@@ -330,6 +326,21 @@ namespace EldenBingoServer
             return squares.OrderBy(s => random.Next()).ToList();
         }
 
+        private IEnumerable<BingoJsonObj> weightedShuffleSquares(IEnumerable<BingoJsonObj> squares)
+        {
+            // Weighted sampling without replacement: lower weights tend to appear later,
+            // where category and region limits make them less likely to reach the boardish.
+            return squares
+                .Select(square => new
+                {
+                    Square = square,
+                    Priority = -Math.Log(1d - _random.NextDouble()) / (double)square.Weight
+                })
+                .OrderBy(item => item.Priority)
+                .Select(item => item.Square)
+                .ToList();
+        }
+
         private void balanceBoard(IList<BingoJsonObj> squares, bool centerLocked)
         {
             //TODO
@@ -406,7 +417,6 @@ namespace EldenBingoServer
                 return _regionToGroups.TryGetValue(region, out var list) ? list : Array.Empty<Group>();
             }
         }
-        //Add New Function
 
 
         //Added to handle Minimums
@@ -473,7 +483,6 @@ namespace EldenBingoServer
             return items[_random.Next(items.Count)];
         }
 
-        // Add Regions
         private bool PassesRegionDistinctLimit(
             BingoJsonObj sq,
             Dictionary<string, HashSet<string>> usedRegionsByGroup)
@@ -512,7 +521,6 @@ namespace EldenBingoServer
             {
                 var groups = _regionLimitConfig.GetGroupsForRegion(region);
 
-                // Region not governed => ignore
                 if (groups.Count == 0) continue;
 
                 foreach (var g in groups)
@@ -522,8 +530,6 @@ namespace EldenBingoServer
                 }
             }
         }
-
-        //Add Regions
 
         private struct BingoJsonObj
         {
@@ -541,12 +547,10 @@ namespace EldenBingoServer
             public string Text { get; init; }
             public string Tooltip { get; init; }
             public decimal Weight { get; init; }
-            public ISet<string> Categories { get; init; }            
+            public ISet<string> Categories { get; init; }
             public IDictionary<string, string[]>? Tokens { get; init; }
             public CenterType CenterType { get; init; }
-            //Add regions
             public ISet<string> Regions { get; init; }
-            //Add regions
 
             public override string ToString()
             {
