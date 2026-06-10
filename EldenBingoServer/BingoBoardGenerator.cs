@@ -121,7 +121,7 @@ namespace EldenBingoServer
         {
             var squareList = new List<BingoJsonObj>(weightedShuffleSquares(_list));
             var squares = new List<BingoJsonObj>();
-            var categoryCount = new Dictionary<string, decimal>(StringComparer.OrdinalIgnoreCase);
+            var categoryCount = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
             var usedRegionsByGroup = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
             foreach (var g in _regionLimitConfig.Groups)
@@ -151,14 +151,14 @@ namespace EldenBingoServer
 
                 foreach (var category in centerSquare.Value.Categories)
                 {
-                    categoryCount.TryGetValue(category, out decimal count);
-                    categoryCount[category] = count + centerSquare.Value.Weight;
+                    categoryCount.TryGetValue(category, out int count);
+                    categoryCount[category] = count + 1;
                 }
 
                 ApplySquareRegions(centerSquare.Value, usedRegionsByGroup);
             }
 
-            var remainingMin = new Dictionary<string, decimal>(StringComparer.OrdinalIgnoreCase);
+            var remainingMin = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
             if (room.CategoryConfig != null)
             {
@@ -171,7 +171,7 @@ namespace EldenBingoServer
 
             if (centerSquare.HasValue && remainingMin.Count > 0)
             {
-                DecrementMinimums(remainingMin, centerSquare.Value);
+                DecrementMinimums(remainingMin, centerSquare.Value.Categories);
             }
 
             int guard = 0;
@@ -182,13 +182,13 @@ namespace EldenBingoServer
                     return null;
 
                 int bestIndex = -1;
-                decimal bestScore = 0;
+                int bestScore = 0;
 
                 for (int i = 0; i < squareList.Count; i++)
                 {
                     var sq = squareList[i];
 
-                    decimal score = ScoreSquareForMinimums(remainingMin, sq);
+                    int score = ScoreSquareForMinimums(remainingMin, sq);
                     if (score <= 0)
                         continue;
 
@@ -216,12 +216,12 @@ namespace EldenBingoServer
 
                 foreach (var category in picked.Categories)
                 {
-                    categoryCount.TryGetValue(category, out decimal count);
-                    categoryCount[category] = count + picked.Weight;
+                    categoryCount.TryGetValue(category, out int count);
+                    categoryCount[category] = count + 1;
                 }
 
                 ApplySquareRegions(picked, usedRegionsByGroup);
-                DecrementMinimums(remainingMin, picked);
+                DecrementMinimums(remainingMin, picked.Categories);
 
                 if (squares.Count >= numSquares)
                     break;
@@ -241,8 +241,8 @@ namespace EldenBingoServer
                     if (room.CategoryConfig != null)
                         limit = Math.Min(limit, room.CategoryConfig.GetCategoryLimit(category));
 
-                    categoryCount.TryGetValue(category, out decimal count);
-                    if (count + potentialSquare.Weight > limit)
+                    categoryCount.TryGetValue(category, out int count);
+                    if (count + 1 > limit)
                     {
                         anySquareFailedCategoryLimit = true;
                         thisSquareFailedCategoryCheck = true;
@@ -260,8 +260,8 @@ namespace EldenBingoServer
 
                 foreach (var category in potentialSquare.Categories)
                 {
-                    categoryCount.TryGetValue(category, out decimal count);
-                    categoryCount[category] = count + potentialSquare.Weight;
+                    categoryCount.TryGetValue(category, out int count);
+                    categoryCount[category] = count + 1;
                 }
 
                 ApplySquareRegions(potentialSquare, usedRegionsByGroup);
@@ -420,30 +420,30 @@ namespace EldenBingoServer
 
 
         //Added to handle Minimums
-        private static void DecrementMinimums(Dictionary<string, decimal> remainingMin, BingoJsonObj square)
+        private static void DecrementMinimums(Dictionary<string, int> remainingMin, ISet<string> categories)
         {
-            foreach (var c in square.Categories)
+            foreach (var c in categories)
             {
                 if (remainingMin.TryGetValue(c, out var need) && need > 0)
-                    remainingMin[c] = Math.Max(0, need - square.Weight);
+                    remainingMin[c] = need - 1;
             }
         }
 
-        private static bool AnyMinimumsRemaining(Dictionary<string, decimal> remainingMin)
+        private static bool AnyMinimumsRemaining(Dictionary<string, int> remainingMin)
             => remainingMin.Values.Any(v => v > 0);
 
-        private static decimal ScoreSquareForMinimums(Dictionary<string, decimal> remainingMin, BingoJsonObj sq)
+        private static int ScoreSquareForMinimums(Dictionary<string, int> remainingMin, BingoJsonObj sq)
         {
-            decimal score = 0;
+            int score = 0;
             foreach (var c in sq.Categories)
             {
                 if (remainingMin.TryGetValue(c, out var need) && need > 0)
-                    score += Math.Min(need, sq.Weight);
+                    score++;
             }
             return score;
         }
 
-        private bool PassesMaxCategoryLimits(ServerRoom room, BingoJsonObj potentialSquare, Dictionary<string, decimal> categoryCount)
+        private bool PassesMaxCategoryLimits(ServerRoom room, BingoJsonObj potentialSquare, Dictionary<string, int> categoryCount)
         {
             foreach (var category in potentialSquare.Categories)
             {
@@ -451,8 +451,8 @@ namespace EldenBingoServer
                 if (room.CategoryConfig != null)
                     limit = Math.Min(limit, room.CategoryConfig.GetCategoryLimit(category));
 
-                categoryCount.TryGetValue(category, out decimal count);
-                if (count + potentialSquare.Weight > limit)
+                categoryCount.TryGetValue(category, out int count);
+                if (count + 1 > limit)
                     return false;
             }
             return true;
