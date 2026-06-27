@@ -95,9 +95,7 @@ namespace EldenBingoServer
                     categories.ToArray(),
                     tokenDict.Count == 0 ? null : tokenDict,
                     (CenterType)center.GetValueOrDefault(0),
-                    //Add Region
                     regions.Count == 0 ? null : regions.ToArray()
-                //Add Region
                 ));
             }
         }
@@ -375,7 +373,7 @@ namespace EldenBingoServer
                 var cfg = new RegionLimitConfig();
 
                 var arr = root["setRegionLimits"] as JArray;
-                if (arr == null) return cfg; // optional
+                if (arr == null) return cfg; 
 
                 foreach (var token in arr.OfType<JObject>())
                 {
@@ -418,8 +416,6 @@ namespace EldenBingoServer
             }
         }
 
-
-        //Added to handle Minimums
         private static void DecrementMinimums(Dictionary<string, decimal> remainingMin, BingoJsonObj square)
         {
             foreach (var c in square.Categories)
@@ -458,7 +454,6 @@ namespace EldenBingoServer
             return true;
         }
 
-        //Added to handle Minimums
 
         private IEnumerable<string> getTokens(string text)
         {

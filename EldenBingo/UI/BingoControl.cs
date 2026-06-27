@@ -1,4 +1,4 @@
-﻿using EldenBingo.Net;
+using EldenBingo.Net;
 using EldenBingo.Properties;
 using EldenBingo.Settings;
 using EldenBingoCommon;
@@ -23,12 +23,22 @@ namespace EldenBingo.UI
         private bool _revealed = false;
         private BingoSquareControl[] Squares;
         private System.Timers.Timer? _timer;
+        private bool _clickHotkeyConnected;
 
         private int _size;
         private int _selectedSquareIndex = -1;
+        private int _squareBackgroundOpacity = 100;
+        private TransparentMarkedSquareStyle _transparentMarkedSquareStyle = TransparentMarkedSquareStyle.Transparent;
         private int _lastNavigationSelection = 0;
 
         public int[] ActiveTeams { get; private set; }
+
+        public enum TransparentMarkedSquareStyle
+        {
+            Transparent,
+            Filled,
+            Border,
+        }
 
         public BingoControl() : base()
         {
@@ -48,6 +58,52 @@ namespace EldenBingo.UI
             ActiveTeams = Array.Empty<int>();
         }
 
+        public Color BoardBackgroundColor
+        {
+            get => _gridControl.BackColor;
+            set
+            {
+                BackColor = value;
+                _gridControl.BackColor = value;
+                _boardStatusLabel.BackColor = value;
+                Invalidate(true);
+            }
+        }
+
+        public int SquareBackgroundOpacity
+        {
+            get => _squareBackgroundOpacity;
+            set
+            {
+                var opacity = Math.Clamp(value, 0, 100);
+                if (_squareBackgroundOpacity == opacity)
+                    return;
+
+                _squareBackgroundOpacity = opacity;
+                foreach (var square in Squares)
+                {
+                    square.SquareBackgroundOpacity = opacity;
+                }
+                Invalidate();
+            }
+        }
+
+        public TransparentMarkedSquareStyle TransparentMarkedStyle
+        {
+            get => _transparentMarkedSquareStyle;
+            set
+            {
+                if (_transparentMarkedSquareStyle == value)
+                    return;
+
+                _transparentMarkedSquareStyle = value;
+                foreach (var square in Squares)
+                {
+                    square.TransparentMarkedStyle = value;
+                }
+                Invalidate();
+            }
+        }
         private enum BoardStatusEnum
         {
             NoBoard,
@@ -79,6 +135,8 @@ namespace EldenBingo.UI
                 while (_gridControl.Controls.Count < targetSquares)
                 {
                     var squareControl = new BingoSquareControl(i++, string.Empty, string.Empty);
+                    squareControl.SquareBackgroundOpacity = _squareBackgroundOpacity;
+                    squareControl.TransparentMarkedStyle = _transparentMarkedSquareStyle;
                     squareControl.MouseDown += square_MouseDown;
                     squareControl.MouseEnter += square_MouseEntered;
                     squareControl.MouseLeave += square_MouseLeave;
@@ -292,7 +350,7 @@ namespace EldenBingo.UI
         {
             _gridControl.UpdateGrid();
             recalculateFontSizeForSquares();
-            setupClickHotkey();
+            ConnectClickHotkey();
         }
 
         private async void keyPressed(object? sender, KeyEventArgs e)
@@ -520,14 +578,32 @@ namespace EldenBingo.UI
             }
         }
 
-        private void setupClickHotkey()
+        public void ConnectClickHotkey()
         {
-            var mainForm = MainForm.GetMainForm(this);
+            if (_clickHotkeyConnected)
+                return;
+
+            var mainForm = MainForm.GetMainForm(this) ?? MainForm.Instance;
             if (mainForm != null)
-            {                
+            {
                 mainForm.RawInput.KeyPressed += keyPressed;
                 mainForm.RawInput.MouseWheel += mouseWheel;
+                _clickHotkeyConnected = true;
             }
+        }
+
+        public void DisconnectClickHotkey()
+        {
+            if (!_clickHotkeyConnected)
+                return;
+
+            var mainForm = MainForm.GetMainForm(this) ?? MainForm.Instance;
+            if (mainForm != null)
+            {
+                mainForm.RawInput.KeyPressed -= keyPressed;
+                mainForm.RawInput.MouseWheel -= mouseWheel;
+            }
+            _clickHotkeyConnected = false;
         }
 
         private UserInRoom? getUserToSetFor()
@@ -767,6 +843,7 @@ namespace EldenBingo.UI
             private readonly ToolTip _toolTip;
             private int[] _teams;
             private int[] _activeTeams;
+            private TransparentMarkedSquareStyle _transparentMarkedSquareStyle;
             private SquareCounter[] _counters;
             private bool _marked;
             private SolidBrush _brush;
@@ -778,6 +855,7 @@ namespace EldenBingo.UI
             private static Bitmap _squareGradient;
 
             private Color? _keywordColor;
+            private int _squareBackgroundOpacity = 100;
 
             static BingoSquareControl()
             {
@@ -787,15 +865,16 @@ namespace EldenBingo.UI
 
             public BingoSquareControl(int index, string text, string tooltip)
             {
-                SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
+                SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer | ControlStyles.SupportsTransparentBackColor, true);
                 TextChanged += onTextChanged;
-                BackColor = BgColor;
+                BackColor = Color.Transparent;
                 Index = index;
                 Text = text;
                 _toolTip = new ToolTip();
                 ToolTip = tooltip;
                 Teams = Array.Empty<int>();
                 _activeTeams = Array.Empty<int>();
+                _transparentMarkedSquareStyle = TransparentMarkedSquareStyle.Transparent;
                 _counters = new SquareCounter[0];
                 _brush = new SolidBrush(Color.White);
                 _imageAttributes = new ImageAttributes();
@@ -828,6 +907,33 @@ namespace EldenBingo.UI
             private float keywordColorAlpha()
             {
                 return Math.Clamp(Properties.Settings.Default.KeywordColorsAlpha * 0.01f, 0f, 1f);
+            }
+
+            public int SquareBackgroundOpacity
+            {
+                get => _squareBackgroundOpacity;
+                set
+                {
+                    var opacity = Math.Clamp(value, 0, 100);
+                    if (_squareBackgroundOpacity == opacity)
+                        return;
+
+                    _squareBackgroundOpacity = opacity;
+                    Invalidate();
+                }
+            }
+
+            public TransparentMarkedSquareStyle TransparentMarkedStyle
+            {
+                get => _transparentMarkedSquareStyle;
+                set
+                {
+                    if (_transparentMarkedSquareStyle == value)
+                        return;
+
+                    _transparentMarkedSquareStyle = value;
+                    Invalidate();
+                }
             }
 
             public int[] Teams
@@ -917,6 +1023,8 @@ namespace EldenBingo.UI
                 base.OnPaint(e);
 
                 drawRectangle(e);
+                drawBorder(e);
+                drawTransparentMarkedBorder(e);
 
                 drawBingoText(e);
 
@@ -1020,6 +1128,38 @@ namespace EldenBingo.UI
                 e.Graphics.DrawImage(_starImage, x, y, width, height);
             }
 
+            private void drawBorder(PaintEventArgs e)
+            {
+                using var pen = new Pen(Color.FromArgb(118, 110, 97));
+                e.Graphics.DrawRectangle(pen, 0, 0, Math.Max(0, Width - 1), Math.Max(0, Height - 1));
+            }
+
+            private void drawTransparentMarkedBorder(PaintEventArgs e)
+            {
+                if (_transparentMarkedSquareStyle != TransparentMarkedSquareStyle.Border || _teams.Length == 0)
+                    return;
+
+                e.Graphics.SmoothingMode = SmoothingMode.None;
+                for (var i = 0; i < _teams.Length; i++)
+                {
+                    var inset = 2 + i * 4;
+                    if (Width <= inset * 2 || Height <= inset * 2)
+                        break;
+
+                    using var pen = new Pen(BingoConstants.GetTeamColor(_teams[i]), 3);
+                    e.Graphics.DrawRectangle(pen, inset, inset, Width - inset * 2 - 1, Height - inset * 2 - 1);
+                }
+            }
+            private Color withSquareOpacity(Color color)
+            {
+                if (_squareBackgroundOpacity >= 100)
+                    return color;
+
+                if (_teams.Length > 0 && _transparentMarkedSquareStyle == TransparentMarkedSquareStyle.Filled)
+                    return color;
+
+                return Color.FromArgb(Convert.ToInt32(255 * (_squareBackgroundOpacity / 100f)), color);
+            }
             private void drawRectangle(PaintEventArgs e)
             {
                 var g = e.Graphics;
@@ -1032,7 +1172,7 @@ namespace EldenBingo.UI
                     {
                         color = color.Brighten(0.14f);
                     }
-                    _brush.Color = color;
+                    _brush.Color = withSquareOpacity(color);
                     g.FillRectangle(_brush, new Rectangle(0, 0, Width, Height));
                 }
                 else
@@ -1070,7 +1210,7 @@ namespace EldenBingo.UI
                             {
                                 color = color.Brighten(0.14f);
                             }
-                            _brush.Color = color;
+                            _brush.Color = withSquareOpacity(color);
 
                             if (numTeams == 1)
                             {
@@ -1088,7 +1228,8 @@ namespace EldenBingo.UI
                     }
                 }
                 var shadows = Properties.Settings.Default.SquareShadows * 0.01f;
-                var gradientColor = isChecked ? Color.FromArgb(Convert.ToInt32(120 * shadows), 0, 0, 0) : Color.FromArgb(Convert.ToInt32(150 * shadows), 0, 0, 0);
+                var backgroundOpacity = _squareBackgroundOpacity / 100f;
+                var gradientColor = isChecked ? Color.FromArgb(Convert.ToInt32(120 * shadows * backgroundOpacity), 0, 0, 0) : Color.FromArgb(Convert.ToInt32(150 * shadows * backgroundOpacity), 0, 0, 0);
                 _gradientBrush.LinearColors = new[] { gradientColor, Color.Transparent };
                 g.FillRectangle(_gradientBrush, new Rectangle(0, 0, Width, Height));
 
@@ -1098,7 +1239,7 @@ namespace EldenBingo.UI
                     _colorMatrix.Matrix00 = -1f;
                     _colorMatrix.Matrix11 = -1f;
                     _colorMatrix.Matrix22 = -1f;
-                    _colorMatrix.Matrix33 = 0.6f * shadows;
+                    _colorMatrix.Matrix33 = 0.6f * shadows * backgroundOpacity;
                     _imageAttributes.SetColorMatrix(_colorMatrix);
                     g.DrawImage(_squareGradient, new Rectangle(0, 0, Width, Height), 0, 0, _squareGradient.Width, _squareGradient.Height, GraphicsUnit.Pixel, _imageAttributes);
                 }

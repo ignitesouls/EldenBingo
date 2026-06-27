@@ -5,7 +5,7 @@ namespace EldenBingo.Util
 {
     public class GitHubVersionChecker
     {
-        private const string GITHUB_API_URL = "https://api.github.com/repos/awsker/EldenBingo/releases";
+        private const string GITHUB_API_URL = "https://api.github.com/repos/ignitesouls/EldenBingo/releases";
         private readonly Version _currentVersion;
         private readonly HttpClient _httpClient;
 

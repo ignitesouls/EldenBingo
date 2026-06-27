@@ -12,7 +12,6 @@ using Neto.Shared;
 using SFML.System;
 using System.Diagnostics;
 using System.Reflection;
-using System.Security.Principal;
 using Version = System.Version;
 
 namespace EldenBingo
@@ -154,15 +153,6 @@ namespace EldenBingo
                 v += $".{version.Build}";
 
             return v;
-        }
-
-        /// <summary>
-        /// Checks if the user has called this application as administrator.
-        /// </summary>
-        /// <returns>True if application is running as administrator.</returns>
-        private static bool IsAdministrator()
-        {
-            return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
         }
 
         private async void _connectButton_Click(object sender, EventArgs e)
@@ -317,18 +307,10 @@ namespace EldenBingo
             }
         }
 
-        private void _openMapButton_Click(object sender, EventArgs e)
+        private void _openBoardButton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                openMapWindow();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening map window: ${ex.Message}");
-            }
+            _lobbyControl.OpenPopoutBoard();
         }
-
         private void _processHandler_CoordinatesChanged(object? sender, MapCoordinateEventArgs e)
         {
             if (_client?.IsConnected == true && _client.Room != null && _client?.LocalUser?.IsSpectator == false)
@@ -357,18 +339,6 @@ namespace EldenBingo
             var settingsDialog = new SettingsDialog();
             settingsDialog.TopMost = Properties.Settings.Default.AlwaysOnTop;
             settingsDialog.ShowDialog(this);
-        }
-
-        private async void _startGameButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                await tryStartingGameWithoutEAC();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
         }
 
         private void addClientListeners(Client? client)
@@ -591,6 +561,7 @@ namespace EldenBingo
                 //If user just enabled "check for updates", do a little check
                 if (!_hasCheckedUpdates && Properties.Settings.Default.CheckForUpdates)
                     checkForUpdates();
+                
             }
         }
 
@@ -778,45 +749,6 @@ namespace EldenBingo
             _consoleControl.PrintToConsole(e.Message, Color.Red);
         }
 
-        private async Task tryStartingGameWithoutEAC()
-        {
-            if (_processHandler == null)
-                return;
-
-            try
-            {
-                GameRunningStatus res = await _processHandler.GetGameRunningStatus();
-                if (res == GameRunningStatus.NotRunning)
-                {
-                    await _processHandler.SafeStartGame();
-                }
-                else if (res == GameRunningStatus.RunningWithEAC)
-                {
-                    if (IsAdministrator())
-                    {
-                        DialogResult result = MessageBox.Show("Game is already running with EAC active!\n\n" +
-                            "Do you want to close and restart it in offline mode without EAC?\n\n", Application.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                        if (result == DialogResult.Yes)
-                        {
-                            _processHandler.KillGameAndEAC();
-                            await Task.Delay(2000);
-                            await _processHandler.SafeStartGame();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Game is already running with EAC active!\n\n" +
-                            "Restart this application as administrator if you want it to be able to restart Elden Ring without EAC", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show($"Error starting the game: {e.Message}", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            //Do nothing if game is already running without EAC
-        }
-
         private async void checkForUpdates()
         {
             _hasCheckedUpdates = true;
@@ -860,6 +792,7 @@ namespace EldenBingo
                 _joinLobbyButton.Enabled = connected;
                 _leaveRoomButton.Enabled = connected;
                 _changeTeamButton.Enabled = connected;
+                _openBoardButton.Enabled = inRoom;
             }));
         }
     }
