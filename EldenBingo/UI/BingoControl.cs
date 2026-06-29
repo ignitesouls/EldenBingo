@@ -104,6 +104,17 @@ namespace EldenBingo.UI
                 Invalidate();
             }
         }
+
+        public int SquareSpacing
+        {
+            get => _gridControl.PaddingX;
+            set
+            {
+                var spacing = Math.Max(0, value);
+                _gridControl.PaddingX = spacing;
+                _gridControl.PaddingY = spacing;
+            }
+        }
         private enum BoardStatusEnum
         {
             NoBoard,

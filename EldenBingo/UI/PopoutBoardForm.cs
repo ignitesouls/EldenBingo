@@ -54,8 +54,8 @@ namespace EldenBingo.UI
 
             _boardFrame = new Panel
             {
-                BackColor = BorderColor,
-                Padding = new Padding(1),
+                BackColor = ChromaKey,
+                Padding = new Padding(0),
             };
 
             _bingoControl = new BingoControl
@@ -63,6 +63,7 @@ namespace EldenBingo.UI
                 Dock = DockStyle.Fill,
                 Margin = new Padding(0),
                 BoardBackgroundColor = ChromaKey,
+                SquareSpacing = 0,
             };
             _bingoControl.TransparentMarkedStyle = BingoControl.TransparentMarkedSquareStyle.Border;
             _boardFrame.Controls.Add(_bingoControl);
@@ -570,9 +571,10 @@ namespace EldenBingo.UI
             var toolbarX = Math.Max(0, _boardFrame.Right - toolbarWidth + 4);
             _toolbarPanel.Location = new Point(toolbarX, 8);
 
-            _statusLabel.Location = new Point(Math.Max(0, _boardFrame.Right - _statusLabel.Width), Math.Max(0, ClientSize.Height - _statusLabel.Height - 6));
-            var timerY = Math.Max(0, _statusLabel.Top - _timerLabel.Height + 6);
-            _timerLabel.Location = new Point(Math.Max(0, _boardFrame.Right - _timerLabel.Width), timerY);
+            var timerY = Math.Max(0, _boardFrame.Bottom + 6);
+            var timerX = Math.Max(0, _boardFrame.Right - _timerLabel.Width);
+            _timerLabel.Location = new Point(timerX, timerY);
+            _statusLabel.Location = new Point(Math.Max(0, _boardFrame.Right - _statusLabel.Width), _timerLabel.Bottom - 4);
             var playersWidth = Math.Max(0, _timerLabel.Left - _boardFrame.Left - 12);
             _playersPanel.SetBounds(_boardFrame.Left, timerY, playersWidth, _timerLabel.Height);
             updatePlayerScoreControlLayout();
