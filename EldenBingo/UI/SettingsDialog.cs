@@ -1,4 +1,4 @@
-﻿using EldenBingo.Settings;
+using EldenBingo.Settings;
 using EldenBingo.Sfx;
 
 namespace EldenBingo.UI
@@ -98,6 +98,11 @@ namespace EldenBingo.UI
             _bingoMaxXTextBox.Text = Properties.Settings.Default.BingoMaxSizeX.ToString();
             _bingoMaxYTextBox.Text = Properties.Settings.Default.BingoMaxSizeY.ToString();
 
+            _popoutBoardDefaultSizeRadioButton.Checked = !Properties.Settings.Default.PopoutBoardCustomSize;
+            _popoutBoardCustomSizeRadioButton.Checked = Properties.Settings.Default.PopoutBoardCustomSize;
+            _popoutBoardSizeXTextBox.Text = Properties.Settings.Default.PopoutBoardSizeX.ToString();
+            _popoutBoardSizeYTextBox.Text = Properties.Settings.Default.PopoutBoardSizeY.ToString();
+
             _fontLinkLabel.Font = MainForm.GetFontFromSettings(_fontLinkLabel.Font, fontSize);
             _fontLinkLabel.Text = _fontLinkLabel.Font.FontFamily.Name;
 
@@ -116,6 +121,7 @@ namespace EldenBingo.UI
             _mapSizeCustomRadioButton.CheckedChanged += (_, _) => updateSizeEnable();
             _mapPositionCustomRadioButton.CheckedChanged += (_, _) => updatePositionEnable();
             _bingoCustomMaxSizeRadioButton.CheckedChanged += (_, _) => updateMaxSizeEnable();
+            _popoutBoardCustomSizeRadioButton.CheckedChanged += (_, _) => updatePopoutBoardSizeEnable();
 
             _swapMouseButtons.Checked = Properties.Settings.Default.FlipMouseButtons;
             _showClassesCheckBox.Checked = Properties.Settings.Default.ShowClassesOnMap;
@@ -137,6 +143,7 @@ namespace EldenBingo.UI
             updateSizeEnable();
             updatePositionEnable();
             updateMaxSizeEnable();
+            updatePopoutBoardSizeEnable();
             updateOutOfFocusText();
             updateVolumeText();
             updateShadowText();
@@ -159,6 +166,12 @@ namespace EldenBingo.UI
         {
             _bingoMaxXTextBox.Enabled = _bingoCustomMaxSizeRadioButton.Checked;
             _bingoMaxYTextBox.Enabled = _bingoCustomMaxSizeRadioButton.Checked;
+        }
+
+        private void updatePopoutBoardSizeEnable()
+        {
+            _popoutBoardSizeXTextBox.Enabled = _popoutBoardCustomSizeRadioButton.Checked;
+            _popoutBoardSizeYTextBox.Enabled = _popoutBoardCustomSizeRadioButton.Checked;
         }
 
         private bool saveSettings()
@@ -193,6 +206,16 @@ namespace EldenBingo.UI
                 //Invalid y size
                 return false;
             }
+            if (!int.TryParse(_popoutBoardSizeXTextBox.Text, out var popoutBoardWidth))
+            {
+                //Invalid x size
+                return false;
+            }
+            if (!int.TryParse(_popoutBoardSizeYTextBox.Text, out var popoutBoardHeight))
+            {
+                //Invalid y size
+                return false;
+            }
             if (!int.TryParse(_portTextBox.Text, out int port))
             {
                 //Invalid port
@@ -212,6 +235,9 @@ namespace EldenBingo.UI
             Properties.Settings.Default.BingoBoardMaximumSize = _bingoCustomMaxSizeRadioButton.Checked;
             Properties.Settings.Default.BingoMaxSizeX = bingoMaxWidth;
             Properties.Settings.Default.BingoMaxSizeY = bingoMaxHeight;
+            Properties.Settings.Default.PopoutBoardCustomSize = _popoutBoardCustomSizeRadioButton.Checked;
+            Properties.Settings.Default.PopoutBoardSizeX = popoutBoardWidth;
+            Properties.Settings.Default.PopoutBoardSizeY = popoutBoardHeight;
 
             Properties.Settings.Default.ControlBackColor = _colorPanel.BackColor;
 

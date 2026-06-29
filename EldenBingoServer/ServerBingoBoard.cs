@@ -11,6 +11,7 @@ namespace EldenBingoServer
             Teams = new List<int>();
             MarkedBy = new HashSet<Guid>();
             PlayerCounters = new ConcurrentDictionary<Guid, int>();
+            SquareMarks = new Dictionary<int, SquareMarkInfo>();
         }
         [JsonProperty]
         public List<int> Teams { get; init; }
@@ -18,6 +19,8 @@ namespace EldenBingoServer
         private IDictionary<Guid, int> PlayerCounters { get; init; }
         [JsonProperty]
         private ISet<Guid> MarkedBy { get; init; }
+        [JsonProperty]
+        public IDictionary<int, SquareMarkInfo> SquareMarks { get; init; }
 
         public bool IsChecked()
         {
@@ -42,7 +45,17 @@ namespace EldenBingoServer
 
         public bool Uncheck(int team)
         {
-            return Teams.Remove(team);
+            if (Teams.Remove(team))
+            {
+                SquareMarks.Remove(team);
+                return true;
+            }
+            return false;
+        }
+
+        public void SetSquareMark(int index, UserInRoom player, int team, int markedAt)
+        {
+            SquareMarks[team] = new SquareMarkInfo(index, team, player.Guid, player.Nick, markedAt);
         }
 
         public bool Mark(UserInRoom player)
@@ -195,7 +208,7 @@ namespace EldenBingoServer
             }
         }
 
-        public bool UserClicked(int i, UserInRoom clicker, UserInRoom onBehalfOf, out int teamChanged)
+        public bool UserClicked(int i, UserInRoom clicker, UserInRoom onBehalfOf, int markedAt, out int teamChanged)
         {
             teamChanged = -1;
             if (i < 0 || i >= SquareCount)
@@ -231,6 +244,10 @@ namespace EldenBingoServer
                 {
                     checkChanged = check.Check(onBehalfOf.Team);
                     teamChanged = onBehalfOf.Team;
+                    if (checkChanged)
+                    {
+                        check.SetSquareMark(i, clicker, onBehalfOf.Team, markedAt);
+                    }
                 }
                 if (checkChanged)
                 {
@@ -280,6 +297,20 @@ namespace EldenBingoServer
                 }
             }
             return squaresCountPerTeam;
+        }
+
+        public SquareMarkInfo[] GetSquareMarks()
+        {
+            var marks = new List<SquareMarkInfo>();
+            for (int i = 0; i < CheckStatus.Length; ++i)
+            {
+                var status = CheckStatus[i];
+                lock (status)
+                {
+                    marks.AddRange(status.SquareMarks.Values);
+                }
+            }
+            return marks.ToArray();
         }
 
 

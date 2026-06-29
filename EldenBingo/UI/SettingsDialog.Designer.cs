@@ -1,4 +1,4 @@
-﻿namespace EldenBingo.UI
+namespace EldenBingo.UI
 {
     partial class SettingsDialog
     {
@@ -44,6 +44,13 @@
             _bingoNoMaxSizeRadioButton = new RadioButton();
             _bingoMaxXTextBox = new TextBox();
             label4 = new Label();
+            _popoutBoardSizeGroupBox = new GroupBox();
+            _popoutBoardSizeYTextBox = new TextBox();
+            _popoutBoardSizeYLabel = new Label();
+            _popoutBoardCustomSizeRadioButton = new RadioButton();
+            _popoutBoardDefaultSizeRadioButton = new RadioButton();
+            _popoutBoardSizeXTextBox = new TextBox();
+            _popoutBoardSizeXLabel = new Label();
             groupBox3 = new GroupBox();
             _alwaysOnTopCheckbox = new CheckBox();
             _colorPanel = new Panel();
@@ -101,6 +108,7 @@
             _arrowNavigationCheckBox = new CheckBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            _popoutBoardSizeGroupBox.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBox5.SuspendLayout();
@@ -280,6 +288,75 @@
             label4.Size = new Size(17, 15);
             label4.TabIndex = 33;
             label4.Text = "X:";
+            // 
+            // _popoutBoardSizeGroupBox
+            // 
+            _popoutBoardSizeGroupBox.Controls.Add(_popoutBoardSizeYTextBox);
+            _popoutBoardSizeGroupBox.Controls.Add(_popoutBoardSizeYLabel);
+            _popoutBoardSizeGroupBox.Controls.Add(_popoutBoardCustomSizeRadioButton);
+            _popoutBoardSizeGroupBox.Controls.Add(_popoutBoardDefaultSizeRadioButton);
+            _popoutBoardSizeGroupBox.Controls.Add(_popoutBoardSizeXTextBox);
+            _popoutBoardSizeGroupBox.Controls.Add(_popoutBoardSizeXLabel);
+            _popoutBoardSizeGroupBox.Location = new Point(257, 102);
+            _popoutBoardSizeGroupBox.Name = "_popoutBoardSizeGroupBox";
+            _popoutBoardSizeGroupBox.Size = new Size(240, 107);
+            _popoutBoardSizeGroupBox.TabIndex = 64;
+            _popoutBoardSizeGroupBox.TabStop = false;
+            _popoutBoardSizeGroupBox.Text = "Pop Out Board Size";
+            // 
+            // _popoutBoardSizeYTextBox
+            // 
+            _popoutBoardSizeYTextBox.Location = new Point(117, 72);
+            _popoutBoardSizeYTextBox.Name = "_popoutBoardSizeYTextBox";
+            _popoutBoardSizeYTextBox.Size = new Size(54, 23);
+            _popoutBoardSizeYTextBox.TabIndex = 70;
+            // 
+            // _popoutBoardSizeYLabel
+            // 
+            _popoutBoardSizeYLabel.AutoSize = true;
+            _popoutBoardSizeYLabel.Location = new Point(94, 75);
+            _popoutBoardSizeYLabel.Name = "_popoutBoardSizeYLabel";
+            _popoutBoardSizeYLabel.Size = new Size(17, 15);
+            _popoutBoardSizeYLabel.TabIndex = 69;
+            _popoutBoardSizeYLabel.Text = "Y:";
+            // 
+            // _popoutBoardCustomSizeRadioButton
+            // 
+            _popoutBoardCustomSizeRadioButton.AutoSize = true;
+            _popoutBoardCustomSizeRadioButton.Location = new Point(9, 46);
+            _popoutBoardCustomSizeRadioButton.Name = "_popoutBoardCustomSizeRadioButton";
+            _popoutBoardCustomSizeRadioButton.Size = new Size(110, 19);
+            _popoutBoardCustomSizeRadioButton.TabIndex = 66;
+            _popoutBoardCustomSizeRadioButton.TabStop = true;
+            _popoutBoardCustomSizeRadioButton.Text = "Set Custom Size";
+            _popoutBoardCustomSizeRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // _popoutBoardDefaultSizeRadioButton
+            // 
+            _popoutBoardDefaultSizeRadioButton.AutoSize = true;
+            _popoutBoardDefaultSizeRadioButton.Location = new Point(9, 22);
+            _popoutBoardDefaultSizeRadioButton.Name = "_popoutBoardDefaultSizeRadioButton";
+            _popoutBoardDefaultSizeRadioButton.Size = new Size(88, 19);
+            _popoutBoardDefaultSizeRadioButton.TabIndex = 65;
+            _popoutBoardDefaultSizeRadioButton.TabStop = true;
+            _popoutBoardDefaultSizeRadioButton.Text = "Default Size";
+            _popoutBoardDefaultSizeRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // _popoutBoardSizeXTextBox
+            // 
+            _popoutBoardSizeXTextBox.Location = new Point(30, 72);
+            _popoutBoardSizeXTextBox.Name = "_popoutBoardSizeXTextBox";
+            _popoutBoardSizeXTextBox.Size = new Size(54, 23);
+            _popoutBoardSizeXTextBox.TabIndex = 68;
+            // 
+            // _popoutBoardSizeXLabel
+            // 
+            _popoutBoardSizeXLabel.AutoSize = true;
+            _popoutBoardSizeXLabel.Location = new Point(7, 75);
+            _popoutBoardSizeXLabel.Name = "_popoutBoardSizeXLabel";
+            _popoutBoardSizeXLabel.Size = new Size(17, 15);
+            _popoutBoardSizeXLabel.TabIndex = 67;
+            _popoutBoardSizeXLabel.Text = "X:";
             // 
             // groupBox3
             // 
@@ -688,6 +765,7 @@
             // tabPage1
             // 
             tabPage1.BackColor = SystemColors.Control;
+            tabPage1.Controls.Add(_popoutBoardSizeGroupBox);
             tabPage1.Controls.Add(groupBox10);
             tabPage1.Controls.Add(groupBox3);
             tabPage1.Controls.Add(groupBox8);
@@ -702,7 +780,7 @@
             // groupBox10
             // 
             groupBox10.Controls.Add(_checkUpdatesCheckBox);
-            groupBox10.Location = new Point(257, 102);
+            groupBox10.Location = new Point(257, 215);
             groupBox10.Name = "groupBox10";
             groupBox10.Size = new Size(240, 59);
             groupBox10.TabIndex = 16;
@@ -856,6 +934,8 @@
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            _popoutBoardSizeGroupBox.ResumeLayout(false);
+            _popoutBoardSizeGroupBox.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             groupBox4.ResumeLayout(false);
@@ -903,6 +983,13 @@
         private RadioButton _bingoNoMaxSizeRadioButton;
         private TextBox _bingoMaxXTextBox;
         private Label label4;
+        private GroupBox _popoutBoardSizeGroupBox;
+        private TextBox _popoutBoardSizeYTextBox;
+        private Label _popoutBoardSizeYLabel;
+        private RadioButton _popoutBoardCustomSizeRadioButton;
+        private RadioButton _popoutBoardDefaultSizeRadioButton;
+        private TextBox _popoutBoardSizeXTextBox;
+        private Label _popoutBoardSizeXLabel;
         private GroupBox groupBox3;
         private Label label5;
         private ColorDialog colorDialog1;

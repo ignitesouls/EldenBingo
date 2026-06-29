@@ -1,4 +1,4 @@
-﻿using EldenBingoCommon;
+using EldenBingoCommon;
 using Neto.Shared;
 using System.ComponentModel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
@@ -256,6 +256,7 @@ namespace EldenBingo.UI
             public string NameText { get; set; }
             public int Team { get; set; }
             public bool OwnTeam { get; set; }
+            public bool CompactLayout { get; set; }
 
             public void Update(int team, string name, string counter)
             {
@@ -267,13 +268,20 @@ namespace EldenBingo.UI
 
             public Size SquareSize()
             {
-                return SquareSize(Font);
+                return CompactLayout ? CompactSquareSize(Font) : SquareSize(Font);
             }
 
             public static Size SquareSize(Font font)
             {
                 var measure = TextRenderer.MeasureText("00", font);
                 return new Size(Math.Max(35, measure.Width + PaddingInsideSquare), Math.Max(22, measure.Height + PaddingInsideSquare));
+            }
+
+
+            public static Size CompactSquareSize(Font font)
+            {
+                var measure = TextRenderer.MeasureText("00", font);
+                return new Size(Math.Max(22, measure.Width + 3), Math.Max(16, measure.Height + 2));
             }
 
             protected override void OnPaint(PaintEventArgs e)
@@ -283,18 +291,22 @@ namespace EldenBingo.UI
 
                 var squareSize = SquareSize();
                 Height = squareSize.Height;
-                var offsetX = Convert.ToInt32(Height * SquareXOffset);
+                var offsetX = CompactLayout ? 0 : Convert.ToInt32(Height * SquareXOffset);
+                var nameMargin = CompactLayout ? Math.Max(2, Convert.ToInt32(Font.Size / 3F)) : NameTextMarginLeft;
 
                 var rect = new Rectangle(offsetX, 0, squareSize.Width, squareSize.Height);
-                var nameRect = new Rectangle(offsetX + rect.Width + NameTextMarginLeft, 0, Math.Max(0, Width - rect.Width - NameTextMarginLeft), rect.Height);
+                var nameRect = new Rectangle(offsetX + rect.Width + nameMargin, 0, Math.Max(0, Width - offsetX - rect.Width - nameMargin), rect.Height);
+                var nameFlags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.EndEllipsis;
 
                 var g = e.Graphics;
-                g.FillRectangle(new SolidBrush(Color), rect);
-                g.DrawRectangle(new Pen(Color.FromArgb(96, 0, 0, 0)), new Rectangle(offsetX, 0, rect.Width - 1, rect.Height - 1));
+                using var fillBrush = new SolidBrush(Color);
+                using var borderPen = new Pen(Color.FromArgb(96, 0, 0, 0));
+                g.FillRectangle(fillBrush, rect);
+                g.DrawRectangle(borderPen, new Rectangle(offsetX, 0, rect.Width - 1, rect.Height - 1));
                 TextRenderer.DrawText(e, CounterText, Font, rect, Color.White, flags: TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
-                TextRenderer.DrawText(e, NameText, Font, nameRect, TextColor, flags: TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+                TextRenderer.DrawText(e, NameText, Font, nameRect, TextColor, flags: nameFlags);
 
-                if(Properties.Settings.Default.GS_ShowPlayerTeam && OwnTeam)
+                if (!CompactLayout && Properties.Settings.Default.GS_ShowPlayerTeam && OwnTeam)
                 {
                     g.DrawImage(Properties.Resources.player_icon, 0, 0, Height, Height);
                 }

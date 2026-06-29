@@ -47,6 +47,14 @@ namespace EldenBingoServer
         public CategoryConfig CategoryConfig { get; set; }
         [JsonProperty]
         public bool BoardAlreadyUsed { get; set; }
+        [JsonProperty]
+        public string SquareSetJsonFileName { get; set; } = string.Empty;
+        [JsonProperty]
+        public DateTime? MatchStartedAt { get; set; }
+        [JsonProperty]
+        public DateTime? MatchEndedAt { get; set; }
+        [JsonProperty]
+        public int? MatchEndedAtSeconds { get; set; }
 
         public BingoClientInRoom AddUser(BingoClientModel client, string nick, string adminPass, int team)
         {

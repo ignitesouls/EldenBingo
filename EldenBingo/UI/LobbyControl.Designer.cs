@@ -36,6 +36,7 @@
             this._chatTextBox = new System.Windows.Forms.TextBox();
             this._timerLabel = new System.Windows.Forms.Label();
             this._matchStatusLabel = new System.Windows.Forms.Label();
+            this._exportJsonButton = new System.Windows.Forms.Button();
             this._bingoBoardPanel = new System.Windows.Forms.Panel();
             this._bingoControl = new EldenBingo.UI.BingoControl();
             this.adminControl1 = new EldenBingo.UI.AdminControl();
@@ -165,6 +166,17 @@
             this._matchStatusLabel.TabIndex = 7;
             this._matchStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // _exportJsonButton
+            // 
+            this._exportJsonButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this._exportJsonButton.Location = new System.Drawing.Point(0, 474);
+            this._exportJsonButton.Name = "_exportJsonButton";
+            this._exportJsonButton.Size = new System.Drawing.Size(200, 28);
+            this._exportJsonButton.TabIndex = 5;
+            this._exportJsonButton.Text = "Export JSON";
+            this._exportJsonButton.UseVisualStyleBackColor = true;
+            this._exportJsonButton.Click += new System.EventHandler(this._exportJsonButton_Click);
+            // 
             // _bingoBoardPanel
             // 
             this._bingoBoardPanel.Controls.Add(this._bingoControl);
@@ -204,6 +216,7 @@
             this._clientList.Name = "_clientList";
             this._clientList.Size = new System.Drawing.Size(200, 502);
             this._clientList.TabIndex = 3;
+            this._clientList.Controls.Add(this._exportJsonButton);
             // 
             // _adminInfoLabel
             // 
@@ -245,6 +258,7 @@
         private Label _matchStatusLabel;
         private AdminControl adminControl1;
         private BingoControl _bingoControl;
+        private Button _exportJsonButton;
         private RichTextBoxCustom _logTextBox;
         private Panel _logBoxBorderPanel;
         private Label _adminInfoLabel;
