@@ -316,7 +316,7 @@ namespace EldenBingo
             MinimumSize = new Size(952, 566);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Elden Bingo";
+            Text = "THE IGNITE GRID";
             Load += MainForm_Load;
             tabControl1.ResumeLayout(false);
             _consolePage.ResumeLayout(false);
