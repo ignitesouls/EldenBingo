@@ -37,6 +37,7 @@ namespace EldenBingo
         public MainForm()
         {
             InitializeComponent();
+            initializeColorProfileMenu();
             Icon = Resources.icon;
             //_processHandler = new GameProcessHandler();
             //_processHandler.StatusChanged += _processHandler_StatusChanged;
@@ -69,6 +70,8 @@ namespace EldenBingo
                     await _server.Stop();
             };
             _client = new Client();
+            initializeQualityOfLifeButtons();
+            initializeLobbyStatus();
             _client.PacketDelayMs = Properties.Settings.Default.DelayMatchEvents;
             addClientListeners(_client);
             listenToSettingsChanged();
@@ -338,7 +341,8 @@ namespace EldenBingo
         {
             var settingsDialog = new SettingsDialog();
             settingsDialog.TopMost = Properties.Settings.Default.AlwaysOnTop;
-            settingsDialog.ShowDialog(this);
+            if (settingsDialog.ShowDialog(this) == DialogResult.OK)
+                applyLayout(settingsDialog.AppliedLayout);
         }
 
         private void addClientListeners(Client? client)
@@ -359,6 +363,7 @@ namespace EldenBingo
             client.AddListener<ServerUserChecked>(userCheckedSquare);
             client.AddListener<ServerBingoAchievedUpdate>(bingoAchieved);
             client.AddListener<ServerBroadcastMessage>(onServerMessage);
+            client.AddListener<ServerMatchStatusUpdate>(matchSoundUpdated);
         }
 
         private void onServerMessage(ClientModel? model, ServerBroadcastMessage message)
@@ -479,6 +484,7 @@ namespace EldenBingo
             void update()
             {
                 _clientStatusTextBox.Text = _client.GetConnectionStatusString();
+                refreshLobbyStatus();
             };
             if (InvokeRequired)
             {
@@ -490,6 +496,7 @@ namespace EldenBingo
 
         private void client_RoomChanged(object? sender, RoomChangedEventArgs e)
         {
+            _matchSoundTracker.Reset(e.NewRoom?.Name, e.NewRoom?.Match.MatchStatus ?? MatchStatus.NotRunning, e.NewRoom?.Match.Paused ?? false);
             if (_client == null)
                 return;
 
@@ -504,6 +511,7 @@ namespace EldenBingo
                     hideLobbyTab();
                 }
                 _clientStatusTextBox.Text = _client.GetConnectionStatusString();
+                refreshLobbyStatus();
             }
             if (InvokeRequired)
             {
@@ -737,6 +745,7 @@ namespace EldenBingo
             client.RemoveListener<ServerJoinRoomAccepted>(joinRoomAccepted);
             client.RemoveListener<ServerJoinRoomDenied>(joinRoomDenied);
             client.RemoveListener<ServerEntireBingoBoardUpdate>(gotBingoBoard);
+            client.RemoveListener<ServerMatchStatusUpdate>(matchSoundUpdated);
         }
 
         private void server_OnStatus(object? sender, StringEventArgs e)
@@ -757,7 +766,7 @@ namespace EldenBingo
             var newerVersion = await updater.CheckForNewerVersionAsync();
             if (newerVersion.HasValue)
             {
-                if (MessageBox.Show($"Version {newerVersion.Value.Tag_Name} of Elden Bingo is now available! Open download page?", $"{Application.ProductName} - Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show(this, $"Version {newerVersion.Value.Tag_Name} of Elden Bingo is now available! Open download page?", $"{Application.ProductName} - Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     openBrowser(newerVersion.Value.Html_Url);
                 }

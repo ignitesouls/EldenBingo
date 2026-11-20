@@ -135,7 +135,7 @@ namespace EldenBingoServer
         }
     }
 
-    public class ServerBingoBoard : BingoBoard
+    public partial class ServerBingoBoard : BingoBoard
     {
         public ServerBingoBoard(ServerRoom room, int size, bool lockout, BingoBoardSquare[] squares, EldenRingClasses[] availableClasses) : base(size, lockout, squares, availableClasses)
         {
@@ -190,7 +190,9 @@ namespace EldenBingoServer
                     Squares[index].Tooltip,
                     status.Teams.ToArray(),
                     status.IsMarked(user),
-                    status.GetCountersForPlayer(user, Room.Users, teams));
+                    status.GetCountersForPlayer(user, Room.Users, teams), Squares[index].PointValue,
+                    Room.Match.MatchStatus == MatchStatus.Running && TimedSquares.TryGetValue(index, out var timed) && timed.Frozen &&
+                    status.Teams.Count == 1 && status.SquareMarks.Values.Any(m => m.UserGuid == user.Guid));
             }
         }
 
@@ -208,7 +210,7 @@ namespace EldenBingoServer
             }
         }
 
-        public bool UserClicked(int i, UserInRoom clicker, UserInRoom onBehalfOf, int markedAt, out int teamChanged)
+        public bool UserClicked(int i, UserInRoom clicker, UserInRoom onBehalfOf, int markedAt, out int teamChanged, bool resumeTimed = false)
         {
             teamChanged = -1;
             if (i < 0 || i >= SquareCount)
@@ -226,9 +228,11 @@ namespace EldenBingoServer
             lock (check)
             {
                 bool checkChanged = false;
+                var removedOwnOriginalClaim = false;
                 //Square owned by this player's team -> allow it to be toggled off
                 if (check.IsChecked(onBehalfOf.Team))
                 {
+                    removedOwnOriginalClaim = check.SquareMarks.TryGetValue(onBehalfOf.Team, out var originalMark) && originalMark.UserGuid == clicker.Guid;
                     checkChanged = check.Uncheck(onBehalfOf.Team);
                     teamChanged = onBehalfOf.Team;
                 }
@@ -236,6 +240,7 @@ namespace EldenBingoServer
                 else if (clicker.IsSpectator && clicker.IsAdmin && check.Teams.Count == 1)
                 {
                     var team = check.Teams[0];
+                    removedOwnOriginalClaim = check.SquareMarks.TryGetValue(team, out var originalMark) && originalMark.UserGuid == clicker.Guid;
                     checkChanged = CheckStatus[i].Uncheck(team);
                     teamChanged = team;
                 }
@@ -246,11 +251,14 @@ namespace EldenBingoServer
                     teamChanged = onBehalfOf.Team;
                     if (checkChanged)
                     {
+                        freezeTimedSquare(i);
                         check.SetSquareMark(i, clicker, onBehalfOf.Team, markedAt);
                     }
                 }
                 if (checkChanged)
                 {
+                    if (removedOwnOriginalClaim && check.Teams.Count == 0 && resumeTimed && Room.Match.MatchStatus == MatchStatus.Running)
+                        resumeTimedSquare(i);
                     _lastBingos = Room.GetBingos();
                 }
                 return checkChanged;
@@ -297,6 +305,18 @@ namespace EldenBingoServer
                 }
             }
             return squaresCountPerTeam;
+        }
+
+        public Dictionary<int, int> GetPointsPerTeam()
+        {
+            var points = new Dictionary<int, int>();
+            for (var i = 0; i < CheckStatus.Length; i++)
+            {
+                lock (CheckStatus[i])
+                    foreach (var team in CheckStatus[i].Teams)
+                        points[team] = checked(points.GetValueOrDefault(team) + Squares[i].PointValue);
+            }
+            return points;
         }
 
         public SquareMarkInfo[] GetSquareMarks()

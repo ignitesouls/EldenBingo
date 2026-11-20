@@ -11,6 +11,15 @@ namespace EldenBingo.UI
             fillClassList();
             updateEnabling();
             _randomSeedUpDown.ValueChanged += (o, e) => SeedChanged?.Invoke();
+            var presets = new Button { Text = "Match presets…", Dock = DockStyle.Top, Height = 28, UseVisualStyleBackColor = true };
+            presets.Click += (_, _) =>
+            {
+                using var dialog = new MatchPresetsForm(Settings);
+                if (dialog.ShowDialog(this) == DialogResult.OK && dialog.SelectedSettings is { } selected) Settings = selected;
+            };
+            Controls.Add(presets); presets.SendToBack(); Height += 28;
+            Width += 24;
+            button1.AutoSize = true;
         }
 
         public int CurrentSeed => Convert.ToInt32(_randomSeedUpDown.Value);

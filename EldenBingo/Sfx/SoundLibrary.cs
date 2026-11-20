@@ -2,6 +2,7 @@
 using NAudio.CoreAudioApi;
 using NAudio.CoreAudioApi.Interfaces;
 using NAudio.Wave;
+using EldenBingo.Settings;
 
 namespace EldenBingo.Sfx
 {
@@ -12,6 +13,9 @@ namespace EldenBingo.Sfx
         SquareUnclaimedOther,
         SquareUnclaimedOwn,
         Bingo,
+        MatchStart,
+        MatchPause,
+        MatchFinish,
     }
 
     public class AudioDevice
@@ -35,18 +39,34 @@ namespace EldenBingo.Sfx
     {
         private readonly MMDeviceEnumerator _deviceEnumerator;
 
-        private static string SfxPath = "./Sfx/";
-        private static readonly string[] AudioFiles = new string[]
+        private static string SfxPath = Path.Combine(AppContext.BaseDirectory, "Sfx");
+        private static readonly string?[] AudioFiles = new string?[]
         {
             "square_claimed_other.wav",
             "square_claimed_own.wav",
             "square_unclaimed_other.wav",
             "square_unclaimed_own.wav",
-            "bingo.wav"
+            "bingo.wav",
+            null, // Start, pause, and finish are silent until a custom file is chosen.
+            null,
+            null
         };
 
         private readonly CachedSoundSampleProvider?[] _sounds;
         private readonly WasapiOut?[] _players;
+        private readonly CachedSoundSampleProvider?[] _customSounds = new CachedSoundSampleProvider?[AudioFiles.Length];
+        private readonly string?[] _customPaths = new string?[AudioFiles.Length];
+        private readonly DateTime[] _customModified = new DateTime[AudioFiles.Length];
+
+        internal static bool HasBundledSound(SoundType type) => (int)type >= 0 && (int)type < AudioFiles.Length && AudioFiles[(int)type] != null;
+
+        internal static void ValidateCustomFile(string path)
+        {
+            if (!File.Exists(path)) throw new FileNotFoundException("The sound file could not be found.", path);
+            using var reader = new AudioFileReader(path);
+            if (reader.TotalTime <= TimeSpan.Zero || reader.Read(new float[1024], 0, 1024) == 0)
+                throw new InvalidDataException("Choose an audio file containing playable sound.");
+        }
 
         private MMDevice? _currentDevice = null;
         private string _forceDeviceId = string.Empty;
@@ -61,7 +81,8 @@ namespace EldenBingo.Sfx
             {
                 try
                 {
-                    var path = Path.Combine(SfxPath, AudioFiles[i]);
+                    if (AudioFiles[i] == null) continue;
+                    var path = Path.Combine(SfxPath, AudioFiles[i]!);
                     if (File.Exists(path))
                     {
                         _sounds[i] = new CachedSoundSampleProvider(new CachedSound(path));
@@ -101,22 +122,36 @@ namespace EldenBingo.Sfx
             return _deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
         }
 
-        public void PlaySound(SoundType type, int? volume = null)
+        public void PlaySound(SoundType type, int? volume = null, int? eventVolume = null, string? customFile = null)
         {
-            if (_currentDevice == null)
-            {
-                initAudioDevice();
-            }
+            var kind = type switch { SoundType.Bingo => MatchSoundEvent.Bingo, SoundType.MatchStart => MatchSoundEvent.Start,
+                SoundType.MatchPause => MatchSoundEvent.Pause, SoundType.MatchFinish => MatchSoundEvent.Finish, _ => MatchSoundEvent.Claim };
+            var preferences = EventSoundPreferences.Parse(Properties.Settings.Default.EventSoundsJson);
+            var effectiveVolume = EventSoundPreferences.EffectiveVolume(volume ?? Properties.Settings.Default.SoundVolume, eventVolume ?? preferences.VolumeFor(kind));
+            if (effectiveVolume == 0 || volume == null && !Properties.Settings.Default.PlaySounds) return;
             int i = (int)type;
             try
             {
                 if (i >= 0 && i < _sounds.Length)
                 {
                     var s = _sounds[i];
+                    var path = customFile ?? preferences.Get(kind).FilePath;
+                    if (!string.IsNullOrWhiteSpace(path))
+                    {
+                        if (!File.Exists(path)) throw new FileNotFoundException("Custom sound file is missing.", path);
+                        var modified = File.GetLastWriteTimeUtc(path);
+                        if (_customSounds[i] == null || _customPaths[i] != path || _customModified[i] != modified)
+                        {
+                            _customSounds[i] = new CachedSoundSampleProvider(new CachedSound(path));
+                            _customPaths[i] = path; _customModified[i] = modified;
+                        }
+                        s = _customSounds[i];
+                    }
                     if (s != null)
                     {
+                        if (_currentDevice == null) initAudioDevice();
                         s.ResetPosition();
-                        s.SetVolume((volume ?? Properties.Settings.Default.SoundVolume) * 0.01f);
+                        s.SetVolume(effectiveVolume * 0.01f);
 
                         WasapiOut? p = _players[i];
                         p?.Stop();

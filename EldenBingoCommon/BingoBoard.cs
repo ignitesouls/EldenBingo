@@ -23,12 +23,17 @@ namespace EldenBingoCommon
         
     }
 
-    public record struct BingoBoardSquare(string Text, string Tooltip, int[] Team, bool Marked, SquareCounter[] Counters)
+    public record struct BingoBoardSquare(string Text, string Tooltip, int[] Team, bool Marked, SquareCounter[] Counters, int PointValue = 1, bool CanChooseTimedResume = false)
     {
         [JsonProperty]
         public string Text { get; set; } = Text;
         [JsonProperty]
         public string Tooltip { get; set; } = Tooltip;
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
+        [System.ComponentModel.DefaultValue(1)]
+        public int PointValue { get; set; } = PointValue;
+        [JsonIgnore]
+        public bool CanChooseTimedResume { get; set; } = CanChooseTimedResume;
         [JsonIgnore]
         public int[] Team { get; set; } = Team;
         [JsonIgnore]

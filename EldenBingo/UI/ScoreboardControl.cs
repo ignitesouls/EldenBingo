@@ -26,6 +26,7 @@ namespace EldenBingo.UI
             contextMenuStrip1.Items.Add(showMyTeamToolStripMenuItem);
             SizeChanged += scoreboardControl_SizeChanged;
             Properties.Settings.Default.PropertyChanged += default_PropertyChanged;
+            Disposed += (_, _) => Properties.Settings.Default.PropertyChanged -= default_PropertyChanged;
         }
 
         public override Font Font
@@ -42,6 +43,7 @@ namespace EldenBingo.UI
 
         public void SetShowPlayerTeam(bool showPlayerTeam)
         {
+            if (IsDisposed || Disposing) return;
             void update()
             {
                 showMyTeamToolStripMenuItem.Checked = showPlayerTeam;
@@ -55,7 +57,7 @@ namespace EldenBingo.UI
                 Invoke(update);
                 return;
             }
-            Invoke(update);
+            update();
         }
 
 
@@ -137,9 +139,9 @@ namespace EldenBingo.UI
                 {
                     var control = new ScoreboardRowControl();
 
-                    control.Color = BingoConstants.GetTeamColor(teamScore.Team);
+                    control.Color = EldenBingo.Settings.BoardAppearanceSettings.TeamColor(teamScore.Team);
                     control.CounterText = teamScore.Score.ToString();
-                    control.TextColor = BingoConstants.GetTeamColorBright(teamScore.Team);
+                    control.TextColor = EldenBingo.Settings.BoardAppearanceSettings.TeamColorBright(teamScore.Team);
                     control.Team = teamScore.Team;
                     control.NameText = teamScore.Name;
                     control.Width = Width;
@@ -188,6 +190,8 @@ namespace EldenBingo.UI
 
         private void default_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName == nameof(Properties.Settings.BoardAppearanceJson))
+                foreach (var row in _rows) row.Invalidate();
             if (e.PropertyName == nameof(Properties.Settings.Default.GS_ShowPlayerTeam))
             {
                 SetShowPlayerTeam(Properties.Settings.Default.GS_ShowPlayerTeam);
@@ -262,8 +266,8 @@ namespace EldenBingo.UI
             {
                 NameText = name;
                 CounterText = counter;
-                Color = BingoConstants.GetTeamColor(team);
-                TextColor = BingoConstants.GetTeamColorBright(team);
+                Color = EldenBingo.Settings.BoardAppearanceSettings.TeamColor(team);
+                TextColor = EldenBingo.Settings.BoardAppearanceSettings.TeamColorBright(team);
             }
 
             public Size SquareSize()
@@ -288,6 +292,9 @@ namespace EldenBingo.UI
             {
                 if (Font == null)
                     return;
+
+                Color = EldenBingo.Settings.BoardAppearanceSettings.TeamColor(Team);
+                TextColor = EldenBingo.Settings.BoardAppearanceSettings.TeamColorBright(Team);
 
                 var squareSize = SquareSize();
                 Height = squareSize.Height;

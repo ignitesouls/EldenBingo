@@ -125,7 +125,7 @@ namespace EldenBingo.UI
         private async void _stopMatchButton_Click(object sender, EventArgs e)
         {
             clearFocus();
-            if (MessageBox.Show("Stop match? The match will end immediately", "Stop match", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show(FindForm() ?? MainForm.Instance, "Stop match? The match will end immediately", "Stop match", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 await tryChangeMatchStatus(MatchStatus.Finished);
         }
 

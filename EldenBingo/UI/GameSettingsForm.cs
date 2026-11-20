@@ -7,6 +7,7 @@ namespace EldenBingo.UI
         public GameSettingsForm()
         {
             InitializeComponent();
+            ClientSize = new Size(ClientSize.Width + 24, ClientSize.Height + 32);
         }
 
         public BingoGameSettings Settings

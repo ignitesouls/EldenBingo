@@ -9,11 +9,11 @@ namespace EldenBingo.Util
         private const int RID_INPUT = 0x10000003;
         private const int WM_INPUT = 0x00FF;
 
-        private HashSet<ushort> _heldKeys;
+        private readonly RawKeyboardState _keyboard = new();
+        internal Settings.BoardHotkeyModifiers HeldModifiers => _keyboard.Modifiers;
 
         public RawInputHandler(IntPtr hwnd)
         {
-            _heldKeys = new HashSet<ushort>();
 
             RAWINPUTDEVICE[] rid = new RAWINPUTDEVICE[2];
             rid[0].usUsagePage = 0x01; // Generic desktop controls
@@ -64,23 +64,8 @@ namespace EldenBingo.Util
 
                     case RIM_TYPEKEYBOARD:
                         var rawKeyboard = (RAWINPUTKEYBOARD)Marshal.PtrToStructure(buffer, typeof(RAWINPUTKEYBOARD));
-                        if (rawKeyboard.keyboard.VKey == 0)
-                            break;
-                        bool pressed = (rawKeyboard.keyboard.Flags & 0x01) == 0;
-                        if (pressed)
-                        {
-                            //Held keys keeps track of keys already being pressed down,
-                            //so we don't get repeating keypressed events when key is held
-                            if (!_heldKeys.Contains(rawKeyboard.keyboard.VKey))
-                            {
-                                OnKeyPressed(new KeyEventArgs((Keys)rawKeyboard.keyboard.VKey));
-                                _heldKeys.Add(rawKeyboard.keyboard.VKey);
-                            }
-                        }
-                        else
-                        {
-                            _heldKeys.Remove(rawKeyboard.keyboard.VKey);
-                        }
+                        var pressed = _keyboard.Process(rawKeyboard.keyboard.VKey, rawKeyboard.keyboard.MakeCode, rawKeyboard.keyboard.Flags);
+                        if (pressed is { } key) OnKeyPressed(new KeyEventArgs(key));
                         break;
                 }
             }

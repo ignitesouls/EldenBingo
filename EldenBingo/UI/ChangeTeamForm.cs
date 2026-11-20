@@ -1,4 +1,4 @@
-﻿using EldenBingoCommon;
+using EldenBingoCommon;
 
 namespace EldenBingo.UI
 {
@@ -22,7 +22,7 @@ namespace EldenBingo.UI
 
         private void setPanelColor()
         {
-            _colorPanel.BackColor = BingoConstants.GetTeamColor(Team);
+            _colorPanel.BackColor = EldenBingo.Settings.BoardAppearanceSettings.TeamColor(Team);
         }
 
         private void _okButton_Click(object sender, EventArgs e)

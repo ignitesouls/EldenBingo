@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace EldenBingo
 {
-    public class Client : NetoClient
+    public partial class Client : NetoClient
     {
         private Room? _room;
 
@@ -57,6 +57,7 @@ namespace EldenBingo
                 {
                     var oldRoom = _room;
                     _room = value;
+                    ResetLocalDimming();
                     if (_room == null)
                         LocalUser = null;
                     fireOnRoomChanged(oldRoom);
@@ -203,6 +204,7 @@ namespace EldenBingo
                 Room.Match.Board = boardUpdate.Size > 0 && boardUpdate.Squares.Length == boardUpdate.Size * boardUpdate.Size ?
                     new BingoBoard(boardUpdate.Size, boardUpdate.Lockout, boardUpdate.Squares, boardUpdate.AvailableClasses) :
                     null;
+                ResetLocalDimming();
             }
         }
 

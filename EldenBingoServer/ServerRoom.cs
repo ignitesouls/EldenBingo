@@ -8,6 +8,7 @@ namespace EldenBingoServer
 {
     public class ServerRoom : Room<BingoClientInRoom>
     {
+        internal SemaphoreSlim BoardMutationGate { get; } = new(1, 1);
         [JsonProperty]
         private Guid _creatorGuid;
         private System.Timers.Timer? _timer;

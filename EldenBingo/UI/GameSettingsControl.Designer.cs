@@ -34,7 +34,7 @@
             label2 = new Label();
             _numClassesUpDown = new NumericUpDown();
             _maxCategoryUpDown = new NumericUpDown();
-            _randomSeedUpDown = new NumericUpDown();
+            _randomSeedUpDown = new SeedUpDown();
             label3 = new Label();
             _preparationTimeUpDown = new NumericUpDown();
             label4 = new Label();
@@ -161,7 +161,7 @@
             button1.Name = "button1";
             button1.Size = new Size(51, 23);
             button1.TabIndex = 6;
-            button1.Text = "Reset";
+            button1.Text = "Random";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 

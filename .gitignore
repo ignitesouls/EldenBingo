@@ -354,3 +354,6 @@ EldenBingo/Textures/Map/**
 
 #Bat files
 *.bat
+
+# Local verification harness and its fixtures/screenshots; keep out of commits.
+/tests/

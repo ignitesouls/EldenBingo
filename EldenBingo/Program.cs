@@ -10,8 +10,13 @@ namespace EldenBingo
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main()
+        private static void Main(string[] args)
         {
+            if (args.Length == 2 && args[0] == "--local-json-host" && int.TryParse(args[1], out var localPort))
+            {
+                Export.LocalJsonBroker.Run(localPort);
+                return;
+            }
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

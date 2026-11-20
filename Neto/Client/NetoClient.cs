@@ -35,6 +35,8 @@ namespace Neto.Client
 
         public Guid ClientGuid { get; private set; }
         public bool IsConnected => _tcp?.Connected == true;
+        /// <summary>The hostname used for the current connection, before DNS resolution.</summary>
+        public string? ConnectedAddress { get; private set; }
         protected CancellationTokenSource CancellationToken { get; private set; }
 
         public static IPEndPoint? EndPointFromAddress(string address, int port, out string error)
@@ -105,6 +107,7 @@ namespace Neto.Client
 
                 if (_tcp.Connected)
                 {
+                    ConnectedAddress = address.Trim();
                     _tcp.NoDelay = true;
                     _tcp.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
                     _tcp.ReceiveBufferSize = 8192;
@@ -151,6 +154,7 @@ namespace Neto.Client
 
                 if (_tcp.Connected)
                 {
+                    ConnectedAddress = ipEndpoint.Address.ToString();
                     _tcp.NoDelay = true;
                     _tcp.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
                     _tcp.ReceiveBufferSize = 8192;

@@ -47,6 +47,7 @@ namespace EldenBingo
             _openBoardButton = new ToolStripButton();
             toolStripSeparator3 = new ToolStripSeparator();
             _settingsButton = new ToolStripButton();
+            _quickSettingsButton = new ToolStripDropDownButton();
             splitContainer1 = new SplitContainer();
             _usersListBox = new UI.RichListBox();
             panel1 = new Panel();
@@ -133,7 +134,7 @@ namespace EldenBingo
             toolStrip1.AutoSize = false;
             toolStrip1.GripStyle = ToolStripGripStyle.Hidden;
             toolStrip1.ImageScalingSize = new Size(24, 24);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { _connectButton, _disconnectButton, toolStripSeparator1, _createLobbyButton, _joinLobbyButton, _leaveRoomButton, _changeTeamButton, toolStripSeparator2, _openBoardButton, toolStripSeparator3, _settingsButton });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { _connectButton, _disconnectButton, toolStripSeparator1, _createLobbyButton, _joinLobbyButton, _leaveRoomButton, _changeTeamButton, toolStripSeparator2, _openBoardButton, toolStripSeparator3, _settingsButton, _quickSettingsButton });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Padding = new Padding(0, 0, 2, 0);
@@ -253,6 +254,12 @@ namespace EldenBingo
             _settingsButton.TextAlign = ContentAlignment.BottomCenter;
             _settingsButton.TextImageRelation = TextImageRelation.ImageAboveText;
             _settingsButton.Click += _settingsButton_Click;
+            _quickSettingsButton.Name = "_quickSettingsButton";
+            _quickSettingsButton.Text = "Quick settings";
+            _quickSettingsButton.Image = UI.ToolbarIcons.QuickSettings;
+            _quickSettingsButton.ImageScaling = ToolStripItemImageScaling.None;
+            _quickSettingsButton.TextAlign = ContentAlignment.BottomCenter;
+            _quickSettingsButton.TextImageRelation = TextImageRelation.ImageAboveText;
             // 
             // splitContainer1
             // 
@@ -343,6 +350,7 @@ namespace EldenBingo
         private ToolStripButton _joinLobbyButton;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripButton _settingsButton;
+        private ToolStripDropDownButton _quickSettingsButton;
         private ToolStripButton _disconnectButton;
         private ToolStripButton _leaveRoomButton;
         private SplitContainer splitContainer1;

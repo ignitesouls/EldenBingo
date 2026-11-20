@@ -1,7 +1,7 @@
-﻿using EldenBingo.Net;
+using EldenBingo.Net;
 using EldenBingoCommon;
 using Neto.Shared;
-using Newtonsoft.Json;
+using EldenBingo.Export;
 
 namespace EldenBingo.UI
 {
@@ -12,8 +12,6 @@ namespace EldenBingo.UI
         private MatchStatus _lastMatchStatus;
         private bool _lastPaused;
         private System.Timers.Timer? _timer;
-        private readonly Dictionary<(int Index, int Team), SquareMarkInfo> _squareMarks;
-        private MatchExportInfo _matchInfo;
         private PopoutBoardForm? _popoutBoardForm;
 
         public LobbyControl() : base()
@@ -21,17 +19,59 @@ namespace EldenBingo.UI
             InitializeComponent();
             _instance = this;
             _adminHeight = adminControl1.Height;
-            _squareMarks = new Dictionary<(int Index, int Team), SquareMarkInfo>();
-            _matchInfo = new MatchExportInfo(string.Empty, Array.Empty<string>(), Array.Empty<PlayerExportInfo>(), string.Empty, null, null, null);
+            initializeExports();
+            _bingoControl.SearchAvailabilityChanged += (_, _) => SearchAvailabilityChanged?.Invoke(this, EventArgs.Empty);
 
             listenToSettingsChanged();
             Load += lobbyControl_Load;
 
-            splitContainer1.SplitterDistance = Width - Convert.ToInt32(200f * this.DefaultScaleFactors().Width);
+            setSidebarWidth(Properties.Settings.Default.LobbySidebarWidth);
+            splitContainer1.SplitterMoved += (_, _) => { if (!_focusMode) Properties.Settings.Default.LobbySidebarWidth = LayoutSidebarWidth; };
             _adminInfoLabel.Height = Convert.ToInt32(_adminInfoLabel.Height * this.DefaultScaleFactors().Height);
 
             SizeChanged += lobbyControl_SizeChanged;
             splitContainer1.Panel1.SizeChanged += bingoPanel_SizeChanged;
+        }
+
+        internal int LayoutSidebarWidth => _focusMode ? _focusSidebarWidth : splitContainer1.Panel2.Width;
+
+        private void setSidebarWidth(int width)
+        {
+            var available = splitContainer1.ClientSize.Width - splitContainer1.SplitterWidth;
+            if (available < 160) return;
+            splitContainer1.SplitterDistance = Math.Clamp(available - width, 80, available - 80);
+        }
+
+        internal void CaptureLayoutGeometry(EldenBingo.Settings.LayoutProfile p)
+        {
+            if (_popoutBoardForm != null && !_popoutBoardForm.IsDisposed)
+                _popoutBoardForm.CaptureLayoutGeometry(p);
+            else if (readPopoutLayout() is EldenBingo.Settings.LayoutProfile saved)
+            {
+                p.PopoutX = saved.PopoutX;
+                p.PopoutY = saved.PopoutY;
+                p.PopoutOpacity = saved.PopoutOpacity;
+                p.PopoutMarkedStyle = saved.PopoutMarkedStyle;
+                p.PopoutToolbar = saved.PopoutToolbar;
+            }
+        }
+
+        private static EldenBingo.Settings.LayoutProfile? readPopoutLayout()
+        {
+            try
+            {
+                var p = System.Text.Json.JsonSerializer.Deserialize<EldenBingo.Settings.LayoutProfile>(Properties.Settings.Default.PopoutLayoutJson);
+                return p?.IsValid == true ? p : null;
+            }
+            catch (System.Text.Json.JsonException) { return null; }
+        }
+
+        internal void ApplyLayout(EldenBingo.Settings.LayoutProfile p)
+        {
+            if (_focusMode) _focusSidebarWidth = p.SidebarWidth;
+            else setSidebarWidth(p.SidebarWidth);
+            if (_popoutBoardForm != null && !_popoutBoardForm.IsDisposed)
+                _popoutBoardForm.ApplyLayout(p);
         }
 
         public static UserInRoom? CurrentlyOnBehalfOfUser
@@ -77,13 +117,18 @@ namespace EldenBingo.UI
                 _bingoControl.ConnectClickHotkey();
                 _popoutBoardForm = null;
             };
-            _popoutBoardForm.Show();
+            var owner = FindForm() ?? MainForm.Instance;
+            if (owner != null) _popoutBoardForm.ShowForOwner(owner);
+            else _popoutBoardForm.Show();
+            if (readPopoutLayout() is EldenBingo.Settings.LayoutProfile layout)
+                _popoutBoardForm.ApplyLayout(layout);
             _bingoControl.DisconnectClickHotkey();
         }
         protected override void AddClientListeners()
         {
             Client.OnRoomChanged += client_RoomChanged;
             Client.AddListener<ServerUserChecked>(userChecked);
+            Client.AddListener<ServerSquareUpdate>(exportSquareUpdated);
             Client.AddListener<ServerUserJoinedRoom>(userJoined);
             Client.AddListener<ServerUserLeftRoom>(userLeft);
             Client.AddListener<ServerEntireBingoBoardUpdate>(gotBingoBoard);
@@ -98,6 +143,15 @@ namespace EldenBingo.UI
 
         protected override void ClientChanged()
         {
+            stopExportsForRoomChange();
+            _exportTracker.Reset(Client?.Room?.Name ?? string.Empty);
+            if (Client?.Room != null)
+            {
+                _exportTracker.SetRoster(Client.Room.Users);
+                var match = Client.Room.Match;
+                _exportTracker.SetClock(match.MatchStatus, match.Paused, match.MatchMilliseconds);
+            }
+            _shareJsonButton.Enabled = Client?.Room != null;
             _bingoControl.Client = Client;
             _clientList.Client = Client;
             _scoreboardControl.Client = Client;
@@ -122,12 +176,16 @@ namespace EldenBingo.UI
         {
             Client.OnRoomChanged -= client_RoomChanged;
             Client.RemoveListener<ServerUserChecked>(userChecked);
+            Client.RemoveListener<ServerSquareUpdate>(exportSquareUpdated);
             Client.RemoveListener<ServerUserJoinedRoom>(userJoined);
             Client.RemoveListener<ServerUserLeftRoom>(userLeft);
             Client.RemoveListener<ServerEntireBingoBoardUpdate>(gotBingoBoard);
             Client.RemoveListener<ServerMatchStatusUpdate>(matchStatusUpdate);
             Client.RemoveListener<ServerUserChat>(userChat);
             Client.RemoveListener<ServerBingoAchievedUpdate>(bingoAchieved);
+            Client.RemoveListener<ServerTeamNameChanged>(teamNameChanged);
+            Client.RemoveListener<ServerUserChangedTeam>(userChangedTeam);
+            Client.RemoveListener<ServerBroadcastMessage>(serverMessage);
         }
 
         private void userChecked(ClientModel? _, ServerUserChecked userCheckedArgs)
@@ -137,23 +195,11 @@ namespace EldenBingo.UI
                 var user = Client.Room.GetUser(userCheckedArgs.UserGuid);
                 var playerName = user?.Nick ?? "Unknown";
                 Color? playerColor = user?.ColorBright;
-                Color? checkColor = userCheckedArgs.Team > -1 ? BingoConstants.GetTeamColorBright(userCheckedArgs.Team) : playerColor;
+                Color? checkColor = userCheckedArgs.Team > -1 ? EldenBingo.Settings.BoardAppearanceSettings.TeamColorBright(userCheckedArgs.Team) : playerColor;
 
                 var square = Client.BingoBoard.Squares[userCheckedArgs.Index];
                 var isMarked = square.IsChecked(userCheckedArgs.Team);
-                if (isMarked)
-                {
-                    _squareMarks[(userCheckedArgs.Index, userCheckedArgs.Team)] = new SquareMarkInfo(
-                        userCheckedArgs.Index,
-                        userCheckedArgs.Team,
-                        userCheckedArgs.UserGuid,
-                        playerName,
-                        userCheckedArgs.MarkedAt);
-                }
-                else
-                {
-                    _squareMarks.Remove((userCheckedArgs.Index, userCheckedArgs.Team));
-                }
+                _exportTracker.SetChecked(userCheckedArgs, playerName);
 
                 updateMatchLog(new[] { playerName, isMarked ? "marked" : "unmarked", square.Text },
                                new Color?[] { playerColor, null, checkColor }, true);
@@ -164,6 +210,7 @@ namespace EldenBingo.UI
         {
             if (Client?.Room != null)
             {
+                _exportTracker.SetRoster(Client.Room.Users);
                 updateMatchLog(new[] { userJoinedArgs.User.Nick, "joined the lobby" },
                         new Color?[] { userJoinedArgs.User.ColorBright, null }, true);
             }
@@ -173,6 +220,7 @@ namespace EldenBingo.UI
         {
             if (Client?.Room != null)
             {
+                _exportTracker.SetRoster(Client.Room.Users);
                 updateMatchLog(new[] { userLeftArgs.User.Nick, "left the lobby" },
                         new Color?[] { userLeftArgs.User.ColorBright, null }, true);
             }
@@ -180,12 +228,8 @@ namespace EldenBingo.UI
 
         private void gotBingoBoard(ClientModel? _, ServerEntireBingoBoardUpdate bingoBoardArgs)
         {
-            _matchInfo = bingoBoardArgs.MatchInfo;
-            _squareMarks.Clear();
-            foreach (var mark in bingoBoardArgs.MarkedSquares)
-            {
-                _squareMarks[(mark.Index, mark.Team)] = mark;
-            }
+            if (Client?.Room == null) return;
+            _exportTracker.SetBoard(bingoBoardArgs);
 
             if (bingoBoardArgs.AvailableClasses.Length <= 0)
                 return;
@@ -241,20 +285,24 @@ namespace EldenBingo.UI
                     linename = "unknown";
                     break;
             }
-            updateMatchLog(new string[] { update.Bingo.Name, $"BINGO on {linename}!" }, new Color?[] { BingoConstants.GetTeamColorBright(update.Bingo.Team), null }, true);
+            updateMatchLog(new string[] { update.Bingo.Name, $"BINGO on {linename}!" }, new Color?[] { EldenBingo.Settings.BoardAppearanceSettings.TeamColorBright(update.Bingo.Team), null }, true);
         }
 
         private void teamNameChanged(ClientModel? model, ServerTeamNameChanged teamNameChanged)
         {
             if (Client?.Room != null)
             {
+                // The canonical color name identifies the target even when an admin renames another team.
+                var team = Enumerable.Range(0, BingoConstants.TeamColors.Length)
+                    .FirstOrDefault(t => BingoConstants.GetTeamName(t) == teamNameChanged.TeamColorName, teamNameChanged.Team);
+                _exportTracker.SetTeamName(team, teamNameChanged.Name);
                 var user = Client.Room.GetUser(teamNameChanged.UserGuid);
                 if (user != null)
                 {
-                    var teamColor = BingoConstants.GetTeamColorBright(teamNameChanged.Team);
+                    var teamColor = EldenBingo.Settings.BoardAppearanceSettings.TeamColorBright(teamNameChanged.Team);
                     updateMatchLog(
                         new string[] { user.Nick, $"changed name of", teamNameChanged.TeamColorName, "to", teamNameChanged.Name },
-                        new Color?[] { BingoConstants.GetTeamColorBright(user.Team), null, teamColor, null, teamColor },
+                        new Color?[] { EldenBingo.Settings.BoardAppearanceSettings.TeamColorBright(user.Team), null, teamColor, null, teamColor },
                         true);
                 }
             }
@@ -264,11 +312,13 @@ namespace EldenBingo.UI
         {
             if (Client?.Room != null)
             {
+                _exportTracker.SetRoster(teamChanged.Users);
+                _exportTracker.SetTeamName(teamChanged.Team, teamChanged.TeamColorName);
                 var user = Client.Room.GetUser(teamChanged.UserGuid);
                 if (user != null)
                 {
-                    var oldTeamColor = BingoConstants.GetTeamColorBright(user.Team);
-                    var newTeamColor = BingoConstants.GetTeamColorBright(teamChanged.Team);
+                    var oldTeamColor = EldenBingo.Settings.BoardAppearanceSettings.TeamColorBright(user.Team);
+                    var newTeamColor = EldenBingo.Settings.BoardAppearanceSettings.TeamColorBright(teamChanged.Team);
                     user.Team = teamChanged.Team;
                     updateMatchLog(
                         new string[] { user.Nick, $"changed team to", teamChanged.TeamColorName },
@@ -285,7 +335,8 @@ namespace EldenBingo.UI
 
         private void matchStatusUpdate(ClientModel? _, ServerMatchStatusUpdate matchStatus)
         {
-            _matchInfo = matchStatus.MatchInfo;
+            if (Client?.Room == null) return;
+            _exportTracker.SetMatch(matchStatus);
         }
 
         private void _scoreboardControl_SizeChanged(object sender, EventArgs e)
@@ -312,7 +363,10 @@ namespace EldenBingo.UI
         private void _timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
             if (Client?.Room?.Match != null)
+            {
                 setMatchTimerLabel(Client.Room.Match.TimerString);
+                if (Volatile.Read(ref _livePublisher) != null) _exportTracker.Tick();
+            }
         }
 
         private void appendText(string text, Color color)
@@ -327,8 +381,15 @@ namespace EldenBingo.UI
 
         private void client_RoomChanged(object? sender, RoomChangedEventArgs e)
         {
-            _squareMarks.Clear();
-            _matchInfo = new MatchExportInfo(string.Empty, Array.Empty<string>(), Array.Empty<PlayerExportInfo>(), string.Empty, null, null, null);
+            if (e.NewRoom == null) SetFocusMode(false);
+            stopExportsForRoomChange();
+            _exportTracker.Reset(e.NewRoom?.Name ?? string.Empty);
+            if (e.NewRoom != null)
+            {
+                _exportTracker.SetRoster(e.NewRoom.Users);
+                var match = e.NewRoom.Match;
+                _exportTracker.SetClock(match.MatchStatus, match.Paused, match.MatchMilliseconds);
+            }
             if (e.PreviousRoom != null)
             {
                 e.PreviousRoom.Match.MatchStatusChanged -= match_MatchStatusChanged;
@@ -422,10 +483,6 @@ namespace EldenBingo.UI
         {
             if (Client?.Room != null)
             {
-                if (Client.Room.Match.MatchStatus == MatchStatus.Starting)
-                {
-                    _squareMarks.Clear();
-                }
                 updateMatchStatus(Client.Room.Match);
                 restartAndListenToTimer();
             }
@@ -474,7 +531,7 @@ namespace EldenBingo.UI
         {
             void showHide()
             {
-                var isAdmin = Client?.LocalUser?.IsAdmin == true;
+                var isAdmin = Client?.LocalUser?.IsAdmin == true && !_focusMode;
                 adminControl1.Visible = isAdmin;
                 adminControl1.Height = isAdmin ? _adminHeight : 0;
                 _adminInfoLabel.Visible = isAdmin && Client?.LocalUser?.IsSpectator == true;
@@ -502,6 +559,7 @@ namespace EldenBingo.UI
 
         private void updateBingoPanelSize()
         {
+            if (_focusMode) { applyFocusLayout(); updateBingoSize(); return; }
             var maxWidth = splitContainer1.Panel1.Width - splitContainer1.SplitterWidth - Convert.ToInt32(270f * this.DefaultScaleFactors().Width);
             var maxHeight = splitContainer1.Panel1.Height - (adminControl1.Visible ? _adminHeight : 0);
             if (Properties.Settings.Default.BingoBoardMaximumSize)
@@ -523,6 +581,16 @@ namespace EldenBingo.UI
 
         private void updateBingoSize()
         {
+            if (_focusMode)
+            {
+                var available = _bingoBoardPanel.ClientSize - new Size(10, 10);
+                if (available.Width < 1 || available.Height < 1) return;
+                var width = Math.Min(available.Width, (int)(available.Height * BingoControl.AspectRatio));
+                _bingoControl.Size = new Size(Math.Max(1, width), Math.Max(1, (int)(width / BingoControl.AspectRatio)));
+                _bingoControl.Location = new Point(Math.Max(0, (_bingoBoardPanel.Width - _bingoControl.Width) / 2), Math.Max(0, (_bingoBoardPanel.Height - _bingoControl.Height) / 2));
+                return;
+            }
+            _bingoControl.Location = new Point(5, 5);
             var maxSize = _bingoBoardPanel.Size - new Size(_bingoControl.Location) - new Size(3, 3);
             _bingoControl.Size = maxSize;
         }
@@ -626,14 +694,14 @@ namespace EldenBingo.UI
             openUrl(e.LinkText);
         }
 
-        private void _exportJsonButton_Click(object? sender, EventArgs e)
+        private async void _exportJsonButton_Click(object? sender, EventArgs e)
         {
-            ExportMarkedSquaresJson();
+            await ExportMarkedSquaresJson();
         }
 
-        public void ExportMarkedSquaresJson()
+        public async Task ExportMarkedSquaresJson()
         {
-            if (Client?.BingoBoard == null)
+            if (Client?.Room == null || !_exportTracker.HasBoard)
             {
                 MessageBox.Show(this, "There is no bingo board to export.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -651,64 +719,11 @@ namespace EldenBingo.UI
             if (dialog.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            var json = JsonConvert.SerializeObject(createSquareExport(), Formatting.Indented);
-            File.WriteAllText(dialog.FileName, json);
-        }
-
-        private BoardSquareExport createSquareExport()
-        {
-            var board = Client?.BingoBoard;
-            if (board == null)
-                return new BoardSquareExport(createMatchInfoExport(), Array.Empty<MarkedSquareExport>(), Array.Empty<RemainingSquareExport>());
-
-            var markedSquares = _squareMarks.Values
-                .Where(mark => mark.Index >= 0 && mark.Index < board.SquareCount && board.Squares[mark.Index].IsChecked(mark.Team))
-                .OrderBy(mark => mark.Index)
-                .ThenBy(mark => mark.Team)
-                .Select(mark => new MarkedSquareExport(
-                    board.Squares[mark.Index].Text,
-                    mark.UserName,
-                    mark.MarkedAt,
-                    getPosition(mark.Index, board.Size)))
-                .ToArray();
-
-            var remainingSquares = Enumerable.Range(0, board.SquareCount)
-                .Where(index => board.Squares[index].Team.Length == 0)
-                .Select(index => new RemainingSquareExport(
-                    board.Squares[index].Text,
-                    getPosition(index, board.Size)))
-                .ToArray();
-
-            return new BoardSquareExport(createMatchInfoExport(), markedSquares, remainingSquares);
-        }
-
-        private MatchInfoExport createMatchInfoExport()
-        {
-            return new MatchInfoExport(
-                _matchInfo.LobbyName,
-                _matchInfo.Admins,
-                _matchInfo.Players.Select(player => new PlayerInfoExport(
-                    player.Name,
-                    player.Team,
-                    player.TeamName,
-                    player.IsAdmin,
-                    player.IsSpectator)).ToArray(),
-                _matchInfo.SquareSetJsonFileName,
-                formatDateTime(_matchInfo.MatchStartedAt),
-                formatDateTime(_matchInfo.MatchEndedAt),
-                _matchInfo.MatchEndedAtSeconds);
-        }
-
-        private static string? formatDateTime(DateTime? dateTime)
-        {
-            return dateTime?.ToString("O");
-        }
-
-        private static string getPosition(int index, int boardSize)
-        {
-            var column = index % boardSize + 1;
-            var row = index / boardSize + 1;
-            return $"C{column}R{row}";
+            try { await LiveJsonFileWriter.WriteAtomicAsync(dialog.FileName, _exportTracker.Serialize()); }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                MessageBox.Show(this, $"Could not export JSON: {ex.Message}", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void openUrl(string? url)
@@ -726,35 +741,5 @@ namespace EldenBingo.UI
             }
         }
 
-        private record MarkedSquareExport(
-            [property: JsonProperty("squareName")] string SquareName,
-            [property: JsonProperty("markedBy")] string MarkedBy,
-            [property: JsonProperty("markedAt")] int MarkedAt,
-            [property: JsonProperty("position")] string Position);
-
-        private record RemainingSquareExport(
-            [property: JsonProperty("squareName")] string SquareName,
-            [property: JsonProperty("position")] string Position);
-
-        private record BoardSquareExport(
-            [property: JsonProperty("matchInfo")] MatchInfoExport MatchInfo,
-            [property: JsonProperty("markedSquares")] MarkedSquareExport[] MarkedSquares,
-            [property: JsonProperty("remainingSquares")] RemainingSquareExport[] RemainingSquares);
-
-        private record MatchInfoExport(
-            [property: JsonProperty("lobbyName")] string LobbyName,
-            [property: JsonProperty("admins")] string[] Admins,
-            [property: JsonProperty("players")] PlayerInfoExport[] Players,
-            [property: JsonProperty("squareSetJsonFileName")] string SquareSetJsonFileName,
-            [property: JsonProperty("matchStartedAt")] string? MatchStartedAt,
-            [property: JsonProperty("matchEndedAt")] string? MatchEndedAt,
-            [property: JsonProperty("matchEndedAtSeconds")] int? MatchEndedAtSeconds);
-
-        private record PlayerInfoExport(
-            [property: JsonProperty("name")] string Name,
-            [property: JsonProperty("team")] int Team,
-            [property: JsonProperty("teamName")] string TeamName,
-            [property: JsonProperty("isAdmin")] bool IsAdmin,
-            [property: JsonProperty("isSpectator")] bool IsSpectator);
     }
 }

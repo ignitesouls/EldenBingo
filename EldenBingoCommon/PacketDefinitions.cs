@@ -39,7 +39,7 @@ public record ClientBingoJson(string Json, string FileName);
 public record ClientRandomizeBoard();
 public record ClientChangeMatchStatus(MatchStatus MatchStatus);
 public record ClientTogglePause();
-public record ClientTryCheck(int Index, Guid ForUser);
+public record ClientTryCheck(int Index, Guid ForUser, bool ResumeTimedOnUnclaim = false);
 public record ClientTryMark(int Index);
 public record ClientTrySetCounter(int Index, int Change, Guid ForUser);
 public record ClientSetGameSettings(BingoGameSettings GameSettings);

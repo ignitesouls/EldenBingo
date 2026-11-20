@@ -3,6 +3,7 @@ using EldenBingoServer;
 using InteractiveReadLine;
 using Microsoft.Extensions.Configuration;
 using Neto.Shared;
+using System.Net;
 
 namespace EldenBingoServerStandalone
 {
@@ -52,7 +53,9 @@ namespace EldenBingoServerStandalone
             {
                 _jsonFile = Path.Combine(getApplicationDirectory(), "serverData.json");
             }
-            _server = new Server(port, _jsonFile);
+            _server = string.Equals(config["loopback"], "true", StringComparison.OrdinalIgnoreCase)
+                ? new Server(port, _jsonFile) { IPAddresses = new[] { IPAddress.Loopback } }
+                : new Server(port, _jsonFile);
             if (config["matchlog"] != null)
             {
                 _server.MatchLogging = true;

@@ -27,11 +27,13 @@ namespace EldenBingo.UI
             _numKeywordsLabelInitial = _numKeywordsLabel.Text;
             _keywordAlphaLabelInitial = _keywordColorAlphaLabel.Text;
 
-            _keywordColors = new List<KeywordColor>(KeywordColorsJsonHelper.Colors);
+            _keywordColors = KeywordColorsJsonHelper.Colors.Select(c => new KeywordColor(c.Keyword, c.Color)).ToList();
 
             initControls();
+            initializeLayouts();
+            initializeBoardAppearance();
 
-            tabControl1.SelectedIndex = Properties.Settings.Default.LastSettingsTab;
+            initializeNavigation();
         }
 
         private void _colorPanel_Click(object sender, EventArgs e)
@@ -74,7 +76,6 @@ namespace EldenBingo.UI
         private void _cancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            Properties.Settings.Default.LastSettingsTab = tabControl1.SelectedIndex;
             Close();
         }
 
@@ -176,26 +177,8 @@ namespace EldenBingo.UI
 
         private bool saveSettings()
         {
-            if (!int.TryParse(_mapSizeCustomXTextBox.Text, out var mapWidth))
-            {
-                //Invalid x size
-                return false;
-            }
-            if (!int.TryParse(_mapSizeCustomYTextBox.Text, out var mapHeight))
-            {
-                //Invalid y size
-                return false;
-            }
-            if (!int.TryParse(_mapPositionXTextBox.Text, out var mapX))
-            {
-                //Invalid x pos
-                return false;
-            }
-            if (!int.TryParse(_mapPositionYTextBox.Text, out var mapY))
-            {
-                //Invalid y pos
-                return false;
-            }
+            if (!validateLayout()) return false;
+            if (!_boardHotkeys.IsValid) return false;
             if (!int.TryParse(_bingoMaxXTextBox.Text, out var bingoMaxWidth))
             {
                 //Invalid x size
@@ -226,12 +209,6 @@ namespace EldenBingo.UI
                 //Invalid event delay
                 return false;
             }
-            Properties.Settings.Default.MapWindowCustomSize = _mapSizeCustomRadioButton.Checked;
-            Properties.Settings.Default.MapWindowCustomPosition = _mapPositionCustomRadioButton.Checked;
-            Properties.Settings.Default.MapWindowWidth = mapWidth;
-            Properties.Settings.Default.MapWindowHeight = mapHeight;
-            Properties.Settings.Default.MapWindowX = mapX;
-            Properties.Settings.Default.MapWindowY = mapY;
             Properties.Settings.Default.BingoBoardMaximumSize = _bingoCustomMaxSizeRadioButton.Checked;
             Properties.Settings.Default.BingoMaxSizeX = bingoMaxWidth;
             Properties.Settings.Default.BingoMaxSizeY = bingoMaxHeight;
@@ -248,11 +225,10 @@ namespace EldenBingo.UI
             Properties.Settings.Default.Port = port;
             Properties.Settings.Default.HostServerOnLaunch = _hostServerCheckBox.Checked;
 
-            Properties.Settings.Default.FlipMouseButtons = _swapMouseButtons.Checked;
-            Properties.Settings.Default.ShowClassesOnMap = _showClassesCheckBox.Checked;
 
             Properties.Settings.Default.PlaySounds = _soundCheckBox.Checked;
             Properties.Settings.Default.SoundVolume = Math.Clamp(_volumeTrackBar.Value * 10, 0, 100);
+            Properties.Settings.Default.EventSoundsJson = System.Text.Json.JsonSerializer.Serialize(_eventSounds);
             Properties.Settings.Default.OutputDevice = (_soundOutputDeviceComboBox.SelectedItem as AudioDevice)?.Id ?? string.Empty;
 
             Properties.Settings.Default.SquareShadows = Math.Clamp(_shadowTrackBar.Value * 10, 0, 100);
@@ -271,8 +247,11 @@ namespace EldenBingo.UI
             KeywordColorsJsonHelper.Colors = _keywordColors.ToArray();
             Properties.Settings.Default.KeywordColorsAlpha = _keywordColorAlphaTrackBar.Value;
 
-            Properties.Settings.Default.LastSettingsTab = tabControl1.SelectedIndex;
 
+            saveLayouts();
+            Properties.Settings.Default.BoardHotkeysJson = System.Text.Json.JsonSerializer.Serialize(_boardHotkeys);
+            Properties.Settings.Default.ScrollKeyboardSelectedSquare = _scrollKeyboardSquare.Checked;
+            Properties.Settings.Default.MiddleMouseDimsSquares = _middleMouseDims.Checked;
             Properties.Settings.Default.Save();
             return true;
         }
@@ -382,7 +361,7 @@ namespace EldenBingo.UI
                 if (selected != null)
                 {
                     player.SetAudioDevice(selected.Id);
-                    player.PlaySound(SoundType.SquareClaimedOther, Math.Clamp(_volumeTrackBar.Value * 10, 0, 100));
+                    player.PlaySound(SoundType.SquareClaimedOther, Math.Clamp(_volumeTrackBar.Value * 10, 0, 100), 100);
                 }
                 player.SetAudioDevice(prev);
             }
@@ -390,14 +369,15 @@ namespace EldenBingo.UI
 
         private void _keywordColorsButton_Click(object sender, EventArgs e)
         {
-            var dialog = new KeywordColorsEditorForm();
+            using var dialog = new KeywordColorsEditorForm();
             dialog.TopMost = Properties.Settings.Default.AlwaysOnTop;
-            dialog.Colors = _keywordColors;
+            dialog.Colors = _keywordColors.Select(c => new KeywordColor(c.Keyword, c.Color)).ToList();
             var res = dialog.ShowDialog(this);
             if (res == DialogResult.OK)
             {
                 _keywordColors = dialog.Colors;
                 updateKeywordColorText();
+                updateLayoutPreview();
             }
         }
     }

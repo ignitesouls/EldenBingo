@@ -1,4 +1,4 @@
-﻿using EldenBingo.Settings;
+using EldenBingo.Settings;
 using EldenBingoCommon;
 using Neto.Shared;
 
@@ -14,6 +14,21 @@ namespace EldenBingo.UI
         public CreateLobbyForm(Client client, bool create)
         {
             InitializeComponent();
+            _createButton.Text = create ? "Create Lobby" : "Join Lobby";
+            _createButton.Width = 110;
+            _createButton.Left = _cancelButton.Left - _createButton.Width - 6;
+            groupBox2.Height += 40;
+            groupBox2.Controls.Add(new Label
+            {
+                Text = create ? "Optional: grants admin access.\nLeave blank to keep it to yourself."
+                    : "Optional: grants admin access.\nLeave blank for regular access.",
+                AutoSize = false, Location = new Point(6, 80), Size = new Size(223, 34)
+            });
+            _lobbySettingsButton.Top += 40;
+            _lobbySettingsButton.Left += 10;
+            _lobbySettingsButton.Width -= 10;
+            _seedLabel.Top += 40;
+            ClientSize = new Size(ClientSize.Width, ClientSize.Height + 40);
             _initWidth = Width;
             _initHeight = Height;
             _client = client;
@@ -40,13 +55,13 @@ namespace EldenBingo.UI
         {
             if (_gameSettingsControl != null)
             {
-                _seedLabel.Text = $"Seed: {_gameSettingsControl.CurrentSeed}";
-                _seedLabel.Visible = _gameSettingsControl.CurrentSeed != 0;
+                _seedLabel.Text = _gameSettingsControl.CurrentSeed == 0 ? "Seed: Random" : $"Seed: {_gameSettingsControl.CurrentSeed}";
+                _seedLabel.Visible = true;
             } 
             else
             {
-                _seedLabel.Text = $"Seed: {Properties.Settings.Default.GS_RandomSeed}";
-                _seedLabel.Visible = Properties.Settings.Default.GS_RandomSeed != 0;
+                _seedLabel.Text = Properties.Settings.Default.GS_RandomSeed == 0 ? "Seed: Random" : $"Seed: {Properties.Settings.Default.GS_RandomSeed}";
+                _seedLabel.Visible = true;
             }
         }
 
@@ -132,7 +147,7 @@ namespace EldenBingo.UI
 
         private void setPanelColor()
         {
-            _colorPanel.BackColor = BingoConstants.GetTeamColor(Team);
+            _colorPanel.BackColor = EldenBingo.Settings.BoardAppearanceSettings.TeamColor(Team);
         }
 
         private bool validate()

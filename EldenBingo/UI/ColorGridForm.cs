@@ -1,4 +1,4 @@
-﻿using EldenBingoCommon;
+using EldenBingoCommon;
 
 namespace EldenBingo.UI
 {
@@ -30,8 +30,7 @@ namespace EldenBingo.UI
 
             for (int i = 0; i < BingoConstants.TeamColors.Length; ++i)
             {
-                var col = BingoConstants.TeamColors[i];
-                var panel = new ColorPanel(col.Color);
+                var panel = new ColorPanel(EldenBingo.Settings.BoardAppearanceSettings.TeamColor(i));
                 grid.Controls.Add(panel);
                 var temp = i;
                 panel.Click += (o, e) => panel_Click(temp);

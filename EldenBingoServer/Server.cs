@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace EldenBingoServer
 {
-    public class Server : NetoServer<BingoClientModel>
+    public partial class Server : NetoServer<BingoClientModel>
     {
         //10 seconds countdown before match starts
         private const int MatchStartCountdown = 9999;
@@ -90,9 +90,14 @@ namespace EldenBingoServer
 
         public override async Task Stop()
         {
-            serializeServer();
-            if (Hosting) 
-                await base.Stop();
+            _timedTokenTimer.Stop();
+            await _timedTickGate.WaitAsync();
+            try
+            {
+                serializeServer();
+                if (Hosting) await base.Stop();
+            }
+            finally { _timedTickGate.Release(); }
         }
 
         protected override async Task DropClient(BingoClientModel client)
@@ -431,58 +436,10 @@ namespace EldenBingoServer
             ServerBingoBoard? board = null;
             try
             {
-                var token = JToken.Parse(bingoJson.Json);
-                JArray? squares = null;
-                JObject? rootObject = null;
+                var definition = SquareSetDefinition.Parse(bingoJson.Json);
+                var rootObject = definition.Root;
+                sender.Room.CategoryConfig = definition.Categories;
 
-                if (token is JArray arr)
-                {
-                    // Legacy format: bare array of squares
-                    rootObject = new JObject
-                    {
-                        ["squares"] = arr
-                    };
-                    squares = arr;
-                }
-                else if (token is JObject jobj && jobj.TryGetValue("squares", out var sqTok) && sqTok is JArray jarr)
-                {
-                    squares = jarr;
-
-                    // Wrapped format: { "squares": [...] }
-                    rootObject = new JObject
-                    {
-                        ["squares"] = jarr
-                    };
-
-                    // carry region limits through to the generator (ONLY for wrapped-object format)
-                    if (jobj.TryGetValue("setRegionLimits", StringComparison.OrdinalIgnoreCase, out var rlTok)
-                        && rlTok is JArray regionLimits)
-                    {
-                        rootObject["setRegionLimits"] = regionLimits;
-                    }
-
-                    // keep your current category-limits key exactly to work with previous square sets
-                    if (jobj.TryGetValue("category limits", out var clTok) && clTok is JObject configObject)
-                    {
-                        rootObject["category limits"] = configObject;
-
-                        var config = CategoryConfig.ParseConfig(configObject);
-                        sender.Room.CategoryConfig = config;
-                    }
-
-                    if (jobj.TryGetValue("category minimums", StringComparison.OrdinalIgnoreCase, out var minTok)
-                        && minTok is JObject minsObject)
-                    {
-                        // ensure room config exists
-                        sender.Room.CategoryConfig ??= new CategoryConfig();
-                        sender.Room.CategoryConfig.ParseMinimums(minsObject);
-                    }
-                }
-
-                if (squares == null || rootObject == null)
-                    throw new Exception("Could not parse square data");
-
-                // Pass the wrapped JObject instead of bare JArray
                 var bg = new BingoBoardGenerator(rootObject, sender.Room.GameSettings.RandomSeed);
                 sender.Room.BoardGenerator = bg;
                 sender.Room.SquareSetJsonFileName = bingoJson.FileName;
@@ -548,6 +505,9 @@ namespace EldenBingoServer
         }
 
         private async void clientChangeMatchStatus(BingoClientModel? sender, ClientChangeMatchStatus matchStatus)
+            => await mutateRoomBoard(sender, () => clientChangeMatchStatusCore(sender, matchStatus));
+
+        private async Task clientChangeMatchStatusCore(BingoClientModel? sender, ClientChangeMatchStatus matchStatus)
         {
             if (sender?.Room == null)
                 return;
@@ -615,6 +575,9 @@ namespace EldenBingoServer
         }
 
         private async void clientTryCheck(BingoClientModel? sender, ClientTryCheck tryCheck)
+            => await mutateRoomBoard(sender, () => clientTryCheckCore(sender, tryCheck));
+
+        private async Task clientTryCheckCore(BingoClientModel? sender, ClientTryCheck tryCheck)
         {
             if (sender?.Room == null)
                 return;
@@ -635,7 +598,7 @@ namespace EldenBingoServer
 
                     var bingosBefore = board.BingoSet;
                     var markedAt = Math.Max(0, sender.Room.Match.MatchSeconds);
-                    if (board.UserClicked(tryCheck.Index, userInfo, userToSet, markedAt, out int teamChanged))
+                    if (board.UserClicked(tryCheck.Index, userInfo, userToSet, markedAt, out int teamChanged, tryCheck.ResumeTimedOnUnclaim))
                     {
                         var tasks = new List<Task>();
                         var check = board.CheckStatus[tryCheck.Index];
@@ -666,6 +629,9 @@ namespace EldenBingoServer
         }
 
         private async void clientTryMark(BingoClientModel? sender, ClientTryMark tryMark)
+            => await mutateRoomBoard(sender, () => clientTryMarkCore(sender, tryMark));
+
+        private async Task clientTryMarkCore(BingoClientModel? sender, ClientTryMark tryMark)
         {
             if (sender?.Room == null)
                 return;
@@ -690,6 +656,9 @@ namespace EldenBingoServer
         }
 
         private async void clientTrySetCounter(BingoClientModel? sender, ClientTrySetCounter trySetCounter)
+            => await mutateRoomBoard(sender, () => clientTrySetCounterCore(sender, trySetCounter));
+
+        private async Task clientTrySetCounterCore(BingoClientModel? sender, ClientTrySetCounter trySetCounter)
         {
             if (sender?.Room == null)
                 return;
@@ -770,6 +739,9 @@ namespace EldenBingoServer
         }
 
         private async void clientTogglePause(BingoClientModel? sender, ClientTogglePause pauseRequest)
+            => await mutateRoomBoard(sender, () => clientTogglePauseCore(sender, pauseRequest));
+
+        private async Task clientTogglePauseCore(BingoClientModel? sender, ClientTogglePause pauseRequest)
         {
             if (sender == null)
                 return;
@@ -900,7 +872,7 @@ namespace EldenBingoServer
 
             if (room.Match.Board is ServerBingoBoard board)
             {
-                var squaresPerTeam = board.GetSquaresPerTeam();
+                var squaresPerTeam = board.GetPointsPerTeam();
                 var bingosPerTeam = board.BingosPerTeam;
 
                 for (int i = 0; i < teamScores.Count; ++i)
@@ -1094,6 +1066,8 @@ namespace EldenBingoServer
         {
             string? error = null;
             var currentStatus = room.Match.MatchStatus;
+            if (currentStatus == MatchStatus.Running && status == MatchStatus.Finished)
+                await publishTimedSquareUpdates(room);
             var matchLive = currentStatus >= MatchStatus.Preparation;
             switch (status)
             {

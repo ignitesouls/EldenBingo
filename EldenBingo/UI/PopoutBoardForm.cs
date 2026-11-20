@@ -35,6 +35,11 @@ namespace EldenBingo.UI
         private Point _dragFormStart;
         private Point _resizeStart;
         private Size _resizeSizeStart;
+        private int _modalDepth;
+        private bool _restoreAfterModal;
+        private Form? _windowOwner;
+
+        protected override bool ShowWithoutActivation => true;
 
         public PopoutBoardForm()
         {
@@ -63,7 +68,6 @@ namespace EldenBingo.UI
                 Dock = DockStyle.Fill,
                 Margin = new Padding(0),
                 BoardBackgroundColor = ChromaKey,
-                SquareSpacing = 0,
             };
             _bingoControl.TransparentMarkedStyle = BingoControl.TransparentMarkedSquareStyle.Border;
             _boardFrame.Controls.Add(_bingoControl);
@@ -71,13 +75,18 @@ namespace EldenBingo.UI
             _toolbarPanel = new FlowLayoutPanel
             {
                 BackColor = ChromaKey,
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                AutoSize = false,
                 Padding = new Padding(6, 4, 4, 3),
                 FlowDirection = FlowDirection.LeftToRight,
-                WrapContents = false,
+                WrapContents = true,
             };
 
+            var find = createToolButton("Find", "Search revealed objectives (default F3)");
+            find.Width = 44;
+            find.Enabled = _bingoControl.CanSearchBoard;
+            find.Click += (_, _) => _bingoControl.OpenBoardSearch();
+            _bingoControl.SearchAvailabilityChanged += (_, _) => find.Enabled = _bingoControl.CanSearchBoard;
+            _toolbarPanel.Controls.Add(find);
             _opacityToggleButton = createToolButton("Transparent", "Toggle square backgrounds between solid and transparent");
             _opacityToggleButton.Width = 92;
             _opacityToggleButton.Click += opacityToggleButton_Click;
@@ -175,6 +184,74 @@ namespace EldenBingo.UI
             _timer = new System.Windows.Forms.Timer { Interval = 50 };
             _timer.Tick += timer_Tick;
             _timer.Start();
+            Application.EnterThreadModal += application_EnterThreadModal;
+            Application.LeaveThreadModal += application_LeaveThreadModal;
+            Disposed += (_, _) =>
+            {
+                Application.EnterThreadModal -= application_EnterThreadModal;
+                Application.LeaveThreadModal -= application_LeaveThreadModal;
+                if (_windowOwner != null) _windowOwner.FormClosed -= windowOwner_FormClosed;
+            };
+        }
+
+        internal void ShowForOwner(Form owner)
+        {
+            if (_windowOwner != owner)
+            {
+                if (_windowOwner != null) _windowOwner.FormClosed -= windowOwner_FormClosed;
+                _windowOwner = owner;
+                owner.FormClosed += windowOwner_FormClosed;
+            }
+            // Native ownership couples the two windows' topmost states on Windows.
+            // Track the lifecycle separately to keep on-top states independent.
+            Owner = null;
+            Show();
+        }
+
+        private void windowOwner_FormClosed(object? sender, FormClosedEventArgs e) => Close();
+
+        private void application_EnterThreadModal(object? sender, EventArgs e)
+        {
+            if (IsDisposed || Disposing || _modalDepth++ != 0) return;
+            _restoreAfterModal = Visible;
+            // A disabled topmost overlay can otherwise cover the dialog that disabled it.
+            // Hiding it also handles native message boxes and common file/color dialogs.
+            if (_restoreAfterModal) Hide();
+        }
+
+        private void application_LeaveThreadModal(object? sender, EventArgs e)
+        {
+            if (_modalDepth == 0 || --_modalDepth != 0) return;
+            var restore = _restoreAfterModal;
+            _restoreAfterModal = false;
+            var owner = _windowOwner ?? Owner;
+            if (restore && !IsDisposed && !Disposing && (owner == null || !owner.IsDisposed && !owner.Disposing && owner.Visible))
+                Show();
+        }
+
+        internal void CaptureLayoutGeometry(EldenBingo.Settings.LayoutProfile p)
+        {
+            p.PopoutX = Left;
+            p.PopoutY = Top;
+            p.PopoutCustom = true;
+            p.PopoutWidth = Math.Max(100, Width - BoardMarginX * 2);
+            p.PopoutHeight = Math.Max(100, Height - _boardFrame.Top - BoardBottomPad);
+            p.PopoutOpacity = _bingoControl.SquareBackgroundOpacity;
+            p.PopoutMarkedStyle = (int)_bingoControl.TransparentMarkedStyle;
+            p.PopoutToolbar = _toolbarControlsVisible;
+        }
+
+        internal void ApplyLayout(EldenBingo.Settings.LayoutProfile p)
+        {
+            var location = p.PopoutX == -9999 || p.PopoutY == -9999 ? Location : new Point(p.PopoutX, p.PopoutY);
+            Bounds = MainForm.FitLayoutBounds(new Rectangle(location, initialFormSize()));
+            _bingoControl.SquareBackgroundOpacity = p.PopoutOpacity;
+            _bingoControl.TransparentMarkedStyle = (BingoControl.TransparentMarkedSquareStyle)p.PopoutMarkedStyle;
+            _opacityToggleButton.Text = p.PopoutOpacity == 0 ? "Solid" : "Transparent";
+            _transparentMarkedStyleButton.Text = p.PopoutMarkedStyle == (int)BingoControl.TransparentMarkedSquareStyle.Filled ? "Fill" : "Border";
+            _toolbarControlsVisible = p.PopoutToolbar;
+            updateToolbarVisibility();
+            Invalidate(true);
         }
 
         private static Size initialFormSize()
@@ -307,6 +384,11 @@ namespace EldenBingo.UI
         private void toolbarToggleButton_Click(object? sender, EventArgs e)
         {
             _toolbarControlsVisible = !_toolbarControlsVisible;
+            updateToolbarVisibility();
+        }
+
+        private void updateToolbarVisibility()
+        {
             foreach (Control control in _toolbarPanel.Controls)
             {
                 if (control != _toolbarToggleButton)
@@ -497,8 +579,8 @@ namespace EldenBingo.UI
                 Team = team,
                 NameText = name,
                 CounterText = score.ToString(),
-                Color = BingoConstants.GetTeamColor(team),
-                TextColor = BingoConstants.GetTeamColorBright(team),
+                Color = EldenBingo.Settings.BoardAppearanceSettings.TeamColor(team),
+                TextColor = EldenBingo.Settings.BoardAppearanceSettings.TeamColorBright(team),
                 BackColor = ChromaKey,
             };
             enableDrag(control);
@@ -553,8 +635,16 @@ namespace EldenBingo.UI
 
         private void layoutControls()
         {
+            // Keep every tool reachable at narrow widths, reserving board space
+            // for however many rows the toolbar needs.
+            var toolbarWidth = Math.Min(Math.Max(1, ClientSize.Width - 16),
+                _toolbarPanel.GetPreferredSize(new Size(int.MaxValue, 0)).Width);
+            _toolbarPanel.Width = toolbarWidth;
+            _toolbarPanel.Height = _toolbarPanel.GetPreferredSize(new Size(toolbarWidth, 0)).Height;
+            _toolbarPanel.PerformLayout();
+            var boardTop = Math.Max(BoardTop, 8 + _toolbarPanel.Height + 8);
             var availableWidth = Math.Max(1, ClientSize.Width - BoardMarginX * 2);
-            var availableHeight = Math.Max(1, ClientSize.Height - BoardTop - BoardBottomPad);
+            var availableHeight = Math.Max(1, ClientSize.Height - boardTop - BoardBottomPad);
             var boardWidth = availableWidth;
             var boardHeight = Convert.ToInt32(boardWidth / BingoControl.AspectRatio);
 
@@ -565,10 +655,8 @@ namespace EldenBingo.UI
             }
 
             var boardLeft = Math.Max(0, (ClientSize.Width - boardWidth) / 2);
-            _boardFrame.Bounds = new Rectangle(boardLeft, BoardTop, boardWidth, boardHeight);
-            _toolbarPanel.PerformLayout();
-            var toolbarWidth = _toolbarPanel.GetPreferredSize(Size.Empty).Width;
-            var toolbarX = Math.Max(0, _boardFrame.Right - toolbarWidth + 4);
+            _boardFrame.Bounds = new Rectangle(boardLeft, boardTop, boardWidth, boardHeight);
+            var toolbarX = Math.Clamp(_boardFrame.Right - toolbarWidth + 4, 8, Math.Max(8, ClientSize.Width - toolbarWidth - 8));
             _toolbarPanel.Location = new Point(toolbarX, 8);
 
             var timerY = Math.Max(0, _boardFrame.Bottom + 6);
