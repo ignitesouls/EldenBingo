@@ -85,7 +85,7 @@ namespace Neto.Server
             _tcpListeners.Clear();
 
             _cancelToken = new CancellationTokenSource();
-            foreach (var ip in getIpAddresses())
+            foreach (var ip in IPAddresses)
             {
                 var localIp = ip;
                 var thread = new Thread(() => runTcpListener(localIp));

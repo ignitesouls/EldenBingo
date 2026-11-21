@@ -95,9 +95,9 @@ namespace EldenBingoServer
         public void UnpauseMatch()
         {
             Match.Unpause();
-            if (Match.MatchMilliseconds < 0 && (Match.MatchStatus == MatchStatus.Starting || Match.MatchStatus == MatchStatus.Preparation))
+            if (Match.MatchStatus is MatchStatus.Starting or MatchStatus.Preparation)
             {
-                restartAndListenToTimer(Match.MatchMilliseconds * -1);
+                restartAndListenToTimer(Math.Max(1, -Match.MatchMilliseconds));
             }
             else
             {
@@ -108,10 +108,6 @@ namespace EldenBingoServer
         [OnDeserialized]
         internal void OnDeserializedMethod(StreamingContext context)
         {
-            if (!Match.Paused)
-            {
-                UnpauseMatch();
-            }
             Match.MatchStatusChanged += match_MatchStatusChanged;
             if(Match.Board is ServerBingoBoard sb)
             {
@@ -183,9 +179,10 @@ namespace EldenBingoServer
 
         private void _timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
-            stopTimer();
-            TimerElapsed?.Invoke(_timer, new RoomEventArgs(this));
+            TimerElapsed?.Invoke(sender, new RoomEventArgs(this));
         }
+
+        internal bool IsCurrentTimer(object? sender) => sender != null && ReferenceEquals(_timer, sender);
 
         private void match_MatchStatusChanged(object? sender, EventArgs e)
         {
@@ -208,8 +205,7 @@ namespace EldenBingoServer
         private void restartAndListenToTimer(int milliseconds)
         {
             stopTimer();
-            _timer = new System.Timers.Timer();
-            _timer.Interval = milliseconds;
+            _timer = new System.Timers.Timer(milliseconds) { AutoReset = false };
             _timer.Elapsed += _timer_Elapsed;
             _timer.Start();
         }
@@ -218,8 +214,9 @@ namespace EldenBingoServer
         {
             if (_timer != null)
             {
-                _timer.Elapsed -= _timer_Elapsed;
-                _timer.Stop();
+                var timer = _timer;
+                _timer = null;
+                timer.Dispose();
             }
         }
 
