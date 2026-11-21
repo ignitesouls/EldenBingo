@@ -1,4 +1,4 @@
-﻿using EldenBingoCommon;
+using EldenBingoCommon;
 using Newtonsoft.Json.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
@@ -28,8 +28,9 @@ namespace EldenBingoServer
             var squareArray = root["squares"] as JArray
                 ?? throw new Exception("Missing 'squares' array");
 
-            foreach (var square in squareArray)
+            for (int sourceIndex = 0; sourceIndex < squareArray.Count; sourceIndex++)
             {
+                var square = squareArray[sourceIndex];
                 string? name = square.Value<string>("name");
                 if (string.IsNullOrWhiteSpace(name))
                     continue;
@@ -47,7 +48,7 @@ namespace EldenBingoServer
                     throw new Exception($"point-value for '{name}' must be a whole number between 0 and {maxPoints}");
                 int pointValue = pointToken?.Value<int>() ?? 1;
 
-                var categories = new HashSet<string>();
+                var categories = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
                 if (category != null)
                     categories.Add(category.Trim());
@@ -91,12 +92,9 @@ namespace EldenBingoServer
                     var tokenArray = square.Value<JArray>(textToken)
                         ?? throw new Exception($"Non-existent token '{textToken}' in '{name}'");
 
-                    if (!tokenDict.ContainsKey(textToken))
-                    {
-                        tokenDict[textToken] = tokenArray
-                            .Select(t => t.Value<string>()!)
-                            .ToArray();
-                    }
+                    if (tokenArray.Count == 0 || tokenArray.Any(t => t.Type == JTokenType.Null))
+                        throw new ArgumentException($"Random token '{textToken}' in '{name}' needs at least one choice and cannot contain null.");
+                    tokenDict[textToken] = tokenArray.Select(t => t.Value<string>()!).ToArray();
                 }
 
                 _list.Add(new BingoJsonObj(
@@ -108,7 +106,7 @@ namespace EldenBingoServer
                     center switch { 0 => CenterType.ForbiddenCenter, 1 => CenterType.ForcedCenter, _ => CenterType.None },
                     regions.Count == 0 ? null : regions.ToArray(),
                     pointValue,
-                    squareArray.IndexOf(square),
+                    sourceIndex,
                     timedTokens
                 ));
             }
@@ -130,14 +128,18 @@ namespace EldenBingoServer
         }
 
         public ServerBingoBoard? CreateBingoBoard(ServerRoom room, Action<int, int>? selectedObjective = null, GenerationDiagnostics? diagnostics = null)
+            => CreateBingoBoard(room, room.CategoryConfig, selectedObjective, diagnostics);
+
+        internal ServerBingoBoard? CreateBingoBoard(ServerRoom room, CategoryConfig? categoryConfig,
+            Action<int, int>? selectedObjective = null, GenerationDiagnostics? diagnostics = null)
         {
             var squareList = new List<BingoJsonObj>(weightedShuffleSquares(_list));
             var squares = new List<BingoJsonObj>();
             var categoryCount = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
-            var usedRegionsByGroup = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
+            var usedRegionsByGroup = new Dictionary<RegionLimitConfig.Group, HashSet<string>>();
             foreach (var g in _regionLimitConfig.Groups)
-                usedRegionsByGroup[g.Name] = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                usedRegionsByGroup[g] = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             var numSquares = room.GameSettings.BoardSize * room.GameSettings.BoardSize;
             bool anySquareFailedCategoryLimit = false;
@@ -171,7 +173,7 @@ namespace EldenBingoServer
                 foreach (var category in square.Categories)
                 {
                     var limit = room.GameSettings.CategoryLimit > 0 ? room.GameSettings.CategoryLimit : 99999;
-                    limit = Math.Min(limit, room.CategoryConfig?.GetCategoryLimit(category) ?? int.MaxValue);
+                    limit = Math.Min(limit, categoryConfig?.GetCategoryLimit(category) ?? int.MaxValue);
                     if (categoryCount.GetValueOrDefault(category) + 1 > limit)
                         diagnostics.CategoryBlockers.Add($"{category}: maximum {limit}");
                 }
@@ -182,23 +184,36 @@ namespace EldenBingoServer
                 diagnostics.For(square.SourceIndex).RegionRejected = true;
                 foreach (var group in _regionLimitConfig.Groups)
                 {
-                    var used = usedRegionsByGroup[group.Name];
+                    var used = usedRegionsByGroup[group];
                     var added = square.Regions.Count(r => group.RegionNames.Contains(r) && !used.Contains(r));
                     if (used.Count + added > group.RegionLimit)
                         diagnostics.RegionBlockers.Add($"{group.Name}: maximum {group.RegionLimit} distinct regions");
                 }
             }
 
-            if (numSquares % 2 == 1)
+            bool needsCenter = numSquares % 2 == 1;
+            if (needsCenter)
             {
-                for (int i = squareList.Count - 1; i >= 0; --i)
+                foreach (var candidate in squareList.Where(s => s.CenterType == CenterType.ForcedCenter))
                 {
-                    if (squareList[i].CenterType == CenterType.ForcedCenter)
+                    if (diagnostics != null) diagnostics.For(candidate.SourceIndex).Considered = true;
+                    if (!PassesMaxCategoryLimits(room, categoryConfig, candidate, categoryCount))
                     {
-                        centerSquare = squareList[i];
-                        squareList.RemoveAt(i);
+                        categoryRejected(candidate);
+                        continue;
                     }
+                    if (!PassesRegionDistinctLimit(candidate, usedRegionsByGroup))
+                    {
+                        regionRejected(candidate);
+                        continue;
+                    }
+                    centerSquare = candidate;
+                    break;
                 }
+
+                int forcedCount = squareList.RemoveAll(s => s.CenterType == CenterType.ForcedCenter);
+                if (forcedCount > 0 && !centerSquare.HasValue)
+                    return fail("No eligible forced center", "Every forced-center candidate exceeds a category or region cap.");
             }
 
             if (centerSquare.HasValue)
@@ -207,6 +222,7 @@ namespace EldenBingoServer
                     foreach (var square in _list.Where(s => s.CenterType == CenterType.ForcedCenter && s.SourceIndex != centerSquare.Value.SourceIndex))
                         diagnostics.For(square.SourceIndex).ForcedCenterExcluded = true;
                 --numSquares;
+                needsCenter = false;
 
                 foreach (var category in centerSquare.Value.Categories)
                 {
@@ -219,9 +235,9 @@ namespace EldenBingoServer
 
             var remainingMin = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
-            if (room.CategoryConfig != null)
+            if (categoryConfig != null)
             {
-                foreach (var kv in room.CategoryConfig.GetAllMinimums())
+                foreach (var kv in categoryConfig.GetAllMinimums())
                 {
                     if (kv.Value > 0)
                         remainingMin[kv.Key] = kv.Value;
@@ -233,13 +249,11 @@ namespace EldenBingoServer
                 DecrementMinimums(remainingMin, centerSquare.Value.Categories);
             }
 
-            int guard = 0;
-            while (remainingMin.Count > 0 && AnyMinimumsRemaining(remainingMin))
-            {
-                guard++;
-                if (guard > 50000)
-                    return fail("Generation safety limit", "Category minimum selection exceeded 50,000 passes.");
+            bool needsLastSlotForCenter(BingoJsonObj candidate) =>
+                needsCenter && squares.Count == numSquares - 1 && candidate.CenterType == CenterType.ForbiddenCenter;
 
+            while (AnyMinimumsRemaining(remainingMin))
+            {
                 int bestIndex = -1;
                 int bestScore = 0;
 
@@ -252,7 +266,7 @@ namespace EldenBingoServer
                         continue;
                     if (diagnostics != null) diagnostics.For(sq.SourceIndex).Considered = true;
 
-                    if (!PassesMaxCategoryLimits(room, sq, categoryCount))
+                    if (!PassesMaxCategoryLimits(room, categoryConfig, sq, categoryCount))
                     {
                         categoryRejected(sq);
                         continue;
@@ -261,6 +275,12 @@ namespace EldenBingoServer
                     if (!PassesRegionDistinctLimit(sq, usedRegionsByGroup))
                     {
                         regionRejected(sq);
+                        continue;
+                    }
+
+                    if (needsLastSlotForCenter(sq))
+                    {
+                        if (diagnostics != null) diagnostics.For(sq.SourceIndex).CenterRejected = true;
                         continue;
                     }
 
@@ -273,12 +293,13 @@ namespace EldenBingoServer
 
                 if (bestIndex == -1)
                     return fail("Category minimums cannot be satisfied", string.Join("; ", remainingMin.Where(p => p.Value > 0)
-                        .Select(p => $"{p.Key}: minimum {room.CategoryConfig!.GetCategoryMinimum(p.Key)}, selected {categoryCount.GetValueOrDefault(p.Key)}, still needs {p.Value}, maximum {Math.Min(room.GameSettings.CategoryLimit > 0 ? room.GameSettings.CategoryLimit : int.MaxValue, room.CategoryConfig.GetCategoryLimit(p.Key))}")));
+                        .Select(p => $"{p.Key}: minimum {categoryConfig!.GetCategoryMinimum(p.Key)}, selected {categoryCount.GetValueOrDefault(p.Key)}, still needs {p.Value}, maximum {Math.Min(room.GameSettings.CategoryLimit > 0 ? room.GameSettings.CategoryLimit : int.MaxValue, categoryConfig.GetCategoryLimit(p.Key))}")));
 
                 var picked = squareList[bestIndex];
                 squareList.RemoveAt(bestIndex);
 
                 squares.Add(picked);
+                needsCenter &= picked.CenterType == CenterType.ForbiddenCenter;
                 minimumSquaresWereForced = true;
 
                 foreach (var category in picked.Categories)
@@ -297,32 +318,14 @@ namespace EldenBingoServer
             if (AnyMinimumsRemaining(remainingMin))
                 return fail("Board filled before category minimums were met", string.Join("; ", remainingMin.Where(p => p.Value > 0).Select(p => $"{p.Key}: still needs {p.Value}")));
 
-            while (squareList.Count > 0 && squares.Count < numSquares)
+            for (int next = 0; next < squareList.Count && squares.Count < numSquares; next++)
             {
-                bool thisSquareFailedCategoryCheck = false;
-
-                BingoJsonObj potentialSquare = squareList[0];
-                squareList.RemoveAt(0);
+                var potentialSquare = squareList[next];
                 if (diagnostics != null) diagnostics.For(potentialSquare.SourceIndex).Considered = true;
 
-                foreach (var category in potentialSquare.Categories)
+                if (!PassesMaxCategoryLimits(room, categoryConfig, potentialSquare, categoryCount))
                 {
-                    int limit = room.GameSettings.CategoryLimit > 0 ? room.GameSettings.CategoryLimit : 99999;
-
-                    if (room.CategoryConfig != null)
-                        limit = Math.Min(limit, room.CategoryConfig.GetCategoryLimit(category));
-
-                    categoryCount.TryGetValue(category, out int count);
-                    if (count + 1 > limit)
-                    {
-                        anySquareFailedCategoryLimit = true;
-                        thisSquareFailedCategoryCheck = true;
-                        break;
-                    }
-                }
-
-                if (thisSquareFailedCategoryCheck)
-                {
+                    anySquareFailedCategoryLimit = true;
                     categoryRejected(potentialSquare);
                     continue;
                 }
@@ -333,17 +336,14 @@ namespace EldenBingoServer
                     continue;
                 }
 
-                // Leave the final slot for a center-eligible objective if none
-                // has been selected yet. This still applies normal limits.
-                if (!centerSquare.HasValue && numSquares % 2 == 1 && squares.Count == numSquares - 1 &&
-                    potentialSquare.CenterType == CenterType.ForbiddenCenter &&
-                    !squares.Any(s => s.CenterType != CenterType.ForbiddenCenter))
+                if (needsLastSlotForCenter(potentialSquare))
                 {
                     if (diagnostics != null) diagnostics.For(potentialSquare.SourceIndex).CenterRejected = true;
                     continue;
                 }
 
                 squares.Add(potentialSquare);
+                needsCenter &= potentialSquare.CenterType == CenterType.ForbiddenCenter;
 
                 foreach (var category in potentialSquare.Categories)
                 {
@@ -564,13 +564,13 @@ namespace EldenBingoServer
             return score;
         }
 
-        private bool PassesMaxCategoryLimits(ServerRoom room, BingoJsonObj potentialSquare, Dictionary<string, int> categoryCount)
+        private bool PassesMaxCategoryLimits(ServerRoom room, CategoryConfig? categoryConfig, BingoJsonObj potentialSquare, Dictionary<string, int> categoryCount)
         {
             foreach (var category in potentialSquare.Categories)
             {
                 int limit = room.GameSettings.CategoryLimit > 0 ? room.GameSettings.CategoryLimit : 99999;
-                if (room.CategoryConfig != null)
-                    limit = Math.Min(limit, room.CategoryConfig.GetCategoryLimit(category));
+                if (categoryConfig != null)
+                    limit = Math.Min(limit, categoryConfig.GetCategoryLimit(category));
 
                 categoryCount.TryGetValue(category, out int count);
                 if (count + 1 > limit)
@@ -606,7 +606,7 @@ namespace EldenBingoServer
 
         private bool PassesRegionDistinctLimit(
             BingoJsonObj sq,
-            Dictionary<string, HashSet<string>> usedRegionsByGroup)
+            Dictionary<RegionLimitConfig.Group, HashSet<string>> usedRegionsByGroup)
         {
             if (sq.Regions.Count == 0) return true;
             if (_regionLimitConfig.Groups.Count == 0) return true;
@@ -614,7 +614,7 @@ namespace EldenBingoServer
             // For each group, count how many NEW distinct regions this square would add
             foreach (var g in _regionLimitConfig.Groups)
             {
-                if (!usedRegionsByGroup.TryGetValue(g.Name, out var used))
+                if (!usedRegionsByGroup.TryGetValue(g, out var used))
                     continue;
 
                 int newDistinct = 0;
@@ -633,7 +633,7 @@ namespace EldenBingoServer
             return true;
         }
 
-        private void ApplySquareRegions(BingoJsonObj sq, Dictionary<string, HashSet<string>> usedRegionsByGroup)
+        private void ApplySquareRegions(BingoJsonObj sq, Dictionary<RegionLimitConfig.Group, HashSet<string>> usedRegionsByGroup)
         {
             if (sq.Regions.Count == 0) return;
             if (_regionLimitConfig.Groups.Count == 0) return;
@@ -646,7 +646,7 @@ namespace EldenBingoServer
 
                 foreach (var g in groups)
                 {
-                    if (usedRegionsByGroup.TryGetValue(g.Name, out var used))
+                    if (usedRegionsByGroup.TryGetValue(g, out var used))
                         used.Add(region);
                 }
             }
@@ -659,7 +659,7 @@ namespace EldenBingoServer
                 Text = text;
                 Tooltip = tooltip == null ? string.Empty : tooltip;
                 Weight = weight;
-                Categories = new HashSet<string>(categories ?? Array.Empty<string>());
+                Categories = new HashSet<string>(categories ?? Array.Empty<string>(), StringComparer.OrdinalIgnoreCase);
                 Tokens = tokens;
                 CenterType = center;
                 PointValue = pointValue;

@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
+    <AssemblyName>IgniteBingo</AssemblyName>
+    <RootNamespace>EldenBingo</RootNamespace>
+    <!-- The product name is used for the local server data and log directories. -->
+    <Product>EldenBingo</Product>
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
